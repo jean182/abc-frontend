@@ -24,6 +24,17 @@ module.exports = {
     'react',
   ],
   rules: {
-    'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }]
+    'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }],
+    'jest/jsx-props-no-spreading': "off",
+    'jsx-a11y/label-has-associated-control': [ 'error', {
+      required: {
+        'some': [ 'nesting', 'id'  ]
+      }
+    }],
+    'jsx-a11y/label-has-for': [ 'error', {
+      required: {
+        'some': [ 'nesting', 'id'  ]
+      }
+    }]
   },
 };
