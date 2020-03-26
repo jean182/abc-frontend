@@ -1,60 +1,78 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 
-function LoginForm({ fakeAuth }) {
+import { login } from "../redux/modules/auth";
+import Errors from "./Errors";
+
+function LoginForm() {
   const history = useHistory();
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/home" } };
-  const { register, handleSubmit } = useForm();
+  const serverErrors = useSelector((state) => state.authReducer.errors);
+  const dispatch = useDispatch();
+  const { register, handleSubmit, errors } = useForm();
+  const { from } = location.state || { from: { pathname: "/" } };
 
-  const onSubmit = () => {
-    fakeAuth.authenticate(() => {
-      history.replace(from);
-    });
+  const onSubmit = (data) => {
+    dispatch(login({ ...data, history, from }));
   };
 
   return (
     <form
-      className="col-sm-6 bg-primary shadow-lg p-sm-5"
+      className={`needs-validation ${
+        !isEmpty(errors) ? "was-validated" : ""
+      } col-sm-6 bg-primary shadow-lg p-sm-5`}
       onSubmit={handleSubmit(onSubmit)}
+      noValidate
     >
-      <div className="form-group row">
-        <label
-          htmlFor="email"
-          className="col-sm-3 col-form-label text-capitalize text-white"
-        >
+      {serverErrors.length > 0 &&
+        serverErrors.map((error) => (
+          <span key={error.time} className="text-danger">
+            {error.body}
+          </span>
+        ))}
+      <div className="form-group">
+        <label htmlFor="email" className="text-capitalize text-white">
           Usuario:
         </label>
-        <div className="col-sm-9">
-          <input
-            className="form-control"
-            id="email"
-            type="text"
-            name="email"
-            placeholder="Correo Electrónico"
-            ref={register}
-          />
-        </div>
+        <input
+          className="form-control"
+          id="email"
+          type="text"
+          name="email"
+          placeholder="Correo Electrónico"
+          required
+          pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$"
+          ref={register({
+            required: "required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: "invalidEmail",
+            },
+          })}
+        />
+        {errors.email && <Errors errors={errors} objectKey="email" />}
       </div>
-      <div className="form-group row">
-        <label
-          htmlFor="password"
-          className="col-sm-3 col-form-label text-capitalize text-white"
-        >
+      <div className="form-group">
+        <label htmlFor="password" className="text-capitalize text-white">
           contraseña:
         </label>
-        <div className="col-sm-9">
-          <input
-            className="form-control"
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            ref={register}
-          />
-        </div>
+        <input
+          className="form-control"
+          id="password"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+          minLength="6"
+          ref={register({
+            required: "Required",
+            minLength: { value: 6, message: "minLength" },
+          })}
+        />
+        {errors.password && <Errors errors={errors} objectKey="password" />}
       </div>
       <div className="form-group row align-items-center">
         <div className="col-sm-6 col-form-label">
@@ -71,9 +89,5 @@ function LoginForm({ fakeAuth }) {
     </form>
   );
 }
-
-LoginForm.propTypes = {
-  fakeAuth: PropTypes.oneOfType([PropTypes.object]).isRequired,
-};
 
 export default LoginForm;

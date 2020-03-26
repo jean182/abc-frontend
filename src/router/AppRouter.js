@@ -1,70 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import AuthButton from "./AuthButton";
 import LoginPage from "../pages/login/LoginPage";
 import UserPage from "../pages/main/MainPage";
 
-function AuthButton({ isAuthenticated, fakeAuth }) {
-  const history = useHistory();
+export const AppRouter = ({ authorized, token }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(authorized);
 
-  return isAuthenticated ? (
-    <p>
-      <button
-        type="button"
-        onClick={() => {
-          fakeAuth.signout(() => history.push("/login"));
-        }}
-      >
-        Sign out
-      </button>
-    </p>
-  ) : (
-    <p>You are not logged in.</p>
-  );
-}
-
-AuthButton.defaultProps = {
-  isAuthenticated: false,
-};
-
-AuthButton.propTypes = {
-  fakeAuth: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  isAuthenticated: PropTypes.bool,
-};
-
-const AppRouter = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const fakeAuth = {
-    authenticate(cb) {
-      setIsAuthenticated(true);
-      setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-      setIsAuthenticated(false);
-      setTimeout(cb, 100);
-    },
-  };
+  useEffect(() => {
+    if (token !== null) setIsAuthenticated(true);
+    if (token === null) setIsAuthenticated(false);
+  }, [token]);
 
   return (
     <Router>
-      <AuthButton isAuthenticated={isAuthenticated} fakeAuth={fakeAuth} />
+      <AuthButton isAuthenticated={isAuthenticated} />
       <ul>
         {!isAuthenticated && (
           <li>
             <Link to="/login">Login</Link>
           </li>
         )}
+        {isAuthenticated && (
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+        )}
       </ul>
       <Switch>
         <Route path="/login">
-          <LoginPage fakeAuth={fakeAuth} />
+          <LoginPage />
         </Route>
         <PrivateRoute path="/home" isAuthenticated={isAuthenticated}>
           <UserPage />
@@ -74,4 +42,18 @@ const AppRouter = () => {
   );
 };
 
-export default AppRouter;
+AppRouter.defaultProps = {
+  authorized: false,
+  token: null,
+};
+
+AppRouter.propTypes = {
+  authorized: PropTypes.bool,
+  token: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  token: state.clientReducer.token,
+});
+
+export default connect(mapStateToProps)(AppRouter);
