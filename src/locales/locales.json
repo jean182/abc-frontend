@@ -1,0 +1,8 @@
+{
+  "appName": "Riesgo Legislativo",
+  "errors": {
+    "required": "Requerido",
+    "invalidEmail": "El formato del correo electrónico no es valido",
+    "minLength": "La contraseña debe tener más de 6 caracteres"
+  }
+}

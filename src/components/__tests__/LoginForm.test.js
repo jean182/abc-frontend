@@ -14,6 +14,16 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
+jest.mock("react-redux", () => ({
+  useDispatch: jest.fn(),
+  useSelector: () => [
+    {
+      body: "Balde",
+      time: 1,
+    },
+  ],
+}));
+
 const mockProps = {
   fakeAuth: {
     authenticate: jest.fn(),
