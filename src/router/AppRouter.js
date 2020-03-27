@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import AuthButton from "./AuthButton";
 import LoginPage from "../pages/login/LoginPage";
 import UserPage from "../pages/main/MainPage";
+import Header from "../components/Header";
 
 export const AppRouter = ({ authorized, token }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(authorized);
@@ -17,19 +17,7 @@ export const AppRouter = ({ authorized, token }) => {
 
   return (
     <Router>
-      <AuthButton isAuthenticated={isAuthenticated} />
-      <ul>
-        {!isAuthenticated && (
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        )}
-        {isAuthenticated && (
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-        )}
-      </ul>
+      <Header isAuthenticated={isAuthenticated} />
       <Switch>
         <Route path="/login">
           <LoginPage />

@@ -5,9 +5,13 @@ import Footer from "../../components/Footer";
 
 function Layout({ children }) {
   return (
-    <div>
-      <Sidebar />
-      <main>{children}</main>
+    <div className="container-fluid">
+      <div className="row flex-xl-nowrap">
+        <Sidebar />
+        <main className="col-12 col-md-10 col-xl-10 p-md-5 pl-md-5 bd-content">
+          {children}
+        </main>
+      </div>
       <Footer />
     </div>
   );

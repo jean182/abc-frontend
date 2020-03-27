@@ -1,11 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../redux/modules/auth";
 
-export default function AuthButton(props) {
-  const { isAuthenticated } = props;
+export default function AuthButton() {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -13,21 +11,13 @@ export default function AuthButton(props) {
     dispatch({ type: LOGOUT, history });
   };
 
-  return isAuthenticated ? (
-    <p>
-      <button type="button" onClick={terminateSession}>
-        Sign out
-      </button>
-    </p>
-  ) : (
-    <p>You are not logged in.</p>
+  return (
+    <button
+      type="button"
+      className="btn btn-link nav-link"
+      onClick={terminateSession}
+    >
+      Sign out
+    </button>
   );
 }
-
-AuthButton.defaultProps = {
-  isAuthenticated: false,
-};
-
-AuthButton.propTypes = {
-  isAuthenticated: PropTypes.bool,
-};
