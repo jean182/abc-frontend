@@ -6,8 +6,8 @@ import EventRow from "./EventRow";
 
 function EventList(props) {
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const { events } = props;
-  const columns = Object.keys(first(events))
+  const { eventList } = props;
+  const columns = Object.keys(first(eventList))
     .map((col, index) => {
       return {
         id: index,
@@ -21,7 +21,7 @@ function EventList(props) {
 
   const findMatchingEvent = (id) => {
     const matchingEvent =
-      events.find((event) => event.id === Number(id)) || null;
+      eventList.find((event) => event.id === Number(id)) || null;
     setSelectedEvent(matchingEvent);
   };
 
@@ -34,7 +34,7 @@ function EventList(props) {
         </div>
       </div>
       <HeaderRow columns={columns} />
-      {events.map((event) => {
+      {eventList.map((event) => {
         return (
           <EventRow
             columns={columns}
@@ -49,7 +49,8 @@ function EventList(props) {
 }
 
 EventList.propTypes = {
-  events: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])).isRequired,
+  eventList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
 };
 
 export default EventList;

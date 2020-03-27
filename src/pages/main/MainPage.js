@@ -1,11 +1,11 @@
 import React from "react";
 import Layout from "./Layout";
-import EventListContainer from "../../components/Events/EventListContainer";
+import ReduxEventListContainer from "../../components/Events/EventListContainer";
 
 function MainPage() {
   return (
     <Layout>
-      <EventListContainer />
+      <ReduxEventListContainer />
     </Layout>
   );
 }

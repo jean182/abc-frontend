@@ -4,7 +4,6 @@ import t from "../../helpers/i18n";
 
 export default function EventRow({ columns, row, select }) {
   const onRowSelection = (event) => {
-    console.log(event.target);
     select(event.target.value);
   };
   return (

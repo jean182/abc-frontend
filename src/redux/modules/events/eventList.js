@@ -1,10 +1,11 @@
-import { all, call, delay, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import { handleActions, createAction } from "redux-actions";
-import { getEvents } from "../../api/eventsEndpoints";
+import { getEvents } from "../../../api/eventsEndpoints";
 
-export const FETCH_EVENTS = "abc-frontend/auth/FETCH_EVENTS";
-export const FETCH_EVENTS_SUCCESS = "abc-frontend/auth/FETCH_EVENTS_SUCCESS";
-export const FETCH_EVENTS_FAIL = "abc-frontend/auth/FETCH_EVENTS_FAIL";
+export const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
+export const FETCH_EVENTS_SUCCESS =
+  "abc-frontend/eventReducer/FETCH_EVENTS_SUCCESS";
+export const FETCH_EVENTS_FAIL = "abc-frontend/eventReducer/FETCH_EVENTS_FAIL";
 
 export const getInitialState = () => {
   return {
@@ -51,7 +52,7 @@ export const fetchEvents = createAction(FETCH_EVENTS);
 
 export const fetchEventsSuccess = createAction(FETCH_EVENTS_SUCCESS);
 
-export const fetchEventsFail = createAction(FETCH_EVENTS_SUCCESS);
+export const fetchEventsFail = createAction(FETCH_EVENTS_FAIL);
 
 // Selectors
 
@@ -65,7 +66,6 @@ export function showEvents(state) {
 export function* fetchEventsSaga() {
   try {
     const response = yield call(getEvents);
-    yield delay(500);
     yield put(fetchEventsSuccess(response));
   } catch (error) {
     yield put(fetchEventsFail(error.message));
