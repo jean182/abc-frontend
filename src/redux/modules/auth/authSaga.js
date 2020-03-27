@@ -1,13 +1,13 @@
 import { cancel, cancelled, call, fork, put, take } from "redux-saga/effects";
-import axiosConfig from "../../api/config";
+import axiosConfig from "../../../api/config";
 import { UNSET_CLIENT, setClient, unsetClient } from "./client";
 import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "./auth";
-import { loginUserRequest } from "../../api/authRequest";
+import { loginUserRequest } from "../../../api/authRequest";
 import {
   getAuthToken,
   removeAuthToken,
   setAuthToken,
-} from "../../helpers/local-storage";
+} from "../../../helpers/local-storage";
 
 function* logout(history) {
   yield put(unsetClient());

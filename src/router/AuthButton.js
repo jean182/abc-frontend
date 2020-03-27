@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { LOGOUT } from "../redux/modules/auth";
+import { LOGOUT } from "../redux/modules/auth/auth";
 
 export default function AuthButton() {
   const history = useHistory();

@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-import { login } from "../redux/modules/auth";
+import { login } from "../redux/modules/auth/auth";
 import Errors from "./Errors";
 
 function LoginForm() {
