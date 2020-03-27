@@ -24,7 +24,7 @@ const authReducer = handleActions(
         ...state,
         requesting: true,
         successful: false,
-        messages: [{ body: "Logging in...", time: new Date() }],
+        messages: [{ body: "Logging in..." }],
         errors: [],
       };
     },
@@ -43,12 +43,20 @@ const authReducer = handleActions(
         errors: state.errors.concat([
           {
             body: action.error.toString(),
-            time: new Date(),
           },
         ]),
         messages: [],
         requesting: false,
         successful: false,
+      };
+    },
+    [LOGOUT]: (state) => {
+      return {
+        ...state,
+        requesting: false,
+        successful: false,
+        messages: [],
+        errors: [],
       };
     },
   },

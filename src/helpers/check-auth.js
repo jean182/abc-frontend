@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import axiosConfig from "../api/config";
-import { setClient } from "../redux/modules/client";
+import { setClient } from "../redux/modules/auth/client";
 import { getAuthToken, removeAuthToken } from "./local-storage";
 
 export default function checkAuthorization({ dispatch }) {

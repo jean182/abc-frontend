@@ -4,5 +4,19 @@
     "required": "Requerido",
     "invalidEmail": "El formato del correo electrónico no es valido",
     "minLength": "La contraseña debe tener más de 6 caracteres"
+  },
+  "noData": "No hay datos para mostrar",
+  "table": {
+    "events": {
+      "fileNumber": "#Exp",
+      "description": "Descripción",
+      "procedureType": "Tipo de Procedimiento",
+      "voteType": "Tipo Valoración",
+      "proposedBy": "Propuesto por",
+      "approvalDate": "Fecha de dictaminación",
+      "state": "Evento",
+      "selection": "Selección"
+
+    }
   }
 }

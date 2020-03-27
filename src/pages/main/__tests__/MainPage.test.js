@@ -12,7 +12,7 @@ describe("MainPage Component", () => {
 
   describe("renders succesfully", () => {
     it("displays children content", () => {
-      expect(component.find("h1").text()).toEqual("ABC Frontend");
+      expect(component.find("Connect(EventListContainer)").length).toEqual(1);
     });
   });
 
