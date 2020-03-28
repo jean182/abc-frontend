@@ -1,13 +1,22 @@
+/* eslint-disable react/no-children-prop, prettier/prettier */
 import React from "react";
 import { shallow } from "enzyme";
 
-import { Sidebar } from "../Sidebar";
+import Sidebar from "../Sidebar";
 
 let component;
 
 describe("Sidebar Component", () => {
   beforeEach(() => {
-    component = shallow(<Sidebar />);
+    component = shallow(
+      <Sidebar
+        children={(
+          <ul>
+            <li>One</li>
+          </ul>
+        )}
+      />
+    );
   });
 
   describe("renders succesfully", () => {

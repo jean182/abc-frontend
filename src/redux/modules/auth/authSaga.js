@@ -8,11 +8,12 @@ import {
   removeAuthToken,
   setAuthToken,
 } from "../../../helpers/local-storage";
+import translate from "../../../helpers/i18n";
 
 function* logout(history) {
   yield put(unsetClient());
   yield call(removeAuthToken);
-  history.push("/login");
+  history.push(translate("routes.login"));
 }
 
 function* loginFlow(email, password, history, from) {
@@ -39,7 +40,7 @@ function* loginFlow(email, password, history, from) {
     yield put({ type: LOGIN_FAIL, error, history });
   } finally {
     if (yield cancelled()) {
-      history.push("/login");
+      history.push(translate("routes.login"));
     }
   }
 
