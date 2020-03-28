@@ -1,5 +1,8 @@
 {
   "appName": "Riesgo Legislativo",
+  "sidebar": {
+    "pending": "Pendiente:"
+  },
   "errors": {
     "required": "Requerido",
     "invalidEmail": "El formato del correo electrónico no es valido",
@@ -15,8 +18,10 @@
       "proposedBy": "Propuesto por",
       "approvalDate": "Fecha de dictaminación",
       "state": "Evento",
-      "selection": "Selección"
-
+      "selection": "Selección",
+      "day": "Día",
+      "month": "Mes",
+      "year": "Año"
     }
   }
 }

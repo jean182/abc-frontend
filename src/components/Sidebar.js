@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import PendingUsers from "./PendingUsers";
+import { showEvent } from "../redux/modules/events/event";
 
-function Sidebar() {
+export function Sidebar({ selectedEvent }) {
   const [toggle, setToggle] = useState(false);
   const [collapsedNav, setCollapsedNav] = useState("collapse");
   const handleClick = () => {
@@ -48,12 +52,13 @@ function Sidebar() {
         id="sidebar-abc"
         aria-label="Main navigation"
       >
-        <div className="row py-3 sidebar-subtitle-borders border-primary">
+        <div className="row py-3 border-primary sidebar-subtitle-borders">
           <div className="col font-weight-bold sidebar-subtitle">
             Calificación de eventos de riesgo legislativo con impacto en la
             banca
           </div>
         </div>
+        <PendingUsers selectedEvent={selectedEvent} />
         <div className="bd-toc-item">
           <a
             className="bd-toc-link"
@@ -72,4 +77,16 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+Sidebar.defaultProps = {
+  selectedEvent: {},
+};
+
+Sidebar.propTypes = {
+  selectedEvent: PropTypes.oneOfType([PropTypes.object]),
+};
+
+const mapStateToProps = (state) => ({
+  selectedEvent: showEvent(state),
+});
+
+export default connect(mapStateToProps)(Sidebar);

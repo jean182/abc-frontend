@@ -57,7 +57,7 @@ export const fetchEventsFail = createAction(FETCH_EVENTS_FAIL);
 // Selectors
 
 export function showEvents(state) {
-  const { events } = state.eventsReducer;
+  const { events } = state.eventsReducer.eventList;
 
   return events;
 }
@@ -72,6 +72,6 @@ export function* fetchEventsSaga() {
   }
 }
 
-export function* eventsReducerWatcherSaga() {
+export function* eventListWatcherSaga() {
   yield all([takeLatest(FETCH_EVENTS, fetchEventsSaga)]);
 }
