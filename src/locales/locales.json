@@ -1,7 +1,18 @@
 {
   "appName": "Riesgo Legislativo",
+  "routes": {
+    "events": "/eventos",
+    "home": "/inicio",
+    "login": "/ingreso"
+  },
   "sidebar": {
-    "pending": "Pendiente:"
+    "pending": "Pendiente:",
+    "evaluator": "Evaluador:"
+  },
+  "home": {
+    "noDataMessageOne": "Distribución de calificaciones por usuario",
+    "noDataMessageTwo": "Distribución de usuarios por probabilidad de avance del evento",
+    "noDataMessageThree": "Distribución por sector de las naturalezas de impacto seleccionadas"
   },
   "errors": {
     "required": "Requerido",

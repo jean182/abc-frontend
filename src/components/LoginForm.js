@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../redux/modules/auth/auth";
 import Errors from "./Errors";
+import translate from "../helpers/i18n";
 
 function LoginForm() {
   const history = useHistory();
@@ -13,7 +14,9 @@ function LoginForm() {
   const serverErrors = useSelector((state) => state.authReducer.errors);
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
-  const { from } = location.state || { from: { pathname: "/" } };
+  const { from } = location.state || {
+    from: { pathname: translate("routes.home") },
+  };
 
   const onSubmit = (data) => {
     dispatch(login({ ...data, history, from }));
