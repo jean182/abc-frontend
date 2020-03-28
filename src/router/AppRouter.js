@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import LoginPage from "../pages/login/LoginPage";
-import UserPage from "../pages/main/MainPage";
+import EventPage from "../pages/main/EventPage";
 import Header from "../components/Header";
 
 export const AppRouter = ({ authorized, token }) => {
@@ -23,7 +23,7 @@ export const AppRouter = ({ authorized, token }) => {
           <LoginPage />
         </Route>
         <PrivateRoute path="/home" isAuthenticated={isAuthenticated}>
-          <UserPage />
+          <EventPage />
         </PrivateRoute>
       </Switch>
     </Router>

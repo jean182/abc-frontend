@@ -2,7 +2,7 @@ import { cancel, cancelled, call, fork, put, take } from "redux-saga/effects";
 import axiosConfig from "../../../api/config";
 import { UNSET_CLIENT, setClient, unsetClient } from "./client";
 import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "./auth";
-import { loginUserRequest } from "../../../api/authRequest";
+import { loginUserRequest } from "../../../api/userEndpoints";
 import {
   getAuthToken,
   removeAuthToken,

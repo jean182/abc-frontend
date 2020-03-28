@@ -11,7 +11,7 @@ import eventListReducer, {
   fetchEventsFail,
   showEvents,
   fetchEventsSaga,
-  eventsReducerWatcherSaga,
+  eventListWatcherSaga,
 } from "../eventList";
 
 const events = [
@@ -108,8 +108,10 @@ describe("reducers", () => {
 describe("selectors", () => {
   const state = {
     eventsReducer: {
-      ...initialState,
-      events,
+      eventList: {
+        ...initialState,
+        events,
+      },
     },
   };
   describe("#showEvents", () => {
@@ -186,7 +188,7 @@ describe("sagas", () => {
   describe("eventsReducerWatcherSaga", () => {
     describe("Unit testing", () => {
       it("watches all the redux actions linked to event watcher saga", () => {
-        const saga = testSaga(eventsReducerWatcherSaga);
+        const saga = testSaga(eventListWatcherSaga);
         saga.next().all([takeLatest(FETCH_EVENTS, fetchEventsSaga)]);
         saga.next().isDone();
       });

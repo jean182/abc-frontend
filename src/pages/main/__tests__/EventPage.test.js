@@ -1,13 +1,13 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import MainPage from "../MainPage";
+import EventPage from "../EventPage";
 
 let component;
 
-describe("MainPage Component", () => {
+describe("EventPage Component", () => {
   beforeEach(() => {
-    component = shallow(<MainPage />);
+    component = shallow(<EventPage />);
   });
 
   describe("renders succesfully", () => {
