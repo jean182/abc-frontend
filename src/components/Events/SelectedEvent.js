@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { isEmpty } from "lodash";
 import t from "../../helpers/i18n";
+import { showEvent } from "../../redux/modules/events/event";
 
-export default function SelectedEvent({ selectedEvent }) {
+export function SelectedEvent({ selectedEvent }) {
   const setInputValue = (obj, key) =>
     obj && !isEmpty(obj[key]) ? obj[key] : "";
 
@@ -79,3 +81,9 @@ SelectedEvent.defaultProps = {
 SelectedEvent.propTypes = {
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
 };
+
+const mapStateToProps = (state) => ({
+  selectedEvent: showEvent(state),
+});
+
+export default connect(mapStateToProps)(SelectedEvent);

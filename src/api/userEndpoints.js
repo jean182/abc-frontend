@@ -9,5 +9,5 @@ export const currentUser = () => {
 };
 
 export const getPendingUsers = (id) => {
-  return config.get(`events/${id}/pending_users`, id);
+  return config.get(`events/${id}/pending_users`);
 };
