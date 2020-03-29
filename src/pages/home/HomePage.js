@@ -1,11 +1,11 @@
 import React from "react";
 import Layout from "./Layout";
-import ReduxChartsContainer from "../../components/Home/ChartsContainer";
+import ReduxPageContent from "../../components/Home/PageContent";
 
 function HomePage() {
   return (
     <Layout>
-      <ReduxChartsContainer />
+      <ReduxPageContent />
     </Layout>
   );
 }

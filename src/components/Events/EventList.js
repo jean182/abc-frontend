@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import HeaderRow from "./HeaderRow";
 import EventRow from "./EventRow";
 import { setEvent, unsetEvent } from "../../redux/modules/events/event";
-import SelectedEvent from "./SelectedEvent";
+import { SelectedEvent } from "./SelectedEvent";
 
 function EventList(props) {
   const [selectedEvent, setSelectedEvent] = useState(null);
