@@ -15,17 +15,15 @@ const ModalTrigger = ({ buttonRef, triggerStyles, onOpen, text, id }) => (
   </button>
 );
 
-ModalTrigger.defaultProps = {
-  buttonRef: null,
-  id: "modal-button",
-};
-
 ModalTrigger.propTypes = {
-  buttonRef: PropTypes.func,
+  buttonRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.any }),
+  ]).isRequired,
   triggerStyles: PropTypes.string.isRequired,
   onOpen: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
 };
 
 export default ModalTrigger;
