@@ -1,0 +1,43 @@
+.login {
+    padding: 0;
+    border-radius: 2px;
+
+    & h3 {
+        margin: 0;
+        color: $white;
+        font-size: 24px;
+        text-align: center;
+        font-weight: bold;
+        padding: 14px 60px 14px 60px;
+        background-color: $secondary;
+        border-radius: 2px;
+    }
+
+    & h4 {
+        margin: 0;
+        color: $primary;
+        font-size: 21px;
+        text-align: center;
+        font-weight: 300;
+        padding: 10px 20px 10px 10px;
+        background-color: $light-gray;
+    }
+
+    &--inputs-container {
+        padding: 40px 100px 20px 100px;
+    }
+
+    & label, .col-form-label {
+        text-align: right;
+        font-weight: 300;
+    }
+
+    &--pass-recover {
+        text-align: left !important;
+    }
+
+    & .form-group:not(:last-child) {
+        margin-bottom: 40px;
+    }
+
+}
