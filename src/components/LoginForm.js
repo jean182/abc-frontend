@@ -26,7 +26,7 @@ function LoginForm() {
     <form
       className={`needs-validation ${
         !isEmpty(errors) ? "was-validated" : ""
-      } col-sm-6 bg-primary shadow-lg p-sm-5`}
+      }col-sm-7 bg-primary shadow-lg login`}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
@@ -36,57 +36,76 @@ function LoginForm() {
             {error.body}
           </span>
         ))}
-      <div className="form-group">
-        <label htmlFor="email" className="text-capitalize text-white">
-          Usuario:
-        </label>
-        <input
-          className="form-control"
-          id="email"
-          type="text"
-          name="email"
-          placeholder="Correo Electrónico"
-          required
-          pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$"
-          ref={register({
-            required: "required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: "invalidEmail",
-            },
-          })}
-        />
-        {errors.email && <Errors errors={errors} objectKey="email" />}
+      <div className="login--header">
+        <h3>Bienvenido a la plataforma de Riesgo Legislativo</h3>
+        <h4>Calificación de eventos con impacto en la banca</h4>
       </div>
-      <div className="form-group">
-        <label htmlFor="password" className="text-capitalize text-white">
-          contraseña:
-        </label>
-        <input
-          className="form-control"
-          id="password"
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          required
-          minLength="6"
-          ref={register({
-            required: "Required",
-            minLength: { value: 6, message: "minLength" },
-          })}
-        />
-        {errors.password && <Errors errors={errors} objectKey="password" />}
-      </div>
-      <div className="form-group row align-items-center">
-        <div className="col-sm-6 col-form-label">
-          <a className="text-white" href="https://facebook.com">
-            Recuperar contraseña
-          </a>
+      <div className="login--inputs-container">
+        <div className="form-group row">
+          <label
+            htmlFor="email"
+            className="col-sm-3 col-form-label text-capitalize text-white"
+          >
+            Usuario:
+          </label>
+          <div className="col-sm-9">
+            <input
+              className="form-control"
+              id="email"
+              type="text"
+              name="email"
+              placeholder="Correo Electrónico"
+              required
+              pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$"
+              ref={register({
+                required: "required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: "invalidEmail",
+                },
+              })}
+            />
+            {errors.email && <Errors errors={errors} objectKey="email" />}
+          </div>
         </div>
-        <div className="col-sm-6 text-sm-right">
-          <button type="submit" className="btn btn-success">
-            Ingresar
-          </button>
+        <div className="form-group row">
+          <label
+            htmlFor="password"
+            className="col-sm-3 col-form-label text-capitalize text-white"
+          >
+            contraseña:
+          </label>
+          <div className="col-sm-9">
+            <input
+              className="form-control"
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Contraseña"
+              required
+              minLength="6"
+              ref={register({
+                required: "Required",
+                minLength: { value: 6, message: "minLength" },
+              })}
+            />
+            {errors.password && <Errors errors={errors} objectKey="password" />}
+          </div>
+        </div>
+        <div className="form-group row align-items-center">
+          <div className="col-sm-6 col-form-label login--pass-recover">
+            <a
+              className="text-white"
+              href="https://www.facebook.com/AsociacionBancariaCostarricense/"
+            >
+              Recuperar contraseña
+            </a>
+          </div>
+          <div className="col-sm-6 text-sm-right">
+            <button type="submit" className="btn btn--login">
+              Ingresar
+            </button>
+          </div>
         </div>
       </div>
     </form>
