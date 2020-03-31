@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { first } from "lodash";
+import { first, orderBy } from "lodash";
 import { useDispatch } from "react-redux";
 import HeaderRow from "./HeaderRow";
 import EventRow from "./EventRow";
@@ -9,6 +9,10 @@ import { SelectedEvent } from "./SelectedEvent";
 
 function EventList(props) {
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [sortValue, setSortValue] = useState({
+    value: "id",
+    orderType: "asc",
+  });
   const dispatch = useDispatch();
   const { eventList } = props;
   const columns = Object.keys(first(eventList))
@@ -22,6 +26,17 @@ function EventList(props) {
       ({ value }) =>
         value !== "id" && value !== "createdAt" && value !== "updatedAt"
     );
+
+  const handleSort = (value) => {
+    if (value.orderType !== "") {
+      setSortValue(value);
+    } else {
+      setSortValue({
+        value: "id",
+        orderType: "asc",
+      });
+    }
+  };
 
   const findMatchingEvent = (id) => {
     const matchingEvent =
@@ -41,17 +56,23 @@ function EventList(props) {
           <h3>Administración de eventos</h3>
         </div>
       </div>
-      <HeaderRow columns={columns} />
-      {eventList.map((event) => {
-        return (
-          <EventRow
-            columns={columns}
-            key={event.id}
-            row={event}
-            select={findMatchingEvent}
-          />
-        );
-      })}
+      <HeaderRow
+        columns={columns}
+        handleSort={handleSort}
+        sortValue={sortValue.value}
+      />
+      {orderBy(eventList, [sortValue.value], [sortValue.orderType]).map(
+        (event) => {
+          return (
+            <EventRow
+              columns={columns}
+              key={event.id}
+              row={event}
+              select={findMatchingEvent}
+            />
+          );
+        }
+      )}
     </>
   );
 }
