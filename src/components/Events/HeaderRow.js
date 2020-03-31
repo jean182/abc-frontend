@@ -1,14 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import t from "../../helpers/i18n";
+import HeaderColumn from "./HeaderColumn";
 
-export default function HeaderRow({ columns }) {
+export default function HeaderRow({ columns, handleSort, sortValue }) {
   return (
     <div className="row table-row header text-white hide-col">
       {columns.map((column) => (
-        <div key={column.id} className="col">
-          {t(`table.events.${column.value}`)}
-        </div>
+        <HeaderColumn
+          key={column.id}
+          column={column}
+          onHeaderClick={handleSort}
+          sortValue={sortValue}
+        />
       ))}
       <div className="col">{t("table.events.selection")}</div>
     </div>
@@ -18,4 +22,6 @@ export default function HeaderRow({ columns }) {
 HeaderRow.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  handleSort: PropTypes.func.isRequired,
+  sortValue: PropTypes.string.isRequired,
 };

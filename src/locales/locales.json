@@ -34,5 +34,10 @@
       "month": "Mes",
       "year": "Año"
     }
+  },
+  "pagination": {
+    "showing": "Mostrando",
+    "of": "de",
+    "events": "eventos"
   }
 }
