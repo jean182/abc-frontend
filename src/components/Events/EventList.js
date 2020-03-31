@@ -4,10 +4,17 @@ import { first, orderBy } from "lodash";
 import { useDispatch } from "react-redux";
 import HeaderRow from "./HeaderRow";
 import EventRow from "./EventRow";
+import Pagination from "./Pagination";
 import { setEvent, unsetEvent } from "../../redux/modules/events/event";
 import { SelectedEvent } from "./SelectedEvent";
+import translate from "../../helpers/i18n";
 
 function EventList(props) {
+  const [resetPagination, setResetPagination] = useState(false);
+  const [range, setRange] = useState({
+    start: 0,
+    end: 10,
+  });
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [sortValue, setSortValue] = useState({
     value: "id",
@@ -27,7 +34,16 @@ function EventList(props) {
         value !== "id" && value !== "createdAt" && value !== "updatedAt"
     );
 
+  const onChangePage = (_event, page) => {
+    setResetPagination(false);
+    setRange({
+      start: 10 * (page - 1),
+      end: 10 * page,
+    });
+  };
+
   const handleSort = (value) => {
+    setResetPagination(true);
     if (value.orderType !== "") {
       setSortValue(value);
     } else {
@@ -61,8 +77,9 @@ function EventList(props) {
         handleSort={handleSort}
         sortValue={sortValue.value}
       />
-      {orderBy(eventList, [sortValue.value], [sortValue.orderType]).map(
-        (event) => {
+      {orderBy(eventList, [sortValue.value], [sortValue.orderType])
+        .slice(range.start, range.end)
+        .map((event) => {
           return (
             <EventRow
               columns={columns}
@@ -71,8 +88,24 @@ function EventList(props) {
               select={findMatchingEvent}
             />
           );
-        }
-      )}
+        })}
+      <div className="d-flex justify-content-between mt-3">
+        <span className="page-items-count">
+          {`${translate("pagination.showing")} ${
+            range.start === 0 ? 1 : range.start + 1
+          } - ${
+            range.end <= eventList.length ? range.end : eventList.length
+          } ${translate("pagination.of")} ${eventList.length} ${translate(
+            "pagination.events"
+          )}.`}
+        </span>
+        <Pagination
+          resetPagination={resetPagination}
+          data={eventList}
+          itemCount={10}
+          onChange={onChangePage}
+        />
+      </div>
     </>
   );
 }

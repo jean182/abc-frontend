@@ -11,7 +11,7 @@ export default function HeaderColumn({ column, onHeaderClick, sortValue }) {
     if (sortValue !== column.value) {
       setOrderType("");
     }
-  }, [sortValue]);
+  }, [sortValue, column.value]);
 
   const next = (value) => {
     if (orderTypes.indexOf(value) === orderTypes.length - 1) {
