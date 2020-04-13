@@ -34,7 +34,7 @@ export default function HeaderColumn({ column, onHeaderClick, sortValue }) {
   return (
     <div className="col">
       <button
-        className="btn nav-link text-white"
+        className="btn--unstyled nav-link text-white"
         type="button"
         onClick={handleClick}
       >
