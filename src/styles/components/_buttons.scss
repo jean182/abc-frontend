@@ -3,7 +3,7 @@
     padding: 10px 30px;
     color: $white;
     transition: .2s all;
-    
+
     &--login {
         background-color: $secondary;
     }
@@ -17,12 +17,56 @@
         box-shadow: 0 0px rgb(41, 41, 41);
         transform: translateY(2px);
     }
-    
+
+    &--unstyled {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: 0;
+    }
+    &--unstyled:hover {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: 0;
+    }
+    &--unstyled:active {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: 0;
+    }
+
+    &--unstyled:focus {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        outline: 0;
+    }
+
     &:hover {
-        box-shadow: 0 2px rgb(41, 41, 41);
-        transform: translateY(-2px);
-        background-color: lighten($primary, 5%);
-        color: $white;
+        background-color: #1c87c9;
+        border: none;
+        color: white;
+        padding: 20px 34px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 4px 2px;
+        cursor: pointer;
     }
 
     &:active {

@@ -39,5 +39,8 @@
     "showing": "Mostrando",
     "of": "de",
     "events": "eventos"
+  },
+  "charts": {
+    "barChartLabel": "Distribución de usuarios por probabilidad de avance del evento"
   }
 }

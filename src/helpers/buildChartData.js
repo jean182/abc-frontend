@@ -1,3 +1,6 @@
+import { camelCase } from "lodash";
+import translate from "./i18n";
+
 function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
@@ -11,7 +14,7 @@ function getRandomColorHex() {
   return color;
 }
 
-export default (response) => {
+export const buildBubbleData = (response) => {
   return response.map((item) => {
     const backgroundColor = [
       getRandomColorHex(),
@@ -33,4 +36,29 @@ export default (response) => {
       borderWidth: 1,
     };
   });
+};
+
+export const buildBarData = (response) => {
+  const { labels, data } = response;
+  const backgroundColor = [
+    getRandomColorHex(),
+    getRandomColorHex(),
+    getRandomColorHex(),
+    getRandomColorHex(),
+  ];
+  return {
+    labels,
+    datasets: [
+      {
+        label: translate("charts.barChartLabel"),
+        data: labels.map((label) => {
+          return data[camelCase(label)];
+        }),
+        barThickness: 30,
+        backgroundColor,
+        borderColor: backgroundColor,
+        borderWidth: 1,
+      },
+    ],
+  };
 };
