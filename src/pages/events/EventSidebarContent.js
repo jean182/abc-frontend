@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import PendingUsers from "../../components/PendingUsers";
 import { showEvent } from "../../redux/modules/events/event";
+import FormsWrapper from "../../components/Surveys/FormsWrapper";
 
 function SidebarContent({ selectedEvent }) {
   return (
@@ -13,6 +14,7 @@ function SidebarContent({ selectedEvent }) {
         </div>
       </div>
       <PendingUsers selectedEvent={selectedEvent} />
+      <FormsWrapper selectedEvent={selectedEvent} />
     </>
   );
 }

@@ -19,8 +19,8 @@ export function EventListContainer(props) {
 
   if (loading) return <Loading />;
   if (error) return <p>{error}</p>;
-  if (eventList.length > 0) return <EventList eventList={eventList} />;
-  return <div>{t("noData")}</div>;
+  if (isEmpty(eventList)) return <div>{t("noData")}</div>;
+  return <EventList eventList={eventList} />;
 }
 
 EventListContainer.defaultProps = {
