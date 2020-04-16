@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import Modal from "../Modal/Modal";
 import ProbabilityForm from "./ProbabilityForm";
+import ImpactForm from "./ImpactForm";
 
 export default function FormsWrapper({ selectedEvent }) {
   if (isEmpty(selectedEvent)) return null;
@@ -13,9 +14,19 @@ export default function FormsWrapper({ selectedEvent }) {
           ariaLabel="Probability Form"
           buttonId="probability-form-button"
           modalId="probability-form-modal"
+          triggerStyles="btn btn-primary btn-block mb-3"
           triggerText="Probabilidad"
         >
           <ProbabilityForm selectedEvent={selectedEvent} />
+        </Modal>
+        <Modal
+          ariaLabel="Impact Form"
+          buttonId="impact-form-button"
+          modalId="impact-form-modal"
+          triggerStyles="btn btn-primary btn-block mt-3"
+          triggerText="Impacto"
+        >
+          <ImpactForm selectedEvent={selectedEvent} />
         </Modal>
       </div>
     </div>

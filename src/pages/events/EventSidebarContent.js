@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { FaChevronCircleLeft } from "react-icons/fa";
 import PendingUsers from "../../components/PendingUsers";
 import { showEvent } from "../../redux/modules/events/event";
 import FormsWrapper from "../../components/Surveys/FormsWrapper";
@@ -15,6 +17,14 @@ function SidebarContent({ selectedEvent }) {
       </div>
       <PendingUsers selectedEvent={selectedEvent} />
       <FormsWrapper selectedEvent={selectedEvent} />
+      <div className="row py-3 sidebar-subtitle-borders border-primary">
+        <div className="col">
+          <Link to="/inicio" className="btn btn-primary">
+            <FaChevronCircleLeft />
+            <span className="ml-2">Regresar al panel principal</span>
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

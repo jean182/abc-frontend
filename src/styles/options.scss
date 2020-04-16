@@ -44,7 +44,7 @@ $questionBg: #9dafd5;
   }
 }
 
-.question-container {
+.probability-form-container {
 	padding: 2rem;
 	fieldset {
 		padding: .5rem;
@@ -53,5 +53,12 @@ $questionBg: #9dafd5;
 	& fieldset:last-of-type {
 		color: white;
 		background: $questionBg;
+	}
+}
+
+.impact-form-container {
+	padding: 2rem;
+	fieldset {
+		padding: .5rem;
 	}
 }
