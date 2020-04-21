@@ -27,7 +27,7 @@ export default function PendingUsers() {
         <p className="font-weight-bold mb-0">
           {translate("sidebar.evaluator")}
         </p>
-        <span className="text-muted">{user.name}</span>
+        <span className="user-name">{user.name}</span>
       </div>
     </div>
   );

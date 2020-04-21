@@ -19,12 +19,14 @@
 @import 'layout/sidebar';
 @import 'layout/table';
 
+@import 'pages/home';
+
 @import 'components/buttons';
 
 @import 'themes/user';
 @import 'themes/admin';
 
-@import "overrides";
+// @import "overrides";
 @import "options";
 // @import "~bootstrap/";
 // @import "sidebar";
