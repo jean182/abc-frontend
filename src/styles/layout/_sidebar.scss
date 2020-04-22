@@ -130,3 +130,7 @@
     color: #16113f;
     background-color: #e9efff;
   }
+
+  .user-name {
+    color: darken($text-muted, 55%);
+  }

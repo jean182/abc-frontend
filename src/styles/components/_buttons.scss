@@ -1,6 +1,6 @@
 .btn {
     background-color: $primary;
-    padding: 10px 30px;
+    padding: 10px;
     color: $white;
     transition: .2s all;
 
@@ -9,13 +9,13 @@
     }
     &--login:hover {
         // box-shadow: 0 2px rgb(41, 41, 41);
-        transform: translateY(-2px) !important;
-        background-color: darken($secondary, 5%) !important;
-        color: $white !important;
+        // transform: translateY(-2px) !important;
+        background-color: lighten($secondary, 10%) !important;
+        // color: $white !important;
     }
     &--login:active {
         box-shadow: 0 0px rgb(41, 41, 41);
-        transform: translateY(2px);
+        // transform: translateY(2px);
     }
 
     &--unstyled {
@@ -57,20 +57,20 @@
     }
 
     &:hover {
-        background-color: #1c87c9;
-        border: none;
+        // background-color: #1c87c9;
+        // border: none;
         color: white;
-        padding: 20px 34px;
-        text-align: center;
+        // padding: 20px 34px;
+        // text-align: center;
         text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 4px 2px;
+        // display: inline-block;
+        // font-size: 20px;
+        // margin: 4px 2px;
         cursor: pointer;
     }
 
     &:active {
         box-shadow: 0 0px rgb(41, 41, 41);
-        transform: translateY(2px);
+        // transform: translateY(2px);
     }
 }

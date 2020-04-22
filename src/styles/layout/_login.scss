@@ -1,6 +1,11 @@
 .login {
     padding: 0;
     border-radius: 2px;
+    margin: 0;
+    position: absolute;
+    width: 665px;
+    top: 50%;
+    transform: translateY(-50%);
 
     & h3 {
         margin: 0;
