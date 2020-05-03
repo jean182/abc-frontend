@@ -38,12 +38,8 @@
     &--info {
         background-color: lighten($light-gray, 6%);
     }
-    
+
     &--types {
         border-left: 1px solid $secondary;
     }
-}
-
-.modal-footer {
-    display: none;
 }

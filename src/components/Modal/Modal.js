@@ -56,22 +56,27 @@ class Modal extends Component {
 
     return (
       <>
-        <ModalContent
-          ariaLabel={ariaLabel}
-          buttonRef={(n) => {
-            this.closeButtonNode = n;
-          }}
-          id={modalId}
-          modalRef={(n) => {
-            this.modalNode = n;
-          }}
-          isOpen={isOpen}
-          content={children}
-          onClickAway={this.onClickAway}
-          onClose={this.onClose}
-          onKeyDown={this.onKeyDown}
-          title={title}
-        />
+        {isOpen && (
+          <>
+            <ModalContent
+              ariaLabel={ariaLabel}
+              buttonRef={(n) => {
+                this.closeButtonNode = n;
+              }}
+              id={modalId}
+              modalRef={(n) => {
+                this.modalNode = n;
+              }}
+              isOpen={isOpen}
+              content={children}
+              onClickAway={this.onClickAway}
+              onClose={this.onClose}
+              onKeyDown={this.onKeyDown}
+              title={title}
+            />
+            <ModalOverlay />
+          </>
+        )}
         <ModalTrigger
           id={buttonId}
           onOpen={this.onOpen}
@@ -81,7 +86,6 @@ class Modal extends Component {
             this.openButtonNode = n;
           }}
         />
-        {isOpen && <ModalOverlay />}
       </>
     );
   }
