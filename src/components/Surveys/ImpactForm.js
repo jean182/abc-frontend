@@ -31,19 +31,14 @@ const checkBoxOptions = [
 ];
 
 export default function ImpactForm(props) {
-  const { selectedEvent } = props;
+  const { selectedEvent, submitWizard } = props;
   const { description, procedureType, voteType } = selectedEvent;
   const splitDescription = description.split(":");
   const {
     0: expNumber,
     [splitDescription.length - 1]: expDescription,
   } = splitDescription;
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data, e) => {
-    console.log(data);
-    e.target.reset();
-  };
-  console.log(errors);
+  const { register, handleSubmit } = useForm();
 
   return (
     <>
@@ -53,26 +48,28 @@ export default function ImpactForm(props) {
         procedureType={procedureType}
         voteType={voteType}
       />
-      <form className="impact-form-container" onSubmit={handleSubmit(onSubmit)}>
-        <div className="impact-form-container--sector-selection">
-          <label className="my-1 mr-2" htmlFor="sectorSelect">
-            Sector:
-          </label>
-          <select
-            className="custom-select"
-            id="sectorSelect"
-            ref={register}
-            name="sector"
-          >
-            {selectOptions.map((option) => {
-              return (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+      <form
+        id="impact-form"
+        className="impact-form-container"
+        onSubmit={handleSubmit(submitWizard)}
+      >
+        <label className="my-1 mr-2" htmlFor="sectorSelect">
+          Sector:
+        </label>
+        <select
+          className="custom-select"
+          id="sectorSelect"
+          ref={register}
+          name="sector"
+        >
+          {selectOptions.map((option) => {
+            return (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            );
+          })}
+        </select>
         <fieldset>
           <p>
             <strong>{translate("impactForm.questionOneTitle")}</strong>
@@ -167,4 +164,5 @@ export default function ImpactForm(props) {
 
 ImpactForm.propTypes = {
   selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  submitWizard: PropTypes.func.isRequired,
 };

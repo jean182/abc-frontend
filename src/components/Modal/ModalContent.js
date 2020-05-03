@@ -14,6 +14,7 @@ const ModalContent = ({
   onClickAway,
   onClose,
   onKeyDown,
+  title,
 }) => {
   const openClass = isOpen ? "show" : "";
   return (
@@ -33,15 +34,11 @@ const ModalContent = ({
       >
         <div className="modal-dialog modal-lg" ref={modalRef}>
           <div className="modal-content">
-            <div className="modal-header">
-              <p>Probabilidad</p>
-              <p>
-                Califique los diferentes factores que componen la probabilidad
-                del evento según las opciones dadas
-              </p>
+            <div className="modal-header bg-secondary text-white">
+              <h1>{title}</h1>
               <button
                 type="button"
-                className="close"
+                className="close text-white"
                 aria-labelledby="close-modal"
                 onClick={onClose}
                 ref={buttonRef}
@@ -49,8 +46,7 @@ const ModalContent = ({
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div className="modal-body">{content}</div>
-            <div className="modal-footer" />
+            {content}
           </div>
         </div>
       </div>
@@ -78,6 +74,7 @@ ModalContent.propTypes = {
   onClickAway: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default ModalContent;

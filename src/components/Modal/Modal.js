@@ -1,80 +1,94 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ModalTrigger from "./ModalTrigger";
 import ModalContent from "./ModalContent";
 import ModalOverlay from "./ModalOverlay";
 
-const Modal = (props) => {
-  const {
-    ariaLabel,
-    children,
-    buttonId,
-    modalId,
-    triggerStyles,
-    triggerText,
-  } = props;
-  const [isOpen, setIsOpen] = useState(false);
-  const modalNode = useRef(null);
-  const closeButtonNode = useRef(null);
-  const openButtonNode = useRef(null);
-  const escapeKey = "Escape";
-
-  useEffect(() => {
-    if (isOpen) {
-      closeButtonNode.current.focus();
-    } else {
-      openButtonNode.current.focus();
-    }
-  }, [isOpen]);
-
-  const toggleScrollLock = () =>
+class Modal extends Component {
+  static toggleScrollLock() {
     document.querySelector("body").classList.toggle("modal-open");
+  }
 
-  const onOpen = () => {
-    setIsOpen(true);
-    toggleScrollLock();
+  constructor() {
+    super();
+    this.state = {
+      isOpen: false,
+    };
+    this.escapeKey = "Escape";
+  }
+
+  onOpen = (event) => {
+    event.stopPropagation();
+
+    this.setState({ isOpen: true }, () => {
+      this.closeButtonNode.focus();
+    });
+    Modal.toggleScrollLock();
   };
 
-  const onClose = () => {
-    setIsOpen(false);
-    toggleScrollLock();
+  onClose = () => {
+    this.setState({ isOpen: false });
+    this.openButtonNode.focus();
+    Modal.toggleScrollLock();
   };
 
-  const onKeyDown = (e) => {
-    return e.key === escapeKey && onClose();
+  onKeyDown = (e) => {
+    e.stopPropagation();
+    return e.key === this.escapeKey && this.onClose();
   };
 
-  const onClickAway = (e) => {
-    if (modalNode && modalNode.current.contains(e.target)) return;
-    onClose();
+  onClickAway = (e) => {
+    if (this.modalNode && this.modalNode.contains(e.target)) return;
+    this.onClose();
   };
 
-  return (
-    <>
-      <ModalContent
-        ariaLabel={ariaLabel}
-        buttonRef={closeButtonNode}
-        id={modalId}
-        modalRef={modalNode}
-        isOpen={isOpen}
-        content={children}
-        onClickAway={onClickAway}
-        onClose={onClose}
-        onKeyDown={onKeyDown}
-      />
-      <ModalTrigger
-        id={buttonId}
-        onOpen={onOpen}
-        text={triggerText}
-        triggerStyles={triggerStyles}
-        buttonRef={openButtonNode}
-      />
-      {isOpen && <ModalOverlay />}
-    </>
-  );
-};
+  render() {
+    const {
+      ariaLabel,
+      children,
+      buttonId,
+      modalId,
+      title,
+      triggerStyles,
+      triggerText,
+    } = this.props;
+    const { isOpen } = this.state;
+
+    return (
+      <>
+        <ModalContent
+          ariaLabel={ariaLabel}
+          buttonRef={(n) => {
+            this.closeButtonNode = n;
+          }}
+          id={modalId}
+          modalRef={(n) => {
+            this.modalNode = n;
+          }}
+          isOpen={isOpen}
+          content={children}
+          onClickAway={this.onClickAway}
+          onClose={this.onClose}
+          onKeyDown={this.onKeyDown}
+          title={title}
+        />
+        <ModalTrigger
+          id={buttonId}
+          onOpen={this.onOpen}
+          text={triggerText}
+          triggerStyles={triggerStyles}
+          buttonRef={(n) => {
+            this.openButtonNode = n;
+          }}
+        />
+        {isOpen && <ModalOverlay />}
+      </>
+    );
+  }
+}
 
 Modal.defaultProps = {
+  title: "",
   triggerStyles: "btn btn-primary",
 };
 
@@ -83,6 +97,7 @@ Modal.propTypes = {
   buttonId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   modalId: PropTypes.string.isRequired,
+  title: PropTypes.string,
   triggerText: PropTypes.string.isRequired,
   triggerStyles: PropTypes.string,
 };

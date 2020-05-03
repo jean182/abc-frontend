@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { FaCheckCircle } from "react-icons/fa";
 import translate from "../../helpers/i18n";
 import EventInfo from "./EventInfo";
 
@@ -15,19 +14,14 @@ const responseKeys = [
 ];
 
 export default function ProbabilityForm(props) {
-  const { selectedEvent } = props;
+  const { selectedEvent, submitWizard } = props;
   const { description, procedureType, voteType } = selectedEvent;
   const splitDescription = description.split(":");
   const {
     0: expNumber,
     [splitDescription.length - 1]: expDescription,
   } = splitDescription;
-  const { register, handleSubmit, errors } = useForm();
-  const onSubmit = (data, e) => {
-    console.log(data);
-    e.target.reset();
-  };
-  console.log(errors);
+  const { register, handleSubmit } = useForm();
 
   return (
     <>
@@ -38,8 +32,9 @@ export default function ProbabilityForm(props) {
         voteType={voteType}
       />
       <form
+        id="probability-form"
         className="probability-form-container"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitWizard)}
       >
         <fieldset>
           <p>
@@ -145,16 +140,6 @@ export default function ProbabilityForm(props) {
             ))}
           </div>
         </fieldset>
-
-        <div className="d-flex justify-content-end mt-2">
-          <button
-            type="submit"
-            className="btn btn-primary d-flex align-items-center"
-          >
-            <FaCheckCircle />
-            <span className="ml-2">Guardar Probabilidad</span>
-          </button>
-        </div>
       </form>
     </>
   );
@@ -162,4 +147,5 @@ export default function ProbabilityForm(props) {
 
 ProbabilityForm.propTypes = {
   selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  submitWizard: PropTypes.func.isRequired,
 };
