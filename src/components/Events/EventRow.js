@@ -7,10 +7,7 @@ export default function EventRow({ columns, row, select }) {
     select(event.target.value);
   };
   return (
-    <div
-      className="row align-rows-center table-row p-2 my-3 my-sm-0 table-row-row"
-      type="button"
-    >
+    <div className="row align-rows-center table-row p-2 my-3 my-sm-0 table-row-row">
       {columns.map(({ value }) => {
         const truncate = value === "description" ? " text-truncate" : "";
         const translatedValue = t(`table.events.${value}`);
