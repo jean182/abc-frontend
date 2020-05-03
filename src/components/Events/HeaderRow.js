@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import t from "../../helpers/i18n";
 import HeaderColumn from "./HeaderColumn";
 
 export default function HeaderRow({ columns, handleSort, sortValue }) {
@@ -14,7 +13,6 @@ export default function HeaderRow({ columns, handleSort, sortValue }) {
           sortValue={sortValue}
         />
       ))}
-      <div className="col">{t("table.events.selection")}</div>
     </div>
   );
 }

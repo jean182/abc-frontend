@@ -1,27 +1,33 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { first, orderBy } from "lodash";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
+import { first, isEmpty, orderBy } from "lodash";
 import HeaderRow from "./HeaderRow";
 import EventRow from "./EventRow";
 import Pagination from "./Pagination";
-import { setEvent, unsetEvent } from "../../redux/modules/events/event";
+import {
+  setEvent,
+  unsetEvent,
+  showEvent,
+} from "../../redux/modules/events/event";
 import { SelectedEvent } from "./SelectedEvent";
 import translate from "../../helpers/i18n";
 
 function EventList(props) {
+  const { eventList, selectedEvent } = props;
   const [resetPagination, setResetPagination] = useState(false);
   const [range, setRange] = useState({
     start: 0,
     end: 10,
   });
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(
+    isEmpty(selectedEvent) ? 0 : selectedEvent.id
+  );
   const [sortValue, setSortValue] = useState({
     value: "id",
     orderType: "asc",
   });
   const dispatch = useDispatch();
-  const { eventList } = props;
   const columns = Object.keys(first(eventList))
     .map((col, index) => {
       return {
@@ -57,7 +63,7 @@ function EventList(props) {
   const findMatchingEvent = (id) => {
     const matchingEvent =
       eventList.find((event) => event.id === Number(id)) || null;
-    setSelectedEvent(matchingEvent);
+    setSelectedRow(Number(id));
     if (matchingEvent !== null) {
       dispatch(unsetEvent());
       dispatch(setEvent(matchingEvent));
@@ -86,6 +92,7 @@ function EventList(props) {
               key={event.id}
               row={event}
               select={findMatchingEvent}
+              selected={selectedRow === event.id}
             />
           );
         })}
@@ -110,9 +117,18 @@ function EventList(props) {
   );
 }
 
+EventList.defaultProps = {
+  selectedEvent: {},
+};
+
 EventList.propTypes = {
   eventList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  selectedEvent: PropTypes.oneOfType([PropTypes.object]),
 };
 
-export default EventList;
+const mapStateToProps = (state) => ({
+  selectedEvent: showEvent(state),
+});
+
+export default connect(mapStateToProps)(EventList);
