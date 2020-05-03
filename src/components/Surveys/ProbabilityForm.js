@@ -48,7 +48,7 @@ export default function ProbabilityForm(props) {
                   id={`questionOne-${index}`}
                   name="questionOne"
                   type="radio"
-                  value={response}
+                  value={(index + 1) * 2}
                   ref={register({ required: true })}
                 />
                 <label htmlFor={`questionOne-${index}`}>{response}</label>
@@ -69,7 +69,7 @@ export default function ProbabilityForm(props) {
                   id={`questionTwo-${index}`}
                   name="questionTwo"
                   type="radio"
-                  value={response}
+                  value={(index + 1) * 2}
                   ref={register({ required: true })}
                 />
                 <label htmlFor={`questionTwo-${index}`}>{response}</label>
@@ -90,7 +90,7 @@ export default function ProbabilityForm(props) {
                   id={`questionThree-${index}`}
                   name="questionThree"
                   type="radio"
-                  value={response}
+                  value={(index + 1) * 2}
                   ref={register({ required: true })}
                 />
                 <label htmlFor={`questionThree-${index}`}>{response}</label>
@@ -111,7 +111,7 @@ export default function ProbabilityForm(props) {
                   id={`questionFour-${index}`}
                   name="questionFour"
                   type="radio"
-                  value={response}
+                  value={(index + 1) * 2}
                   ref={register({ required: true })}
                 />
                 <label htmlFor={`questionFour-${index}`}>{response}</label>

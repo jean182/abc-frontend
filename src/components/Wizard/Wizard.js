@@ -44,7 +44,14 @@ export const Wizard = (props) => {
 
   const closeWizard = () => {
     const { close } = props;
+    const { wizardStep } = wizardState;
     close();
+    if (wizardStep !== 1) {
+      setWizardState({
+        ...wizardState,
+        wizardStep: 1,
+      });
+    }
   };
 
   const submitWizard = (data, e) => {

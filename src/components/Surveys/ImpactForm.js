@@ -2,7 +2,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { FaCheckCircle } from "react-icons/fa";
 import translate from "../../helpers/i18n";
 import EventInfo from "./EventInfo";
 
@@ -147,16 +146,6 @@ export default function ImpactForm(props) {
             );
           })}
         </fieldset>
-
-        <div className="d-flex justify-content-end mt-4">
-          <button
-            type="submit"
-            className="btn btn-primary d-flex align-items-center"
-          >
-            <FaCheckCircle />
-            <span className="ml-2">Guardar Probabilidad</span>
-          </button>
-        </div>
       </form>
     </>
   );

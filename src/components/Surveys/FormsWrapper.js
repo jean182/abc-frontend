@@ -67,7 +67,7 @@ export default function FormsWrapper({ selectedEvent }) {
             ]}
             params={{ dashboardId: 1 }}
             action={() => console.log("balde")}
-            close={() => probabilityModal.current.onClose()}
+            close={() => impactModal.current.onClose()}
           />
         </Modal>
       </div>
