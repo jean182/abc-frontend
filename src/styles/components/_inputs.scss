@@ -1,0 +1,40 @@
+.abc-input {
+    padding: 0 20px;
+    height: 55px;
+
+    &--date {
+        height: 43px !important;
+        border-color: #94A8D0;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+    }
+    &--date::placeholder{
+        color: lighten($primary, 30%) !important;
+    }
+    &--date:nth-child(1) {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 0px;
+    }
+    &--date:nth-child(2) {
+        border-radius: 0px;
+    }
+    &--date:nth-child(3) {
+        border-radius: 0 0 3px 3px;
+        border-top: 0px;
+    }
+    &--date:focus {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.25);
+    }
+}
+
+.abc-no-input {
+    &::placeholder {
+        color: lighten($font-color-base, 30%) !important;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        border: 1px solid #ced4da;
+    }
+}

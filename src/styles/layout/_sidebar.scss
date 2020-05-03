@@ -119,7 +119,6 @@
   
   .sidebar-subtitle-borders {
     border-top: 3px solid $primary;
-    border-bottom: 3px solid $primary;
     &:first-of-type {
       border-bottom: none;
    }
@@ -127,6 +126,7 @@
   
   .pending-users {
     border: 1px solid;
+    border-radius: 3px;
     color: #16113f;
     background-color: #e9efff;
   }

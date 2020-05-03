@@ -3,6 +3,7 @@ $primary: #3359A5;
 $secondary: #16113F;
 $light-gray: #E5E5E5;
 $text-muted: #F8F9FA;
+$gray-text: #333333;
 
 $darkNavy: #213140;
 $teal2: $secondary;
@@ -12,3 +13,4 @@ $questionBg: #9dafd5;
 // Typography
 $font-family-sans-serif:      'Roboto';
 $font-family-base:            $font-family-sans-serif !default;
+$font-color-base:             $gray-text;

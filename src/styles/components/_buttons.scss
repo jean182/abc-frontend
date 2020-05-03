@@ -1,6 +1,6 @@
 .btn {
     background-color: $primary;
-    padding: 10px;
+    padding: 8px;
     color: $white;
     transition: .2s all;
 
@@ -8,21 +8,20 @@
         background-color: $secondary;
     }
     &--login:hover {
-        // box-shadow: 0 2px rgb(41, 41, 41);
-        // transform: translateY(-2px) !important;
         background-color: lighten($secondary, 10%) !important;
-        // color: $white !important;
     }
     &--login:active {
         box-shadow: 0 0px rgb(41, 41, 41);
-        // transform: translateY(2px);
     }
 
     &--unstyled {
         background: none;
         color: inherit;
         border: none;
+        width: 100%;
         padding: 0;
+        font-size: 18px;
+        font-weight: 600 !important;
         font: inherit;
         cursor: pointer;
         outline: 0;
@@ -57,20 +56,16 @@
     }
 
     &:hover {
-        // background-color: #1c87c9;
-        // border: none;
         color: white;
-        // padding: 20px 34px;
-        // text-align: center;
         text-decoration: none;
-        // display: inline-block;
-        // font-size: 20px;
-        // margin: 4px 2px;
         cursor: pointer;
     }
 
     &:active {
         box-shadow: 0 0px rgb(41, 41, 41);
-        // transform: translateY(2px);
     }
+}
+
+button.btn--unstyled.nav-link.text-white {
+    line-height: 1;
 }

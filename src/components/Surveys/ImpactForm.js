@@ -54,23 +54,25 @@ export default function ImpactForm(props) {
         voteType={voteType}
       />
       <form className="impact-form-container" onSubmit={handleSubmit(onSubmit)}>
-        <label className="my-1 mr-2" htmlFor="sectorSelect">
-          Sector:
-        </label>
-        <select
-          className="custom-select"
-          id="sectorSelect"
-          ref={register}
-          name="sector"
-        >
-          {selectOptions.map((option) => {
-            return (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            );
-          })}
-        </select>
+        <div className="impact-form-container--sector-selection">
+          <label className="my-1 mr-2" htmlFor="sectorSelect">
+            Sector:
+          </label>
+          <select
+            className="custom-select"
+            id="sectorSelect"
+            ref={register}
+            name="sector"
+          >
+            {selectOptions.map((option) => {
+              return (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+        </div>
         <fieldset>
           <p>
             <strong>{translate("impactForm.questionOneTitle")}</strong>
@@ -149,7 +151,7 @@ export default function ImpactForm(props) {
           })}
         </fieldset>
 
-        <div className="d-flex justify-content-end mt-2">
+        <div className="d-flex justify-content-end mt-4">
           <button
             type="submit"
             className="btn btn-primary d-flex align-items-center"

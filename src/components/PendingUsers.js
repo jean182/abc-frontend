@@ -31,11 +31,7 @@ export default function PendingUsers({ selectedEvent }) {
           <p className="font-weight-bold">{t("sidebar.pending")}</p>
           <ul>
             {users.map((user) => {
-              return (
-                <li key={user.id} className="text-monospace">
-                  {user.name}
-                </li>
-              );
+              return <li key={user.id}>{user.name}</li>;
             })}
           </ul>
         </div>

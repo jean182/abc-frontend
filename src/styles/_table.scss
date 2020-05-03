@@ -35,3 +35,11 @@
     }
   }
 }
+
+.header {
+  &.col:first-child{
+    // background-color: red;
+    max-width: 10%;
+    text-align: center;
+  }
+}

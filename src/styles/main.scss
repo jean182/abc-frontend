@@ -5,31 +5,23 @@
 @import 'base/base';
 @import 'base/reset';
 
-
 @import 'vendors/bootstrap';
 
 @import 'components/buttons';
+@import 'components/inputs';
+@import 'components/options';
 
 @import 'layout/chart';
 @import 'layout/footer';
 @import 'layout/forms';
 @import 'layout/header';
 @import 'layout/login';
+@import 'layout/modals';
 @import 'layout/navigation';
 @import 'layout/sidebar';
 @import 'layout/table';
 
 @import 'pages/home';
 
-@import 'components/buttons';
-
 @import 'themes/user';
 @import 'themes/admin';
-
-// @import "overrides";
-@import "options";
-// @import "~bootstrap/";
-// @import "sidebar";
-// @import "table";
-// @import "home";
-// @import "chart";
