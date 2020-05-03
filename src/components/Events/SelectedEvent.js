@@ -15,26 +15,26 @@ export function SelectedEvent({ selectedEvent }) {
     return parsedStringDate;
   };
   return (
-    <div className="row mb-3 bg-light ">
-      <div className="col-sm-11 p-3 align-self-center">
+    <div className="row mb-3 selected-event">
+      <div className="col-sm-11 p-3 align-self-center selected-event">
         <input
-          className="form-control bg-white mb-3"
+          className="form-control bg-white mb-3 abc-input abc-no-input"
           placeholder={t("table.events.description")}
           type="text"
           value={setInputValue(selectedEvent, "description")}
           readOnly
         />
         <input
-          className="form-control bg-white mt-3"
+          className="form-control bg-white mt-3 abc-input abc-no-input"
           placeholder={t("table.events.proposedBy")}
           type="text"
           value={setInputValue(selectedEvent, "proposedBy")}
           readOnly
         />
       </div>
-      <div className="col-sm-1 bg-light p-3">
+      <div className="col-sm-1 bg-light p-3 selected-event-date">
         <input
-          className="form-control bg-white"
+          className="form-control bg-white abc-input--date"
           placeholder={t("table.events.day")}
           type="text"
           value={
@@ -46,7 +46,7 @@ export function SelectedEvent({ selectedEvent }) {
           readOnly
         />
         <input
-          className="form-control bg-white"
+          className="form-control bg-white abc-input--date"
           placeholder={t("table.events.month")}
           type="text"
           value={
@@ -58,7 +58,7 @@ export function SelectedEvent({ selectedEvent }) {
           readOnly
         />
         <input
-          className="form-control bg-white"
+          className="form-control bg-white abc-input--date"
           placeholder={t("table.events.year")}
           type="text"
           value={

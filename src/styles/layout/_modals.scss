@@ -1,0 +1,49 @@
+.modal-header {
+    background-color: $secondary;
+    color: white;
+    float: left;
+    display: block;
+
+    & p {
+        margin-bottom: 0;
+        padding-left: 30px;
+    }
+
+    & p:first-child {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        float: left;
+        width: 100%;
+    }
+    & p:nth-child(2) {
+        float: left;
+    }
+
+    & .close {
+        padding: 0rem 1rem;
+        margin: -1rem -1rem -1rem auto;
+        position: relative;
+        bottom: 20px;
+        right: 25px;
+        font-size: 40px;
+        opacity: 1 !important;
+        color: white;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &--info {
+        background-color: lighten($light-gray, 6%);
+    }
+    
+    &--types {
+        border-left: 1px solid $secondary;
+    }
+}
+
+.modal-footer {
+    display: none;
+}

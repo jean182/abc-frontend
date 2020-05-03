@@ -8,14 +8,14 @@ export default function EventInfo({
   voteType,
 }) {
   return (
-    <div className="row bg-light align-items-center py-3">
-      <div className="col-sm-8 pl-sm-5">
-        <p className="text-truncate mb-0 text-primary font-weight-bold">
-          <span className="text-dark">{`${expNumber}:`}</span>
+    <div className="row align-items-center modal-header--info">
+      <div className="col-sm-8 pl-sm-5 pt-3 pb-3">
+        <p className="mb-0 text-primary">
+          <span className="text-dark font-weight-bold">{`${expNumber}:`}</span>
           {expDescription}
         </p>
       </div>
-      <div className="col-sm-4">
+      <div className="col-sm-4 modal-header--types">
         <p className="mb-0 font-weight-light">
           <strong className="font-weight-bold">
             {"Tipo de procedimiento: "}

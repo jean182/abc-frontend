@@ -34,6 +34,11 @@ const ModalContent = ({
         <div className="modal-dialog modal-lg" ref={modalRef}>
           <div className="modal-content">
             <div className="modal-header">
+              <p>Probabilidad</p>
+              <p>
+                Califique los diferentes factores que componen la probabilidad
+                del evento según las opciones dadas
+              </p>
               <button
                 type="button"
                 className="close"

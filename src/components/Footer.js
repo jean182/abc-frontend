@@ -7,7 +7,7 @@ function Footer() {
         <p>{`© All rights are reserved | ${new Date().getFullYear()}`}</p>
       </nav>
       <footer>
-        <p>Mady by Solución Digital</p>
+        <p>Crafted by Solución Digital</p>
       </footer>
     </>
   );

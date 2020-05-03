@@ -22,7 +22,7 @@
   "noData": "No hay datos para mostrar",
   "table": {
     "events": {
-      "fileNumber": "#Exp",
+      "fileNumber": "# Expediente",
       "description": "Descripción",
       "procedureType": "Tipo de Procedimiento",
       "voteType": "Tipo Valoración",
