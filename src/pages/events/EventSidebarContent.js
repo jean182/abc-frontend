@@ -7,8 +7,10 @@ import PendingUsers from "../../components/PendingUsers";
 import { showEvent } from "../../redux/modules/events/event";
 import FormsWrapper from "../../components/Surveys/FormsWrapper";
 import AuthButton from "../../router/AuthButton";
+import AdminOptions from "./AdminOptions";
 
-function SidebarContent({ selectedEvent }) {
+function SidebarContent({ selectedEvent, user }) {
+  const { role } = user;
   return (
     <>
       <div className="row py-3 border-primary sidebar-subtitle-borders">
@@ -26,6 +28,7 @@ function SidebarContent({ selectedEvent }) {
           </Link>
         </div>
       </div>
+      {role === "Administrador" && <AdminOptions />}
       <AuthButton />
     </>
   );
@@ -37,10 +40,12 @@ SidebarContent.defaultProps = {
 
 SidebarContent.propTypes = {
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
+  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedEvent: showEvent(state),
+  user: state.sessionReducer.user,
 });
 
 export default connect(mapStateToProps)(SidebarContent);

@@ -63,8 +63,11 @@ function EventList(props) {
   const findMatchingEvent = (id) => {
     const matchingEvent =
       eventList.find((event) => event.id === Number(id)) || null;
-    setSelectedRow(Number(id));
-    if (matchingEvent !== null) {
+    if (selectedRow === matchingEvent.id) {
+      dispatch(unsetEvent());
+      setSelectedRow(0);
+    } else {
+      setSelectedRow(Number(id));
       dispatch(unsetEvent());
       dispatch(setEvent(matchingEvent));
     }

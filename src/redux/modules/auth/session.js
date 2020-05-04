@@ -2,10 +2,11 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { handleActions, createAction } from "redux-actions";
 import { currentUser } from "../../../api/userEndpoints";
 
-export const FETCH_USER = "abc-frontend/eventReducer/FETCH_USER";
+export const FETCH_USER = "abc-frontend/sessionReducer/FETCH_USER";
 export const FETCH_USER_SUCCESS =
-  "abc-frontend/eventReducer/FETCH_USER_SUCCESS";
-export const FETCH_USER_FAIL = "abc-frontend/eventReducer/FETCH_USER_FAIL";
+  "abc-frontend/sessionReducer/FETCH_USER_SUCCESS";
+export const FETCH_USER_FAIL = "abc-frontend/sessionReducer/FETCH_USER_FAIL";
+export const CLEAR_USER_DATA = "abc-frontend/sessionReducer/CLEAR_USER_DATA";
 
 export const getInitialState = () => {
   return {
@@ -40,6 +41,14 @@ const userReducer = handleActions(
         loading: false,
       };
     },
+    [CLEAR_USER_DATA]: (state) => {
+      return {
+        ...state,
+        user: {},
+        loading: false,
+        error: null,
+      };
+    },
   },
   getInitialState()
 );
@@ -53,6 +62,8 @@ export const fetchUser = createAction(FETCH_USER);
 export const fetchUserSuccess = createAction(FETCH_USER_SUCCESS);
 
 export const fetchUserFail = createAction(FETCH_USER_FAIL);
+
+export const clearUserData = createAction(CLEAR_USER_DATA);
 
 // Selectors
 

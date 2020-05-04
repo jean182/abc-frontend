@@ -78,5 +78,15 @@
     "password": "Contraseña",
     "create": "Crear Usuario",
     "edit": "Editar Usuario"
+  },
+  "eventForm": {
+    "fileNumber": "# Expediente",
+    "description": "Descripción",
+    "proposedBy": "Propuesto por",
+    "approvalDate": "Fecha de dictaminación",
+    "procedureType": "Tipo de Procedimiento",
+    "voteType": "Votación",
+    "create": "Crear Evento",
+    "edit": "Editar Evento"
   }
 }

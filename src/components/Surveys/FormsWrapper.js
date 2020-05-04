@@ -32,7 +32,7 @@ export default function FormsWrapper({ selectedEvent }) {
           <ReduxWizard
             addButtonText="Guardar Probabilidad"
             formId="probability-form"
-            selectedEvent={selectedEvent}
+            selectedItem={selectedEvent}
             wizardComponents={[
               {
                 wizardStep: 1,
@@ -60,7 +60,7 @@ export default function FormsWrapper({ selectedEvent }) {
           <ReduxWizard
             addButtonText="Guardar Impacto"
             formId="impact-form"
-            selectedEvent={selectedEvent}
+            selectedItem={selectedEvent}
             wizardComponents={[
               {
                 wizardStep: 1,
