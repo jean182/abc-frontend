@@ -1,10 +1,6 @@
 import { camelCase } from "lodash";
 import translate from "./i18n";
 
-function getRandomNumber(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
 function getRandomColorHex() {
   const hex = "0123456789ABCDEF";
   let color = "#";
@@ -28,7 +24,7 @@ export const buildBubbleData = (response) => {
         {
           x: item.probabilityScale,
           y: item.impactScale,
-          r: Math.round(getRandomNumber(5, 15)),
+          r: 22,
         },
       ],
       backgroundColor,
@@ -41,10 +37,11 @@ export const buildBubbleData = (response) => {
 export const buildBarData = (response) => {
   const { labels, data } = response;
   const backgroundColor = [
-    getRandomColorHex(),
-    getRandomColorHex(),
-    getRandomColorHex(),
-    getRandomColorHex(),
+    "#3359A5",
+    // getRandomColorHex(),
+    // getRandomColorHex(),
+    // getRandomColorHex(),
+    // getRandomColorHex(),
   ];
   return {
     labels,

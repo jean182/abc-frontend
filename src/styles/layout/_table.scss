@@ -12,6 +12,7 @@
   height: auto;
   min-height: 48px;
   border-top: 0;
+  transition: 0.2s;
 
   @include media-breakpoint-down(sm) {
     margin: 0;
@@ -43,8 +44,24 @@
 
   &:not(:nth-child(-n+3)):hover {
     cursor: pointer;
+    border-left: 4px solid darken($primary, 5%);
     background-color: lighten($darkNavy, 75%);
+    padding-left: 5px !important;
   }
+  
+  &:not(:nth-child(-n+3)):focus {
+    outline: 0;
+    // color: white;
+    border-left: 10px solid darken($primary, 5%);
+    // background-color: lighten($primary, 20%);
+    padding-left: 0 !important;
+  }
+
+  &:not(:nth-child(-n+3)):active {
+    // background-color: darken($primary, 1%);
+    background-color: lighten($darkNavy, 73%);
+  }
+
 
   & .col:first-child {
     width: 10%;
@@ -53,5 +70,5 @@
 }
 
 .row-selected {
-  background-color: #ebf0f5;;
+  background-color: #ebf0f5;
 }

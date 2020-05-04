@@ -48,6 +48,7 @@ class Modal extends Component {
       children,
       buttonId,
       modalId,
+      subtitle,
       title,
       triggerStyles,
       triggerText,
@@ -72,6 +73,7 @@ class Modal extends Component {
               onClickAway={this.onClickAway}
               onClose={this.onClose}
               onKeyDown={this.onKeyDown}
+              subtitle={subtitle}
               title={title}
             />
             <ModalOverlay />
@@ -93,6 +95,7 @@ class Modal extends Component {
 
 Modal.defaultProps = {
   title: "",
+  subtitle: "",
   triggerStyles: "btn btn-primary",
 };
 
@@ -101,6 +104,7 @@ Modal.propTypes = {
   buttonId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   modalId: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   title: PropTypes.string,
   triggerText: PropTypes.string.isRequired,
   triggerStyles: PropTypes.string,

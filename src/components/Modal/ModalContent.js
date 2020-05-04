@@ -14,6 +14,7 @@ const ModalContent = ({
   onClickAway,
   onClose,
   onKeyDown,
+  subtitle,
   title,
 }) => {
   const openClass = isOpen ? "show" : "";
@@ -36,6 +37,7 @@ const ModalContent = ({
           <div className="modal-content">
             <div className="modal-header bg-secondary text-white">
               <h1>{title}</h1>
+              <h4>{subtitle}</h4>
               <button
                 type="button"
                 className="close text-white"
@@ -74,6 +76,7 @@ ModalContent.propTypes = {
   onClickAway: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired,
+  subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
 
