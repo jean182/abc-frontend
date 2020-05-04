@@ -5,6 +5,7 @@ import {
   getEvents,
   updateEventRequest,
 } from "../../../api/eventsEndpoints";
+import { setEvent } from "./event";
 
 export const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
 export const FETCH_EVENTS_SUCCESS =
@@ -148,23 +149,28 @@ export function* fetchEventsSaga() {
 }
 
 export function* createEventSaga(action) {
+  const { event, swal } = action.payload;
   try {
-    const event = action.payload;
     const response = yield call(createEventRequest, event);
     yield put(createEventSuccess(response));
+    swal.fire("Listo!", "Creado exitosamente", "success");
   } catch (error) {
     yield put(createEventFail(error.message));
+    swal.fire("Oops...", error.message, "error");
   }
 }
 
 export function* updateEventSaga(action) {
+  const { event, swal } = action.payload;
   try {
-    const event = action.payload;
     const { id } = event;
     const response = yield call(updateEventRequest, id, event);
     yield put(updateEventSuccess(response));
+    yield put(setEvent(response.data));
+    swal.fire("Listo!", "Editado exitosamente", "success");
   } catch (error) {
     yield put(updateEventFail(error.message));
+    swal.fire("Oops...", error.message, "error");
   }
 }
 

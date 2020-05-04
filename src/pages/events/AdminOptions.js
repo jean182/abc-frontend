@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { isEmpty } from "lodash";
@@ -9,6 +9,8 @@ import { showEvent } from "../../redux/modules/events/event";
 import { createEvent, updateEvent } from "../../redux/modules/events/eventList";
 
 function AdminOptions({ createAction, selectedEvent, updateAction }) {
+  const eventCreateModalRef = useRef(null);
+  const eventEditModalRef = useRef(null);
   return (
     <>
       <Modal
@@ -18,8 +20,13 @@ function AdminOptions({ createAction, selectedEvent, updateAction }) {
         title="Crear Nuevo Evento"
         triggerStyles="btn btn-primary btn-block mb-3"
         triggerText="Crear nuevo evento"
+        ref={eventCreateModalRef}
       >
-        <EventForm selectedEvent={{}} action={createAction} />
+        <EventForm
+          close={() => eventCreateModalRef.current.onClose()}
+          selectedEvent={{}}
+          action={createAction}
+        />
       </Modal>
       {!isEmpty(selectedEvent) && (
         <Modal
@@ -29,8 +36,13 @@ function AdminOptions({ createAction, selectedEvent, updateAction }) {
           title="Editar Evento"
           triggerStyles="btn btn-primary btn-block mb-3"
           triggerText="Editar evento"
+          ref={eventEditModalRef}
         >
-          <EventForm selectedEvent={selectedEvent} action={updateAction} />
+          <EventForm
+            close={() => eventEditModalRef.current.onClose()}
+            selectedEvent={selectedEvent}
+            action={updateAction}
+          />
         </Modal>
       )}
     </>

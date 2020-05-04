@@ -1,7 +1,8 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import translate from "../../helpers/i18n";
 
 const procedureTypeOptions = [
@@ -17,9 +18,8 @@ const voteTypeOptions = [
 ];
 
 function EventForm(props) {
-  const { action, selectedEvent } = props;
+  const { action, close, selectedEvent } = props;
   const { register, handleSubmit } = useForm();
-  const formRef = useRef(null);
   const onSubmit = (data, event) => {
     let eventParams = {};
     if (isEmpty(selectedEvent)) {
@@ -29,7 +29,7 @@ function EventForm(props) {
           state: "pending",
         },
       };
-      action(eventParams);
+      action({ event: eventParams, swal: Swal });
     } else {
       eventParams = {
         id: selectedEvent.id,
@@ -38,16 +38,16 @@ function EventForm(props) {
           state: "pending",
         },
       };
-      action(eventParams);
+      action({ event: eventParams, swal: Swal });
     }
     event.target.reset();
+    close();
   };
 
   return (
     <form
       id={`event-${isEmpty(selectedEvent) ? "create" : "edit"}-form`}
       onSubmit={handleSubmit(onSubmit)}
-      ref={formRef}
     >
       <div className="modal-body">
         <div className="form-group">
@@ -152,6 +152,7 @@ function EventForm(props) {
 
 EventForm.propTypes = {
   action: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
   selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
