@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CurrentUser from "../../components/CurrentUser";
+import AuthButton from "../../router/AuthButton";
 import translate from "../../helpers/i18n";
 
 function HomeSidebarContent() {
@@ -20,6 +21,7 @@ function HomeSidebarContent() {
           Eventos
         </Link>
       </div>
+      <AuthButton />
     </>
   );
 }

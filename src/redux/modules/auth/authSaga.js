@@ -13,7 +13,7 @@ import translate from "../../../helpers/i18n";
 function* logout(history) {
   yield put(unsetClient());
   yield call(removeAuthToken);
-  history.push(translate("routes.login"));
+  history.push("/");
 }
 
 function* loginFlow(email, password, history, from) {

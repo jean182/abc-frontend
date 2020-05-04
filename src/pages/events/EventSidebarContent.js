@@ -6,6 +6,7 @@ import { FaChevronCircleLeft } from "react-icons/fa";
 import PendingUsers from "../../components/PendingUsers";
 import { showEvent } from "../../redux/modules/events/event";
 import FormsWrapper from "../../components/Surveys/FormsWrapper";
+import AuthButton from "../../router/AuthButton";
 
 function SidebarContent({ selectedEvent }) {
   return (
@@ -25,6 +26,7 @@ function SidebarContent({ selectedEvent }) {
           </Link>
         </div>
       </div>
+      <AuthButton />
     </>
   );
 }

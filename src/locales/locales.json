@@ -7,7 +7,8 @@
   },
   "sidebar": {
     "pending": "Pendiente:",
-    "evaluator": "Evaluador:"
+    "evaluator": "Evaluador:",
+    "logout": "Cerrar Sesión"
   },
   "home": {
     "noDataMessageOne": "Distribución de calificaciones por usuario",
