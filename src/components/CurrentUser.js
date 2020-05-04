@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import { isEmpty } from "lodash";
-import { currentUser } from "../api/userEndpoints";
 import translate from "../helpers/i18n";
+import { fetchUser } from "../redux/modules/auth/session";
 
-export default function PendingUsers() {
-  const [user, setUser] = useState({});
-
+function CurrentUser({ getUserInfo, user }) {
   useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const result = await currentUser();
-        setUser(result.data);
-      } catch (err) {
-        setUser({});
-      }
-    };
-
-    fetchCurrentUser();
-  }, []);
+    if (isEmpty(user)) {
+      getUserInfo();
+    }
+  }, [user, getUserInfo]);
 
   if (isEmpty(user)) return null;
 
@@ -32,3 +26,23 @@ export default function PendingUsers() {
     </div>
   );
 }
+
+CurrentUser.propTypes = {
+  getUserInfo: PropTypes.func.isRequired,
+  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      getUserInfo: fetchUser,
+    },
+    dispatch
+  );
+};
+
+const mapStateToProps = (state) => ({
+  user: state.sessionReducer.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentUser);
