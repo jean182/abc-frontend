@@ -8,6 +8,10 @@ export const currentUser = () => {
   return config.get(`users/current`);
 };
 
+export const allUsers = () => {
+  return config.get(`users`);
+};
+
 export const getPendingUsers = (id) => {
   return config.get(`events/${id}/pending_users`);
 };

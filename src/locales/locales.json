@@ -34,12 +34,19 @@
       "day": "Día",
       "month": "Mes",
       "year": "Año"
+    },
+    "users": {
+      "name": "Nombre",
+      "username": "Nombre de usuario",
+      "email": "Correo Electrónico",
+      "role": "Rol"
     }
   },
   "pagination": {
     "showing": "Mostrando",
     "of": "de",
-    "events": "eventos"
+    "events": "eventos",
+    "users": "usuarios"
   },
   "charts": {
     "barChartLabel": "Distribución de usuarios por probabilidad de avance del evento"
@@ -63,5 +70,13 @@
     "questionTwo": "¿Cuál considera que es el riesgo de que esta medida impacte a otros sectores?",
     "questionGeneralImpactTitle": "Impacto en general",
     "questionGeneralImpact": "¿Cuál cree que es la naturaleza del impacto?"
+  },
+  "userForm": {
+    "name": "Nombre Completo",
+    "username": "Nombre de Usuario",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "create": "Crear Usuario",
+    "edit": "Editar Usuario"
   }
 }
