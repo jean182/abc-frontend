@@ -10,7 +10,12 @@ import SubmitMessage from "./SubmitMessage";
 export default function FormsWrapper({ selectedEvent }) {
   const probabilityModal = useRef(null);
   const impactModal = useRef(null);
-  if (isEmpty(selectedEvent)) return null;
+  if (isEmpty(selectedEvent))
+    return (
+      <div className="row py-3 sidebar-subtitle-borders border-primary">
+        <p>Favor seleccione un evento</p>
+      </div>
+    );
   return (
     <div className="row py-3 sidebar-subtitle-borders border-primary">
       <div className="col">

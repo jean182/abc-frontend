@@ -1,10 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CurrentUser from "../../components/CurrentUser";
 import AuthButton from "../../router/AuthButton";
+import AdminOptions from "./AdminOptions";
 import translate from "../../helpers/i18n";
 
-function HomeSidebarContent() {
+function HomeSidebarContent({ user }) {
+  const { role } = user;
   return (
     <>
       <div className="row py-3 border-primary sidebar-subtitle-borders">
@@ -21,9 +25,18 @@ function HomeSidebarContent() {
           Eventos
         </Link>
       </div>
+      {role === "Administrador" && <AdminOptions />}
       <AuthButton />
     </>
   );
 }
 
-export default HomeSidebarContent;
+HomeSidebarContent.propTypes = {
+  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.sessionReducer.user,
+});
+
+export default connect(mapStateToProps)(HomeSidebarContent);

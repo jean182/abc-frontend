@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import t from "../../helpers/i18n";
+import t from "../../../helpers/i18n";
 
-export default function EventRow({ columns, row, select, selected }) {
+export default function TableRow({ columns, dataItem, row, select, selected }) {
   const onRowSelectionClick = () => {
     select(row.id);
   };
@@ -22,7 +22,7 @@ export default function EventRow({ columns, row, select, selected }) {
     >
       {columns.map(({ value }) => {
         const truncate = value === "description" ? " text-truncate" : "";
-        const translatedValue = t(`table.events.${value}`);
+        const translatedValue = t(`table.${dataItem}.${value}`);
         return (
           <div
             key={`${value}-${row.id}`}
@@ -39,9 +39,10 @@ export default function EventRow({ columns, row, select, selected }) {
   );
 }
 
-EventRow.propTypes = {
+TableRow.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  dataItem: PropTypes.string.isRequired,
   row: PropTypes.oneOfType([PropTypes.object]).isRequired,
   select: PropTypes.func.isRequired,
   selected: PropTypes.bool.isRequired,

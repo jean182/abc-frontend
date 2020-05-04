@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FaSortDown, FaSortUp } from "react-icons/fa";
-import t from "../../helpers/i18n";
+import t from "../../../helpers/i18n";
 
-export default function HeaderColumn({ column, onHeaderClick, sortValue }) {
+export default function HeaderColumn({
+  column,
+  dataItem,
+  onHeaderClick,
+  sortValue,
+}) {
   const orderTypes = ["desc", "asc", ""];
   const [orderType, setOrderType] = useState("");
 
@@ -38,7 +43,7 @@ export default function HeaderColumn({ column, onHeaderClick, sortValue }) {
         type="button"
         onClick={handleClick}
       >
-        {t(`table.events.${column.value}`)}
+        {t(`table.${dataItem}.${column.value}`)}
         <span>{displayArrow(orderType)}</span>
       </button>
     </div>
@@ -47,6 +52,7 @@ export default function HeaderColumn({ column, onHeaderClick, sortValue }) {
 
 HeaderColumn.propTypes = {
   column: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  dataItem: PropTypes.string.isRequired,
   onHeaderClick: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
 };

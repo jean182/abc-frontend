@@ -1,34 +1,23 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { connect, useDispatch } from "react-redux";
-import { first, isEmpty, orderBy } from "lodash";
+import { first, orderBy } from "lodash";
 import HeaderRow from "../Shared/Table/HeaderRow";
 import TableRow from "../Shared/Table/TableRow";
 import Pagination from "../Shared/Pagination";
-import {
-  setEvent,
-  unsetEvent,
-  showEvent,
-} from "../../redux/modules/events/event";
-import { SelectedEvent } from "./SelectedEvent";
 import translate from "../../helpers/i18n";
 
-function EventList(props) {
-  const { eventList, selectedEvent } = props;
+function UserList(props) {
+  const { selectedUser, setSelectedUser, userList } = props;
   const [resetPagination, setResetPagination] = useState(false);
   const [range, setRange] = useState({
     start: 0,
     end: 10,
   });
-  const [selectedRow, setSelectedRow] = useState(
-    isEmpty(selectedEvent) ? 0 : selectedEvent.id
-  );
   const [sortValue, setSortValue] = useState({
     value: "id",
     orderType: "asc",
   });
-  const dispatch = useDispatch();
-  const columns = Object.keys(first(eventList))
+  const columns = Object.keys(first(userList))
     .map((col, index) => {
       return {
         id: index,
@@ -40,7 +29,7 @@ function EventList(props) {
         value !== "id" && value !== "createdAt" && value !== "updatedAt"
     );
 
-  const onChangePage = (_event, page) => {
+  const onChangePage = (_user, page) => {
     setResetPagination(false);
     setRange({
       start: 10 * (page - 1),
@@ -60,41 +49,41 @@ function EventList(props) {
     }
   };
 
-  const findMatchingEvent = (id) => {
-    const matchingEvent =
-      eventList.find((event) => event.id === Number(id)) || null;
-    setSelectedRow(Number(id));
-    if (matchingEvent !== null) {
-      dispatch(unsetEvent());
-      dispatch(setEvent(matchingEvent));
+  const findMatchingUser = (id) => {
+    const matchingUser =
+      userList.find((user) => user.id === Number(id)) || null;
+    if (selectedUser.id === matchingUser.id) {
+      setSelectedUser({});
+    } else {
+      setSelectedUser(matchingUser);
     }
   };
 
   return (
-    <>
-      <SelectedEvent selectedEvent={selectedEvent} />
+    <div className="p-2 mt-3">
+      <div className="row d-none" />
       <div className="row table-row title-header text-white bg-primary">
         <div className="col text-center">
-          <h3>Administración de eventos</h3>
+          <h3>Administración de Usuarios</h3>
         </div>
       </div>
       <HeaderRow
         columns={columns}
-        dataItem="events"
+        dataItem="users"
         handleSort={handleSort}
         sortValue={sortValue.value}
       />
-      {orderBy(eventList, [sortValue.value], [sortValue.orderType])
+      {orderBy(userList, [sortValue.value], [sortValue.orderType])
         .slice(range.start, range.end)
-        .map((event) => {
+        .map((user) => {
           return (
             <TableRow
               columns={columns}
-              dataItem="events"
-              key={event.id}
-              row={event}
-              select={findMatchingEvent}
-              selected={selectedRow === event.id}
+              dataItem="users"
+              key={user.id}
+              row={user}
+              select={findMatchingUser}
+              selected={selectedUser.id === user.id}
             />
           );
         })}
@@ -103,34 +92,27 @@ function EventList(props) {
           {`${translate("pagination.showing")} ${
             range.start === 0 ? 1 : range.start + 1
           } - ${
-            range.end <= eventList.length ? range.end : eventList.length
-          } ${translate("pagination.of")} ${eventList.length} ${translate(
-            "pagination.events"
+            range.end <= userList.length ? range.end : userList.length
+          } ${translate("pagination.of")} ${userList.length} ${translate(
+            "pagination.users"
           )}.`}
         </span>
         <Pagination
           resetPagination={resetPagination}
-          data={eventList}
+          data={userList}
           itemCount={10}
           onChange={onChangePage}
         />
       </div>
-    </>
+    </div>
   );
 }
 
-EventList.defaultProps = {
-  selectedEvent: {},
-};
-
-EventList.propTypes = {
-  eventList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+UserList.propTypes = {
+  selectedUser: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  setSelectedUser: PropTypes.func.isRequired,
+  userList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
-  selectedEvent: PropTypes.oneOfType([PropTypes.object]),
 };
 
-const mapStateToProps = (state) => ({
-  selectedEvent: showEvent(state),
-});
-
-export default connect(mapStateToProps)(EventList);
+export default UserList;
