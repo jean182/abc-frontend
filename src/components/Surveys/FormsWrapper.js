@@ -18,6 +18,7 @@ export default function FormsWrapper({ selectedEvent }) {
           ariaLabel="Probability Form"
           buttonId="probability-form-button"
           modalId="probability-form-modal"
+          subtitle="Califique los diferentes factores que componen la probabilidad del evento según las opciones dadas"
           title="Probabilidad"
           triggerStyles="btn btn-primary btn-block mb-3"
           triggerText="Probabilidad"
