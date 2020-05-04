@@ -30,8 +30,8 @@ const checkBoxOptions = [
 ];
 
 export default function ImpactForm(props) {
-  const { selectedEvent, submitWizard } = props;
-  const { description, procedureType, voteType } = selectedEvent;
+  const { selectedItem, submitWizard } = props;
+  const { description, procedureType, voteType } = selectedItem;
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -152,6 +152,6 @@ export default function ImpactForm(props) {
 }
 
 ImpactForm.propTypes = {
-  selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
   submitWizard: PropTypes.func.isRequired,
 };

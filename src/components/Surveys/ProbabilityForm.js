@@ -14,8 +14,8 @@ const responseKeys = [
 ];
 
 export default function ProbabilityForm(props) {
-  const { selectedEvent, submitWizard } = props;
-  const { description, procedureType, voteType } = selectedEvent;
+  const { selectedItem, submitWizard } = props;
+  const { description, procedureType, voteType } = selectedItem;
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -146,6 +146,6 @@ export default function ProbabilityForm(props) {
 }
 
 ProbabilityForm.propTypes = {
-  selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
   submitWizard: PropTypes.func.isRequired,
 };

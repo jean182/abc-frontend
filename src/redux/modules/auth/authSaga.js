@@ -2,6 +2,7 @@ import { cancel, cancelled, call, fork, put, take } from "redux-saga/effects";
 import axiosConfig from "../../../api/config";
 import { UNSET_CLIENT, setClient, unsetClient } from "./client";
 import { LOGIN, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "./auth";
+import { clearUserData } from "./session";
 import { loginUserRequest } from "../../../api/userEndpoints";
 import {
   getAuthToken,
@@ -11,6 +12,7 @@ import {
 import translate from "../../../helpers/i18n";
 
 function* logout(history) {
+  yield put(clearUserData());
   yield put(unsetClient());
   yield call(removeAuthToken);
   history.push("/");

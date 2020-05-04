@@ -10,7 +10,7 @@ export const Wizard = (props) => {
     addButtonText,
     cancelButtonText,
     formId,
-    selectedEvent,
+    selectedItem,
     wizardComponents,
   } = props;
 
@@ -73,7 +73,7 @@ export const Wizard = (props) => {
       <div className="modal-body">
         <div key={component.wizardStep}>
           <component.component
-            selectedEvent={selectedEvent}
+            selectedItem={selectedItem}
             stateData={{ ...wizardState }}
             submitWizard={submitWizard}
             updateWizardState={updateWizardState}
@@ -136,7 +136,7 @@ Wizard.propTypes = {
   cancelButtonText: PropTypes.string,
   close: PropTypes.func.isRequired,
   formId: PropTypes.string.isRequired,
-  selectedEvent: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
   wizardComponents: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
   // params: PropTypes.oneOfType([PropTypes.object]).isRequired,
