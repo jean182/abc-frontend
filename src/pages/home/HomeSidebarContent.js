@@ -25,7 +25,7 @@ function HomeSidebarContent({ user }) {
           Eventos
         </Link>
       </div>
-      {role === "admin" && <AdminOptions />}
+      {role === "Administrador" && <AdminOptions />}
       <AuthButton />
     </>
   );

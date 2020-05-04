@@ -1,13 +1,37 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { isEmpty, pickBy, identity } from "lodash";
 import { useForm } from "react-hook-form";
 import translate from "../../helpers/i18n";
+import { createUser, updateUser } from "../../redux/modules/users/userList";
 
-export default function UserForm({ selectedUser }) {
+function UserForm(props) {
+  const { createAction, selectedUser, updateAction } = props;
   const { register, handleSubmit } = useForm();
   const formRef = useRef(null);
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data, event) => {
+    let userParams = {};
+    if (isEmpty(selectedUser)) {
+      userParams = {
+        user: {
+          ...data,
+          passwordConfirmation: data.password,
+        },
+      };
+      createAction(userParams);
+      event.target.reset();
+    } else {
+      userParams = {
+        id: selectedUser.id,
+        user: {
+          ...pickBy(data, identity),
+        },
+      };
+      updateAction(userParams);
+    }
+  };
 
   useEffect(() => {
     if (!isEmpty(selectedUser)) {
@@ -79,5 +103,19 @@ export default function UserForm({ selectedUser }) {
 }
 
 UserForm.propTypes = {
+  createAction: PropTypes.func.isRequired,
   selectedUser: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  updateAction: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      createAction: createUser,
+      updateAction: updateUser,
+    },
+    dispatch
+  );
+};
+
+export default connect(null, mapDispatchToProps)(UserForm);
