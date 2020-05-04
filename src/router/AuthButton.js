@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../redux/modules/auth/auth";
+import translate from "../helpers/i18n";
 
 export default function AuthButton() {
   const history = useHistory();
@@ -14,10 +15,10 @@ export default function AuthButton() {
   return (
     <button
       type="button"
-      className="btn btn-link nav-link"
+      className="btn btn-primary btn-block"
       onClick={terminateSession}
     >
-      Sign out
+      {translate("sidebar.logout")}
     </button>
   );
 }

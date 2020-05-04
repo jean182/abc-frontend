@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import LoginPage from "../pages/login/LoginPage";
 import EventPage from "../pages/events/EventPage";
-import Header from "../components/Header";
 import translate from "../helpers/i18n";
 import HomePage from "../pages/home/HomePage";
 
@@ -19,10 +23,13 @@ export const AppRouter = ({ authorized, token }) => {
 
   return (
     <Router>
-      <Header isAuthenticated={isAuthenticated} />
       <Switch>
-        <Route path={translate("routes.login")}>
-          <LoginPage />
+        <Route path="/" exact>
+          {isAuthenticated ? (
+            <Redirect to={translate("routes.home")} />
+          ) : (
+            <LoginPage isAuthenticated={isAuthenticated} />
+          )}
         </Route>
         <PrivateRoute
           path={translate("routes.home")}
