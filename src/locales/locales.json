@@ -61,7 +61,8 @@
     "questionFourTitle": "Popularidad de la medida",
     "questionFour": "¿La aprobación de la medida genera un efecto político positivo para los intereses de los diputados o partidos politicos?",
     "questionGlobalTitle": "Probabilidad Global",
-    "questionGlobal": "¿Qué tan probable cree que es el avance del proyecto de ley?"
+    "questionGlobal": "¿Qué tan probable cree que es el avance del proyecto de ley?",
+    "submit": "Enviar"
   },
   "impactForm": {
     "questionOneTitle": "Impacto real",
@@ -69,7 +70,8 @@
     "questionTwoTitle": "Riesgo de contagio",
     "questionTwo": "¿Cuál considera que es el riesgo de que esta medida impacte a otros sectores?",
     "questionGeneralImpactTitle": "Impacto en general",
-    "questionGeneralImpact": "¿Cuál cree que es la naturaleza del impacto?"
+    "questionGeneralImpact": "¿Cuál cree que es la naturaleza del impacto?",
+    "submit": "Enviar"
   },
   "userForm": {
     "name": "Nombre Completo",
@@ -77,7 +79,8 @@
     "email": "Correo Electrónico",
     "password": "Contraseña",
     "create": "Crear Usuario",
-    "edit": "Editar Usuario"
+    "edit": "Editar Usuario",
+    "delete": "Deshabilitar Usuario"
   },
   "eventForm": {
     "fileNumber": "# Expediente",
