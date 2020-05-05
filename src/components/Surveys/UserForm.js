@@ -4,11 +4,22 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { isEmpty, pickBy, identity } from "lodash";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import translate from "../../helpers/i18n";
-import { createUser, updateUser } from "../../redux/modules/users/userList";
+import {
+  createUser,
+  deleteUser,
+  updateUser,
+} from "../../redux/modules/users/userList";
 
 function UserForm(props) {
-  const { createAction, selectedUser, updateAction } = props;
+  const {
+    clearSelectedUser,
+    createAction,
+    deleteAction,
+    selectedUser,
+    updateAction,
+  } = props;
   const { register, handleSubmit } = useForm();
   const formRef = useRef(null);
   const onSubmit = (data, event) => {
@@ -20,7 +31,7 @@ function UserForm(props) {
           passwordConfirmation: data.password,
         },
       };
-      createAction(userParams);
+      createAction({ user: userParams, swal: Swal });
       event.target.reset();
     } else {
       userParams = {
@@ -29,8 +40,13 @@ function UserForm(props) {
           ...pickBy(data, identity),
         },
       };
-      updateAction(userParams);
+      updateAction({ user: userParams, swal: Swal });
     }
+  };
+
+  const destroyUser = () => {
+    deleteAction({ id: selectedUser.id, swal: Swal });
+    clearSelectedUser();
   };
 
   useEffect(() => {
@@ -98,12 +114,23 @@ function UserForm(props) {
             : translate("userForm.edit")
         }
       />
+      {!isEmpty(selectedUser) && (
+        <button
+          type="button"
+          className="ml-2 btn btn-danger"
+          onClick={destroyUser}
+        >
+          {translate("userForm.delete")}
+        </button>
+      )}
     </form>
   );
 }
 
 UserForm.propTypes = {
+  clearSelectedUser: PropTypes.func.isRequired,
   createAction: PropTypes.func.isRequired,
+  deleteAction: PropTypes.func.isRequired,
   selectedUser: PropTypes.oneOfType([PropTypes.object]).isRequired,
   updateAction: PropTypes.func.isRequired,
 };
@@ -112,6 +139,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       createAction: createUser,
+      deleteAction: deleteUser,
       updateAction: updateUser,
     },
     dispatch

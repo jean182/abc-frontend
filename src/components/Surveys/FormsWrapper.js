@@ -4,8 +4,6 @@ import { isEmpty } from "lodash";
 import Modal from "../Modal/Modal";
 import ProbabilityForm from "./ProbabilityForm";
 import ImpactForm from "./ImpactForm";
-import ReduxWizard from "../Wizard/Wizard";
-import SubmitMessage from "./SubmitMessage";
 
 export default function FormsWrapper({ selectedEvent }) {
   const probabilityModal = useRef(null);
@@ -29,24 +27,7 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Probabilidad"
           ref={probabilityModal}
         >
-          <ReduxWizard
-            addButtonText="Guardar Probabilidad"
-            formId="probability-form"
-            selectedItem={selectedEvent}
-            wizardComponents={[
-              {
-                wizardStep: 1,
-                component: ProbabilityForm,
-              },
-              {
-                wizardStep: 2,
-                component: SubmitMessage,
-              },
-            ]}
-            params={{ dashboardId: 1 }}
-            action={() => null}
-            close={() => probabilityModal.current.onClose()}
-          />
+          <ProbabilityForm selectedItem={selectedEvent} />
         </Modal>
         <Modal
           ariaLabel="Impact Form"
@@ -57,24 +38,7 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Impacto"
           ref={impactModal}
         >
-          <ReduxWizard
-            addButtonText="Guardar Impacto"
-            formId="impact-form"
-            selectedItem={selectedEvent}
-            wizardComponents={[
-              {
-                wizardStep: 1,
-                component: ImpactForm,
-              },
-              {
-                wizardStep: 2,
-                component: SubmitMessage,
-              },
-            ]}
-            params={{ dashboardId: 1 }}
-            action={() => null}
-            close={() => impactModal.current.onClose()}
-          />
+          <ImpactForm selectedItem={selectedEvent} />
         </Modal>
       </div>
     </div>

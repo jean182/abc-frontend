@@ -20,6 +20,10 @@ export const updateUserRequest = (id, data) => {
   return config.put(`users/${id}`, data);
 };
 
+export const deleteUserRequest = (id) => {
+  return config.delete(`users/${id}`);
+};
+
 export const getPendingUsers = (id) => {
   return config.get(`events/${id}/pending_users`);
 };

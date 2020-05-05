@@ -14,7 +14,7 @@ const responseKeys = [
 ];
 
 export default function ProbabilityForm(props) {
-  const { selectedItem, submitWizard } = props;
+  const { selectedItem } = props;
   const { description, procedureType, voteType } = selectedItem;
   const splitDescription = description.split(":");
   const {
@@ -23,129 +23,146 @@ export default function ProbabilityForm(props) {
   } = splitDescription;
   const { register, handleSubmit } = useForm();
 
+  const onSubmit = (data, e) => {
+    console.log(data);
+    console.log(e);
+  };
+
   return (
     <>
-      <EventInfo
-        expDescription={expDescription}
-        expNumber={expNumber}
-        procedureType={procedureType}
-        voteType={voteType}
-      />
-      <form
-        id="probability-form"
-        className="probability-form-container"
-        onSubmit={handleSubmit(submitWizard)}
-      >
-        <fieldset>
-          <p>
-            <strong>{translate("probabilityForm.questionOneTitle")}</strong>
-          </p>
-          <p>{translate("probabilityForm.questionOne")}</p>
-          <div className="toggle">
-            {responseKeys.map((response, index) => (
-              <React.Fragment key={`questionOne-${index}`}>
-                <input
-                  id={`questionOne-${index}`}
-                  name="questionOne"
-                  type="radio"
-                  value={(index + 1) * 2}
-                  ref={register({ required: true })}
-                />
-                <label htmlFor={`questionOne-${index}`}>{response}</label>
-              </React.Fragment>
-            ))}
-          </div>
-        </fieldset>
+      <div className="modal-body">
+        <EventInfo
+          expDescription={expDescription}
+          expNumber={expNumber}
+          procedureType={procedureType}
+          voteType={voteType}
+        />
+        <form
+          id="probability-form"
+          className="probability-form-container"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <fieldset>
+            <p>
+              <strong>{translate("probabilityForm.questionOneTitle")}</strong>
+            </p>
+            <p>{translate("probabilityForm.questionOne")}</p>
+            <div className="toggle">
+              {responseKeys.map((response, index) => (
+                <React.Fragment key={`questionOne-${index}`}>
+                  <input
+                    id={`questionOne-${index}`}
+                    name="questionOne"
+                    type="radio"
+                    value={(index + 1) * 2}
+                    ref={register({ required: true })}
+                  />
+                  <label htmlFor={`questionOne-${index}`}>{response}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </fieldset>
 
-        <fieldset>
-          <p>
-            <strong>{translate("probabilityForm.questionTwoTitle")}</strong>
-          </p>
-          <p>{translate("probabilityForm.questionTwo")}</p>
-          <div className="toggle">
-            {responseKeys.map((response, index) => (
-              <React.Fragment key={`questionTwo-${index}`}>
-                <input
-                  id={`questionTwo-${index}`}
-                  name="questionTwo"
-                  type="radio"
-                  value={(index + 1) * 2}
-                  ref={register({ required: true })}
-                />
-                <label htmlFor={`questionTwo-${index}`}>{response}</label>
-              </React.Fragment>
-            ))}
-          </div>
-        </fieldset>
+          <fieldset>
+            <p>
+              <strong>{translate("probabilityForm.questionTwoTitle")}</strong>
+            </p>
+            <p>{translate("probabilityForm.questionTwo")}</p>
+            <div className="toggle">
+              {responseKeys.map((response, index) => (
+                <React.Fragment key={`questionTwo-${index}`}>
+                  <input
+                    id={`questionTwo-${index}`}
+                    name="questionTwo"
+                    type="radio"
+                    value={(index + 1) * 2}
+                    ref={register({ required: true })}
+                  />
+                  <label htmlFor={`questionTwo-${index}`}>{response}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </fieldset>
 
-        <fieldset>
-          <p>
-            <strong>{translate("probabilityForm.questionThreeTitle")}</strong>
-          </p>
-          <p>{translate("probabilityForm.questionThree")}</p>
-          <div className="toggle">
-            {responseKeys.map((response, index) => (
-              <React.Fragment key={`questionThree-${index}`}>
-                <input
-                  id={`questionThree-${index}`}
-                  name="questionThree"
-                  type="radio"
-                  value={(index + 1) * 2}
-                  ref={register({ required: true })}
-                />
-                <label htmlFor={`questionThree-${index}`}>{response}</label>
-              </React.Fragment>
-            ))}
-          </div>
-        </fieldset>
+          <fieldset>
+            <p>
+              <strong>{translate("probabilityForm.questionThreeTitle")}</strong>
+            </p>
+            <p>{translate("probabilityForm.questionThree")}</p>
+            <div className="toggle">
+              {responseKeys.map((response, index) => (
+                <React.Fragment key={`questionThree-${index}`}>
+                  <input
+                    id={`questionThree-${index}`}
+                    name="questionThree"
+                    type="radio"
+                    value={(index + 1) * 2}
+                    ref={register({ required: true })}
+                  />
+                  <label htmlFor={`questionThree-${index}`}>{response}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </fieldset>
 
-        <fieldset>
-          <p>
-            <strong>{translate("probabilityForm.questionFourTitle")}</strong>
-          </p>
-          <p>{translate("probabilityForm.questionFour")}</p>
-          <div className="toggle">
-            {responseKeys.map((response, index) => (
-              <React.Fragment key={`questionFour-${index}`}>
-                <input
-                  id={`questionFour-${index}`}
-                  name="questionFour"
-                  type="radio"
-                  value={(index + 1) * 2}
-                  ref={register({ required: true })}
-                />
-                <label htmlFor={`questionFour-${index}`}>{response}</label>
-              </React.Fragment>
-            ))}
-          </div>
-        </fieldset>
+          <fieldset>
+            <p>
+              <strong>{translate("probabilityForm.questionFourTitle")}</strong>
+            </p>
+            <p>{translate("probabilityForm.questionFour")}</p>
+            <div className="toggle">
+              {responseKeys.map((response, index) => (
+                <React.Fragment key={`questionFour-${index}`}>
+                  <input
+                    id={`questionFour-${index}`}
+                    name="questionFour"
+                    type="radio"
+                    value={(index + 1) * 2}
+                    ref={register({ required: true })}
+                  />
+                  <label htmlFor={`questionFour-${index}`}>{response}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </fieldset>
 
-        <fieldset>
-          <p>
-            <strong>{translate("probabilityForm.questionGlobalTitle")}</strong>
-          </p>
-          <p>{translate("probabilityForm.questionGlobal")}</p>
-          <div className="toggle">
-            {responseKeys.map((response, index) => (
-              <React.Fragment key={`questionGlobal-${index}`}>
-                <input
-                  id={`questionGlobal-${index}`}
-                  name="questionGlobal"
-                  type="radio"
-                  value={response}
-                  ref={register({ required: true })}
-                />
-                <label htmlFor={`questionGlobal-${index}`}>{response}</label>
-              </React.Fragment>
-            ))}
-          </div>
-        </fieldset>
-      </form>
+          <fieldset>
+            <p>
+              <strong>
+                {translate("probabilityForm.questionGlobalTitle")}
+              </strong>
+            </p>
+            <p>{translate("probabilityForm.questionGlobal")}</p>
+            <div className="toggle">
+              {responseKeys.map((response, index) => (
+                <React.Fragment key={`questionGlobal-${index}`}>
+                  <input
+                    id={`questionGlobal-${index}`}
+                    name="questionGlobal"
+                    type="radio"
+                    value={response}
+                    ref={register({ required: true })}
+                  />
+                  <label htmlFor={`questionGlobal-${index}`}>{response}</label>
+                </React.Fragment>
+              ))}
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div className="modal-footer">
+        <button
+          type="submit"
+          form="probability-form"
+          className="btn btn-primary"
+        >
+          {translate("probabilityForm.submit")}
+        </button>
+      </div>
     </>
   );
 }
 
 ProbabilityForm.propTypes = {
   selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
-  submitWizard: PropTypes.func.isRequired,
 };

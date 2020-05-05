@@ -31,8 +31,9 @@ function LoginForm() {
       noValidate
     >
       {serverErrors.length > 0 &&
-        serverErrors.map((error) => (
-          <span key={error.time} className="text-danger">
+        serverErrors.map((error, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <span key={`${error.time}-${index}`} className="text-danger">
             {error.body}
           </span>
         ))}

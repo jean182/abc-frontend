@@ -3,6 +3,7 @@ import { handleActions, createAction } from "redux-actions";
 import {
   allUsers,
   createUserRequest,
+  deleteUserRequest,
   updateUserRequest,
 } from "../../../api/userEndpoints";
 
@@ -18,6 +19,10 @@ export const UPDATE_USER = "abc-frontend/usersReducer/UPDATE_USER";
 export const UPDATE_USER_SUCCESS =
   "abc-frontend/usersReducer/UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAIL = "abc-frontend/usersReducer/UPDATE_USER_FAIL";
+export const DELETE_USER = "abc-frontend/usersReducer/DELETE_USER";
+export const DELETE_USER_SUCCESS =
+  "abc-frontend/usersReducer/DELETE_USER_SUCCESS";
+export const DELETE_USER_FAIL = "abc-frontend/usersReducer/DELETE_USER_FAIL";
 
 export const getInitialState = () => {
   return {
@@ -103,6 +108,29 @@ const usersReducer = handleActions(
         loading: false,
       };
     },
+    [DELETE_USER]: (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    [DELETE_USER_SUCCESS]: (state, action) => {
+      const id = action.payload;
+      const userList = state.userList.filter((user) => user.id !== id);
+      return {
+        ...state,
+        userList,
+        loading: false,
+      };
+    },
+    [DELETE_USER_FAIL]: (state, action) => {
+      const error = action.payload;
+      return {
+        ...state,
+        error,
+        loading: false,
+      };
+    },
   },
   getInitialState()
 );
@@ -129,6 +157,12 @@ export const updateUserSuccess = createAction(UPDATE_USER_SUCCESS);
 
 export const updateUserFail = createAction(UPDATE_USER_FAIL);
 
+export const deleteUser = createAction(DELETE_USER);
+
+export const deleteUserSuccess = createAction(DELETE_USER_SUCCESS);
+
+export const deleteUserFail = createAction(DELETE_USER_FAIL);
+
 // Selectors
 
 export function showUsers(state) {
@@ -138,7 +172,7 @@ export function showUsers(state) {
 }
 
 // Sagas
-export function* fetchUsersSaga() {
+function* fetchUsersSaga() {
   try {
     const response = yield call(allUsers);
     yield put(fetchUsersSuccess(response));
@@ -147,24 +181,44 @@ export function* fetchUsersSaga() {
   }
 }
 
-export function* createUserSaga(action) {
+function* createUserSaga(action) {
+  const { user, swal } = action.payload;
   try {
-    const user = action.payload;
     const response = yield call(createUserRequest, user);
     yield put(createUserSuccess(response));
+    swal.fire("Listo!", "Creado exitosamente", "success");
   } catch (error) {
     yield put(createUserFail(error.message));
+    swal.fire("Oops...", error.message, "error");
   }
 }
 
-export function* updateUserSaga(action) {
+function* updateUserSaga(action) {
+  const { user, swal } = action.payload;
   try {
-    const user = action.payload;
     const { id } = user;
     const response = yield call(updateUserRequest, id, user);
     yield put(updateUserSuccess(response));
+    swal.fire("Listo!", "Editado exitosamente", "success");
   } catch (error) {
     yield put(updateUserFail(error.message));
+    swal.fire("Oops...", error.message, "error");
+  }
+}
+
+function* deleteUserSaga(action) {
+  const { id, swal } = action.payload;
+  try {
+    yield call(deleteUserRequest, id);
+    yield put(deleteUserSuccess(id));
+    swal.fire(
+      "Listo!",
+      "El usuario a sido deshabilitado exitosamente",
+      "success"
+    );
+  } catch (error) {
+    yield put(deleteUserFail(error.message));
+    swal.fire("Oops...", error.message, "error");
   }
 }
 
@@ -172,6 +226,7 @@ export function* userListWatcherSaga() {
   yield all([
     takeLatest(FETCH_USERS, fetchUsersSaga),
     takeLatest(CREATE_USER, createUserSaga),
+    takeLatest(DELETE_USER, deleteUserSaga),
     takeLatest(UPDATE_USER, updateUserSaga),
   ]);
 }
