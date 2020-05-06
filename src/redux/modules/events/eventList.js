@@ -2,23 +2,24 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import { handleActions, createAction } from "redux-actions";
 import {
   createEventRequest,
+  deleteEventRequest,
   getEvents,
   updateEventRequest,
 } from "../../../api/eventsEndpoints";
-import { setEvent } from "./event";
+import { setEvent, unsetEvent } from "./event";
 
-export const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
-export const FETCH_EVENTS_SUCCESS =
-  "abc-frontend/eventReducer/FETCH_EVENTS_SUCCESS";
-export const FETCH_EVENTS_FAIL = "abc-frontend/eventReducer/FETCH_EVENTS_FAIL";
-export const CREATE_EVENT = "abc-frontend/eventReducer/CREATE_EVENT";
-export const CREATE_EVENT_SUCCESS =
-  "abc-frontend/eventReducer/CREATE_EVENT_SUCCESS";
-export const CREATE_EVENT_FAIL = "abc-frontend/eventReducer/CREATE_EVENT_FAIL";
-export const UPDATE_EVENT = "abc-frontend/eventReducer/UPDATE_EVENT";
-export const UPDATE_EVENT_SUCCESS =
-  "abc-frontend/eventReducer/UPDATE_EVENT_SUCCESS";
-export const UPDATE_EVENT_FAIL = "abc-frontend/eventReducer/UPDATE_EVENT_FAIL";
+const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
+const FETCH_EVENTS_SUCCESS = "abc-frontend/eventReducer/FETCH_EVENTS_SUCCESS";
+const FETCH_EVENTS_FAIL = "abc-frontend/eventReducer/FETCH_EVENTS_FAIL";
+const CREATE_EVENT = "abc-frontend/eventReducer/CREATE_EVENT";
+const CREATE_EVENT_SUCCESS = "abc-frontend/eventReducer/CREATE_EVENT_SUCCESS";
+const CREATE_EVENT_FAIL = "abc-frontend/eventReducer/CREATE_EVENT_FAIL";
+const UPDATE_EVENT = "abc-frontend/eventReducer/UPDATE_EVENT";
+const UPDATE_EVENT_SUCCESS = "abc-frontend/eventReducer/UPDATE_EVENT_SUCCESS";
+const UPDATE_EVENT_FAIL = "abc-frontend/eventReducer/UPDATE_EVENT_FAIL";
+const DELETE_EVENT = "abc-frontend/eventReducer/DELETE_EVENT";
+const DELETE_EVENT_SUCCESS = "abc-frontend/eventReducer/DELETE_EVENT_SUCCESS";
+const DELETE_EVENT_FAIL = "abc-frontend/eventReducer/DELETE_EVENT_FAIL";
 
 export const getInitialState = () => {
   return {
@@ -104,6 +105,29 @@ const eventReducer = handleActions(
         loading: false,
       };
     },
+    [DELETE_EVENT]: (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    [DELETE_EVENT_SUCCESS]: (state, action) => {
+      const id = action.payload;
+      const events = state.events.filter((event) => event.id !== id);
+      return {
+        ...state,
+        events,
+        loading: false,
+      };
+    },
+    [DELETE_EVENT_FAIL]: (state, action) => {
+      const error = action.payload;
+      return {
+        ...state,
+        error,
+        loading: false,
+      };
+    },
   },
   getInitialState()
 );
@@ -129,6 +153,12 @@ export const updateEvent = createAction(UPDATE_EVENT);
 export const updateEventSuccess = createAction(UPDATE_EVENT_SUCCESS);
 
 export const updateEventFail = createAction(UPDATE_EVENT_FAIL);
+
+export const deleteEvent = createAction(DELETE_EVENT);
+
+export const deleteEventSuccess = createAction(DELETE_EVENT_SUCCESS);
+
+export const deleteEventFail = createAction(DELETE_EVENT_FAIL);
 
 // Selectors
 
@@ -174,10 +204,28 @@ export function* updateEventSaga(action) {
   }
 }
 
+function* deleteEventSaga(action) {
+  const { id, swal } = action.payload;
+  try {
+    yield call(deleteEventRequest, id);
+    yield put(deleteEventSuccess(id));
+    yield put(unsetEvent());
+    swal.fire(
+      "Listo!",
+      "El evento a sido deshabilitado exitosamente",
+      "success"
+    );
+  } catch (error) {
+    yield put(deleteEventFail(error.message));
+    swal.fire("Oops...", error.message, "error");
+  }
+}
+
 export function* eventListWatcherSaga() {
   yield all([
     takeLatest(FETCH_EVENTS, fetchEventsSaga),
     takeLatest(CREATE_EVENT, createEventSaga),
+    takeLatest(DELETE_EVENT, deleteEventSaga),
     takeLatest(UPDATE_EVENT, updateEventSaga),
   ]);
 }

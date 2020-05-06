@@ -12,6 +12,10 @@ export const updateEventRequest = (id, data) => {
   return config.put(`events/${id}`, data);
 };
 
+export const deleteEventRequest = (id) => {
+  return config.delete(`events/${id}`);
+};
+
 export const getBubbleChart = (id) => config.get(`events/${id}/bubble_chart`);
 
 export const getBarChart = (id) => config.get(`events/${id}/bar_chart`);
