@@ -67,9 +67,10 @@ function EventForm(props) {
           <label htmlFor="description">
             {translate("eventForm.description")}
           </label>
-          <input
+          <textarea
             name="description"
             className="form-control"
+            type="textarea"
             defaultValue={selectedEvent ? selectedEvent.description : ""}
             ref={register({ required: true })}
             placeholder={translate("eventForm.description")}
