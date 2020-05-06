@@ -62,7 +62,7 @@
     "questionFour": "¿La aprobación de la medida genera un efecto político positivo para los intereses de los diputados o partidos politicos?",
     "questionGlobalTitle": "Probabilidad Global",
     "questionGlobal": "¿Qué tan probable cree que es el avance del proyecto de ley?",
-    "submit": "Enviar"
+    "submit": "Guardar Probabilidad"
   },
   "impactForm": {
     "questionOneTitle": "Impacto real",
@@ -71,7 +71,7 @@
     "questionTwo": "¿Cuál considera que es el riesgo de que esta medida impacte a otros sectores?",
     "questionGeneralImpactTitle": "Impacto en general",
     "questionGeneralImpact": "¿Cuál cree que es la naturaleza del impacto?",
-    "submit": "Enviar"
+    "submit": "Guardar Impacto"
   },
   "userForm": {
     "name": "Nombre Completo",
