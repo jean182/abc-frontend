@@ -22,7 +22,7 @@ function SidebarContent({ selectedEvent, user }) {
       <FormsWrapper selectedEvent={selectedEvent} />
       <div className="row py-3 sidebar-subtitle-borders border-primary">
         <div className="col">
-          <Link to="/inicio" className="btn btn-primary">
+          <Link to="/inicio" className="btn btn-primary btn-block">
             <FaChevronCircleLeft />
             <span className="ml-2">Regresar al panel principal</span>
           </Link>

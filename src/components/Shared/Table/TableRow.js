@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import t from "../../../helpers/i18n";
+import Tooltip from "../Tooltip";
 
 export default function TableRow({ columns, dataItem, row, select, selected }) {
   const onRowSelectionClick = () => {
@@ -21,13 +22,23 @@ export default function TableRow({ columns, dataItem, row, select, selected }) {
       tabIndex={0}
     >
       {columns.map(({ value }) => {
-        const truncate = value === "description" ? " text-truncate" : "";
+        const isDescription = value === "description";
         const translatedValue = t(`table.${dataItem}.${value}`);
+        if (isDescription) {
+          return (
+            <div key={`${value}-${row.id}`} className="col-sm my-1 my-sm-0">
+              <span className="d-sm-none font-weight-bold">
+                {`${translatedValue}: `}
+              </span>
+              <div className="d-none d-md-block">
+                <Tooltip description={row[value]} />
+              </div>
+              <div className="d-md-none">{row[value]}</div>
+            </div>
+          );
+        }
         return (
-          <div
-            key={`${value}-${row.id}`}
-            className={`col-sm my-1 my-sm-0${truncate}`}
-          >
+          <div key={`${value}-${row.id}`} className="col-sm my-1 my-sm-0">
             <span className="d-sm-none font-weight-bold">
               {`${translatedValue}: `}
             </span>
