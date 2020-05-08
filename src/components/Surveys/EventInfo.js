@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import t from "../../helpers/i18n";
 
 export default function EventInfo({
   expDescription,
@@ -20,11 +21,11 @@ export default function EventInfo({
           <strong className="font-weight-bold">
             {"Tipo de procedimiento: "}
           </strong>
-          {procedureType}
+          {t(`eventsEnum.procedureType.${procedureType}`)}
         </p>
         <p className="mb-0 font-weight-light">
           <strong className="font-weight-bold">Tipo de votación: </strong>
-          {voteType}
+          {t(`eventsEnum.voteType.${voteType}`)}
         </p>
       </div>
     </div>

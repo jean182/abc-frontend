@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
+import EmptyHomeScreen from "./EmptyHomeScreen";
 import Chart from "../Charts/Chart";
 import bubbleConfig from "../../data/bubble-config";
 import barConfig from "../../data/bar-config";
@@ -35,6 +36,8 @@ export default function GraphicsContainer({ selectedEvent }) {
       fetchBubbleData();
     }
   }, [selectedEvent]);
+
+  if (isEmpty(barData) || isEmpty(bubbleData)) return <EmptyHomeScreen />;
 
   const buildBubbleChart = () => {
     return {

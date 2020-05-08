@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import { getPendingUsers } from "../api/userEndpoints";
 import t from "../helpers/i18n";
+import { usePrevious } from "../hooks";
 
 export default function PendingUsers({ selectedEvent }) {
   const [users, setUsers] = useState([]);
+  const prevEvent = usePrevious(selectedEvent) || { id: null };
 
   useEffect(() => {
-    if (!isEmpty(selectedEvent)) {
+    if (!isEmpty(selectedEvent) && selectedEvent.id !== prevEvent.id) {
       const fetchPendingUsers = async () => {
         try {
           const result = await getPendingUsers(selectedEvent.id);
@@ -20,7 +22,7 @@ export default function PendingUsers({ selectedEvent }) {
 
       fetchPendingUsers();
     }
-  }, [selectedEvent]);
+  }, [selectedEvent, prevEvent]);
 
   if (isEmpty(selectedEvent) || isEmpty(users)) return null;
 
