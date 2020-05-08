@@ -42,6 +42,22 @@
       "role": "Rol"
     }
   },
+  "eventsEnum": {
+    "procedureType": {
+      "ordinary_before" : "Ordinario antes de reforma",
+      "ordinary_after":  "Ordinario luego de reforma",
+      "two_hundred_eight": "208 bis",
+      "waiver_procedure": "Dispensa de trámite"
+    },
+    "voteType": {
+      "simple_majority":   "Mayoría simple",
+      "qualified_majority":  "Mayoría calificada"
+    },
+    "state": {
+      "pending": "Pendiente",
+      "complete": "Completo"
+    }
+  },
   "pagination": {
     "showing": "Mostrando",
     "of": "de",

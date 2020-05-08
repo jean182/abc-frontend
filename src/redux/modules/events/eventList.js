@@ -8,18 +8,22 @@ import {
 } from "../../../api/eventsEndpoints";
 import { setEvent, unsetEvent } from "./event";
 
-const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
-const FETCH_EVENTS_SUCCESS = "abc-frontend/eventReducer/FETCH_EVENTS_SUCCESS";
-const FETCH_EVENTS_FAIL = "abc-frontend/eventReducer/FETCH_EVENTS_FAIL";
-const CREATE_EVENT = "abc-frontend/eventReducer/CREATE_EVENT";
-const CREATE_EVENT_SUCCESS = "abc-frontend/eventReducer/CREATE_EVENT_SUCCESS";
-const CREATE_EVENT_FAIL = "abc-frontend/eventReducer/CREATE_EVENT_FAIL";
-const UPDATE_EVENT = "abc-frontend/eventReducer/UPDATE_EVENT";
-const UPDATE_EVENT_SUCCESS = "abc-frontend/eventReducer/UPDATE_EVENT_SUCCESS";
-const UPDATE_EVENT_FAIL = "abc-frontend/eventReducer/UPDATE_EVENT_FAIL";
-const DELETE_EVENT = "abc-frontend/eventReducer/DELETE_EVENT";
-const DELETE_EVENT_SUCCESS = "abc-frontend/eventReducer/DELETE_EVENT_SUCCESS";
-const DELETE_EVENT_FAIL = "abc-frontend/eventReducer/DELETE_EVENT_FAIL";
+export const FETCH_EVENTS = "abc-frontend/eventReducer/FETCH_EVENTS";
+export const FETCH_EVENTS_SUCCESS =
+  "abc-frontend/eventReducer/FETCH_EVENTS_SUCCESS";
+export const FETCH_EVENTS_FAIL = "abc-frontend/eventReducer/FETCH_EVENTS_FAIL";
+export const CREATE_EVENT = "abc-frontend/eventReducer/CREATE_EVENT";
+export const CREATE_EVENT_SUCCESS =
+  "abc-frontend/eventReducer/CREATE_EVENT_SUCCESS";
+export const CREATE_EVENT_FAIL = "abc-frontend/eventReducer/CREATE_EVENT_FAIL";
+export const UPDATE_EVENT = "abc-frontend/eventReducer/UPDATE_EVENT";
+export const UPDATE_EVENT_SUCCESS =
+  "abc-frontend/eventReducer/UPDATE_EVENT_SUCCESS";
+export const UPDATE_EVENT_FAIL = "abc-frontend/eventReducer/UPDATE_EVENT_FAIL";
+export const DELETE_EVENT = "abc-frontend/eventReducer/DELETE_EVENT";
+export const DELETE_EVENT_SUCCESS =
+  "abc-frontend/eventReducer/DELETE_EVENT_SUCCESS";
+export const DELETE_EVENT_FAIL = "abc-frontend/eventReducer/DELETE_EVENT_FAIL";
 
 export const getInitialState = () => {
   return {
@@ -183,10 +187,10 @@ export function* createEventSaga(action) {
   try {
     const response = yield call(createEventRequest, event);
     yield put(createEventSuccess(response));
-    swal.fire("Listo!", "Creado exitosamente", "success");
+    yield call([swal, swal.fire], "Listo!", "Creado exitosamente", "success");
   } catch (error) {
     yield put(createEventFail(error.message));
-    swal.fire("Oops...", error.message, "error");
+    yield call([swal, swal.fire], "Oops...", error.message, "error");
   }
 }
 
@@ -197,27 +201,28 @@ export function* updateEventSaga(action) {
     const response = yield call(updateEventRequest, id, event);
     yield put(updateEventSuccess(response));
     yield put(setEvent(response.data));
-    swal.fire("Listo!", "Editado exitosamente", "success");
+    yield call([swal, swal.fire], "Listo!", "Editado exitosamente", "success");
   } catch (error) {
     yield put(updateEventFail(error.message));
-    swal.fire("Oops...", error.message, "error");
+    yield call([swal, swal.fire], "Oops...", error.message, "error");
   }
 }
 
-function* deleteEventSaga(action) {
+export function* deleteEventSaga(action) {
   const { id, swal } = action.payload;
   try {
     yield call(deleteEventRequest, id);
     yield put(deleteEventSuccess(id));
     yield put(unsetEvent());
-    swal.fire(
+    yield call(
+      [swal, swal.fire],
       "Listo!",
       "El evento a sido deshabilitado exitosamente",
       "success"
     );
   } catch (error) {
     yield put(deleteEventFail(error.message));
-    swal.fire("Oops...", error.message, "error");
+    yield call([swal, swal.fire], "Oops...", error.message, "error");
   }
 }
 
