@@ -11,7 +11,7 @@ export default function FormsWrapper({ selectedEvent }) {
   if (isEmpty(selectedEvent))
     return (
       <div className="row py-3 sidebar-subtitle-borders border-primary">
-        <p>Favor seleccione un evento</p>
+        <p>Seleccione un evento</p>
       </div>
     );
   return (
@@ -33,6 +33,7 @@ export default function FormsWrapper({ selectedEvent }) {
           ariaLabel="Impact Form"
           buttonId="impact-form-button"
           modalId="impact-form-modal"
+          subtitle="Califique los diferentes factores que componen el impacto del evento según las opciones dadas"
           title="Impacto"
           triggerStyles="btn btn-primary btn-block mt-3"
           triggerText="Impacto"
