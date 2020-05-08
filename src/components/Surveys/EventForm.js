@@ -109,6 +109,7 @@ function EventForm(props) {
             className="custom-select"
             name="procedureType"
             ref={register({ required: true })}
+            defaultValue={selectedEvent ? selectedEvent.procedureType : ""}
           >
             {procedureTypeOptions.map((option) => {
               return (
@@ -125,6 +126,7 @@ function EventForm(props) {
             className="custom-select"
             name="voteType"
             ref={register({ required: true })}
+            defaultValue={selectedEvent ? selectedEvent.voteType : ""}
           >
             {voteTypeOptions.map((option) => {
               return (

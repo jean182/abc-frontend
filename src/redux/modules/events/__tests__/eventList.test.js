@@ -4,6 +4,10 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
 import * as api from "../../../../api/eventsEndpoints";
 import eventListReducer, {
+  CREATE_EVENT,
+  createEventSaga,
+  DELETE_EVENT,
+  deleteEventSaga,
   FETCH_EVENTS,
   FETCH_EVENTS_SUCCESS,
   FETCH_EVENTS_FAIL,
@@ -12,6 +16,8 @@ import eventListReducer, {
   showEvents,
   fetchEventsSaga,
   eventListWatcherSaga,
+  UPDATE_EVENT,
+  updateEventSaga,
 } from "../eventList";
 
 const events = [
@@ -189,7 +195,14 @@ describe("sagas", () => {
     describe("Unit testing", () => {
       it("watches all the redux actions linked to event watcher saga", () => {
         const saga = testSaga(eventListWatcherSaga);
-        saga.next().all([takeLatest(FETCH_EVENTS, fetchEventsSaga)]);
+        saga
+          .next()
+          .all([
+            takeLatest(FETCH_EVENTS, fetchEventsSaga),
+            takeLatest(CREATE_EVENT, createEventSaga),
+            takeLatest(DELETE_EVENT, deleteEventSaga),
+            takeLatest(UPDATE_EVENT, updateEventSaga),
+          ]);
         saga.next().isDone();
       });
     });

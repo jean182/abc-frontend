@@ -12,6 +12,19 @@ export default function TableRow({ columns, dataItem, row, select, selected }) {
     if (event.key === "Enter") select(row.id);
   };
 
+  const parseValue = (key, value) => {
+    switch (key) {
+      case "procedureType":
+        return t(`eventsEnum.${key}.${value}`);
+      case "voteType":
+        return t(`eventsEnum.${key}.${value}`);
+      case "state":
+        return t(`eventsEnum.${key}.${value}`);
+      default:
+        return value;
+    }
+  };
+
   const selectedClass = selected ? " row-selected" : "";
   return (
     <div
@@ -42,7 +55,7 @@ export default function TableRow({ columns, dataItem, row, select, selected }) {
             <span className="d-sm-none font-weight-bold">
               {`${translatedValue}: `}
             </span>
-            {row[value]}
+            {parseValue(value, row[value])}
           </div>
         );
       })}
