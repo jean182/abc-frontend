@@ -37,7 +37,10 @@ function EventList(props) {
     })
     .filter(
       ({ value }) =>
-        value !== "id" && value !== "createdAt" && value !== "updatedAt"
+        value !== "id" &&
+        value !== "createdAt" &&
+        value !== "updatedAt" &&
+        value !== "state"
     );
 
   const onChangePage = (_event, page) => {
