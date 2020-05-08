@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { Form } from "react-bootstrap";
 import translate from "../../helpers/i18n";
 
 const procedureTypeOptions = [
@@ -19,7 +20,7 @@ const voteTypeOptions = [
 
 function EventForm(props) {
   const { action, close, selectedEvent } = props;
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data, event) => {
     let eventParams = {};
     if (isEmpty(selectedEvent)) {
@@ -45,7 +46,7 @@ function EventForm(props) {
   };
 
   return (
-    <form
+    <Form
       id={`event-${isEmpty(selectedEvent) ? "create" : "edit"}-form`}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -54,27 +55,38 @@ function EventForm(props) {
           <label htmlFor="fileNumber">
             {translate("eventForm.fileNumber")}
           </label>
-          <input
+          <Form.Control
             name="fileNumber"
-            className="form-control"
+            className={errors.fileNumber ? "is-invalid" : "valid"}
             type="number"
             ref={register({ required: true })}
             defaultValue={selectedEvent ? selectedEvent.fileNumber : ""}
             placeholder={translate("eventForm.fileNumber")}
           />
+          {errors.fileNumber && (
+            <div className="invalid-feedback">
+              {`${translate("eventForm.fileNumber")} no puede estar vacio`}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="description">
             {translate("eventForm.description")}
           </label>
-          <textarea
+          <Form.Control
+            as="textarea"
             name="description"
-            className="form-control"
+            className={errors.description ? "is-invalid" : "valid"}
             type="textarea"
             defaultValue={selectedEvent ? selectedEvent.description : ""}
             ref={register({ required: true })}
             placeholder={translate("eventForm.description")}
           />
+          {errors.description && (
+            <div className="invalid-feedback">
+              {`${translate("eventForm.description")} no puede estar vacio`}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="proposedBy">
@@ -149,7 +161,7 @@ function EventForm(props) {
           }
         />
       </div>
-    </form>
+    </Form>
   );
 }
 
