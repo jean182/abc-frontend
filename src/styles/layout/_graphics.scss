@@ -1,0 +1,23 @@
+.graphic {
+    display: block !important;
+    
+    &--title {
+        display: block !important;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        width: 100%;
+        & p {
+            color: #8c8c8c !important;
+            padding: 30px 0 10px 0;
+            margin-bottom: 0;
+        }
+    }
+
+    &--wrapper {
+        display: block !important;
+        // background-color: white;
+        // padding: 20px;
+        height: 100%;
+    }
+}
