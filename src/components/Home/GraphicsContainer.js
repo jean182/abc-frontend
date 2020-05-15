@@ -7,6 +7,7 @@ import bubbleConfig from "../../data/bubble-config";
 import barConfig from "../../data/bar-config";
 import { getBarChart, getBubbleChart } from "../../api/eventsEndpoints";
 import { buildBarData, buildBubbleData } from "../../helpers/buildChartData";
+import translate from "../../helpers/i18n";
 
 export default function GraphicsContainer({ selectedEvent }) {
   const [bubbleData, setBubbleData] = useState([]);
@@ -61,15 +62,30 @@ export default function GraphicsContainer({ selectedEvent }) {
   return (
     <div>
       <div className="row">
-        <div className="col-sm-12">
-          {!isEmpty(chartConfig.data.datasets) && (
-            <Chart chartConfig={chartConfig} />
-          )}
+        <div className="col-sm bg-light dist-cxu-box--filled">
+          <div className="graphic empty-container mb-3 d-flex justify-content-center align-items-center">
+            <div className="graphic--title">
+              <p>{translate("home.noDataMessageOne")}</p>
+            </div>
+            <div className="graphic--wrapper">
+              {!isEmpty(chartConfig.data.datasets) && (
+                <Chart chartConfig={chartConfig} />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12">
-          {!isEmpty(barData) && <Chart chartConfig={buildBarChart()} />}
+        <div className="col-sm dist-uxpae-box--filled">
+          <div className="graphic bg-light empty-container-2 mb-3 d-flex justify-content-center align-items-center">
+            <div className="graphic--title">
+              <p>{translate("home.noDataMessageTwo")}</p>
+            </div>
+            <div className="graphic--wrapper">
+              {!isEmpty(barData) && <Chart chartConfig={buildBarChart()} />}
+            </div>
+          </div>
+          <div className="bg-light empty-container-2 d-flex justify-content-center align-items-center">
+            <p>{translate("home.noDataMessageThree")}</p>
+          </div>
         </div>
       </div>
     </div>

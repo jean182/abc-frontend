@@ -1,30 +1,16 @@
 import { camelCase } from "lodash";
 import translate from "./i18n";
 
-function getRandomColorHex() {
-  const hex = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 1; i <= 6; i += 1) {
-    color += hex[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
 export const buildBubbleData = (response) => {
   return response.map((item) => {
-    const backgroundColor = [
-      getRandomColorHex(),
-      getRandomColorHex(),
-      getRandomColorHex(),
-      getRandomColorHex(),
-    ];
+    const backgroundColor = ["#2A4988", "#416fcc"];
     return {
       label: item.username,
       data: [
         {
           x: item.probabilityScale,
           y: item.impactScale,
-          r: 22,
+          r: 5,
         },
       ],
       backgroundColor,
@@ -36,13 +22,7 @@ export const buildBubbleData = (response) => {
 
 export const buildBarData = (response) => {
   const { labels, data } = response;
-  const backgroundColor = [
-    "#3359A5",
-    // getRandomColorHex(),
-    // getRandomColorHex(),
-    // getRandomColorHex(),
-    // getRandomColorHex(),
-  ];
+  const backgroundColor = ["#3359A5", "#2A4988", "#416fcc"];
   return {
     labels,
     datasets: [
