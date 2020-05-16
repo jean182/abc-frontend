@@ -10,7 +10,7 @@ const responseKeys = [
   "Bajo impacto",
   "Impacto intermedio",
   "Alto impacto",
-  "Impacto externo",
+  "Impacto extremo",
 ];
 
 const selectOptions = [
