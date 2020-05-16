@@ -13,6 +13,12 @@ const procedureTypeOptions = [
   { id: 4, label: "Dispensa de trámite", value: "waiver_procedure" },
 ];
 
+const stageOptions = [
+  { id: 1, label: "Pendiente de asignar", value: "pending" },
+  { id: 2, label: "En comisión", value: "commission" },
+  { id: 3, label: "En plenario", value: "plenary" },
+];
+
 const voteTypeOptions = [
   { id: 1, label: "Mayoría Calificada", value: "qualified_majority" },
   { id: 2, label: "Mayoría Simple", value: "simple_majority" },
@@ -27,7 +33,7 @@ function EventForm(props) {
       eventParams = {
         event: {
           ...data,
-          state: "pending",
+          state: "current",
         },
       };
       action({ event: eventParams, swal: Swal });
@@ -36,7 +42,7 @@ function EventForm(props) {
         id: selectedEvent.id,
         event: {
           ...data,
-          state: "pending",
+          state: "current",
         },
       };
       action({ event: eventParams, swal: Swal });
@@ -141,6 +147,23 @@ function EventForm(props) {
             defaultValue={selectedEvent ? selectedEvent.voteType : ""}
           >
             {voteTypeOptions.map((option) => {
+              return (
+                <option key={option.id} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="stage">{translate("eventForm.stage")}</label>
+          <select
+            className="custom-select"
+            name="stage"
+            ref={register({ required: true })}
+            defaultValue={selectedEvent ? selectedEvent.stage : ""}
+          >
+            {stageOptions.map((option) => {
               return (
                 <option key={option.id} value={option.value}>
                   {option.label}

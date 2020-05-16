@@ -29,6 +29,7 @@
       "voteType": "Tipo Valoración",
       "proposedBy": "Propuesto por",
       "approvalDate": "Fecha de dictaminación",
+      "stage": "Etapa",
       "state": "Evento",
       "selection": "Selección",
       "day": "Día",
@@ -54,8 +55,13 @@
       "qualified_majority":  "Mayoría calificada"
     },
     "state": {
-      "pending": "Pendiente",
+      "current": "Pendiente",
       "complete": "Completo"
+    },
+    "stage": {
+      "pending": "Pendiente de asignar",
+      "commission": "En comisión",
+      "plenary": "En plenario"
     }
   },
   "pagination": {
@@ -104,8 +110,13 @@
     "proposedBy": "Propuesto por",
     "approvalDate": "Fecha de dictaminación",
     "procedureType": "Tipo de Procedimiento",
+    "stage": "Etapa",
     "voteType": "Votación",
     "create": "Crear Evento",
     "edit": "Editar Evento"
+  },
+  "eventFilters": {
+    "approvalDate": "Filtrar por fecha de dictaminación",
+    "stage": "Filtrar por Etapa"
   }
 }

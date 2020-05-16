@@ -20,6 +20,8 @@ export default function TableRow({ columns, dataItem, row, select, selected }) {
         return t(`eventsEnum.${key}.${value}`);
       case "state":
         return t(`eventsEnum.${key}.${value}`);
+      case "stage":
+        return t(`eventsEnum.${key}.${value}`);
       default:
         return value;
     }
