@@ -1,41 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { isNaN } from "lodash";
+import { isValid, parseISO } from "date-fns";
 import {
   filterByStage,
   filterByDate,
   filterByIfHasDate,
 } from "../../redux/modules/filters/filters";
 import translate from "../../helpers/i18n";
-import { getDates } from "../../helpers/date-helpers";
+import { getIsoDatesFromInterval } from "../../helpers/date-helpers";
 
-const ExpenseListFilters = (props) => {
+export const EventListFilters = (props) => {
   const handleDateChange = (event) => {
     const { value } = event.target;
-    const timestamp = Date.parse(value);
+    const date = parseISO(value);
 
-    let date = "";
-    if (isNaN(timestamp) === false) {
-      date = new Date(timestamp);
-    }
-    if (date === "") {
-      props.dispatch(filterByIfHasDate([true, false]));
-      props.dispatch(filterByDate([]));
-    } else {
-      const dates = getDates(new Date("2019-06-01"), date);
+    if (isValid(date)) {
+      const dates = getIsoDatesFromInterval(parseISO("2019-06-01"), date);
       props.dispatch(filterByIfHasDate([true]));
       props.dispatch(filterByDate(dates));
+    } else {
+      props.dispatch(filterByIfHasDate([true, false]));
+      props.dispatch(filterByDate([]));
     }
   };
 
   return (
     <div className="row mb-3">
       <div className="col">
-        <label htmlFor="dateFilter">
+        <label htmlFor="approvalDateFilter">
           {translate("eventFilters.approvalDate")}
         </label>
         <input
+          id="approvalDateFilter"
           name="dateFilter"
           type="date"
           className="form-control"
@@ -46,6 +43,7 @@ const ExpenseListFilters = (props) => {
         <label htmlFor="stageFilter">{translate("eventFilters.stage")}</label>
         <select
           className="custom-select"
+          id="stageFilter"
           name="stageFilter"
           onChange={(event) => {
             props.dispatch(filterByStage(event.target.value));
@@ -69,8 +67,8 @@ const ExpenseListFilters = (props) => {
   );
 };
 
-ExpenseListFilters.propTypes = {
+EventListFilters.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(ExpenseListFilters);
+export default connect()(EventListFilters);

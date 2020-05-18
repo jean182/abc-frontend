@@ -6,5 +6,8 @@ import "@testing-library/jest-dom/extend-expect";
 import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import "jest-canvas-mock";
+import LocalStorageMock from "./__mocks__/LocalStorageMock";
+
+global.localStorage = new LocalStorageMock();
 
 configure({ adapter: new Adapter() });

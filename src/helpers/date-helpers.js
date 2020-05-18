@@ -1,17 +1,33 @@
-const isoDate = (date) => {
-  return `${date.getFullYear()}-${`0${date.getMonth() + 1}`.slice(
-    -2
-  )}-${`0${date.getDate()}`.slice(-2)}`;
-};
+import {
+  eachDayOfInterval,
+  format,
+  formatISO,
+  isValid,
+  parseISO,
+} from "date-fns";
+import { es } from "date-fns/locale";
 
-export function getDates(startDate, endDate) {
-  const arr = [];
-  const dt = new Date(startDate);
-  while (dt <= endDate) {
-    arr.push(new Date(dt));
-    dt.setDate(dt.getDate() + 1);
-  }
-  return arr.map((date) => isoDate(date));
+export function getIsoDatesFromInterval(startDate, endDate) {
+  const dates = eachDayOfInterval({
+    start: startDate,
+    end: endDate,
+  });
+  return dates.map((date) => formatISO(date, { representation: "date" }));
 }
 
-export const dateRangearray = () => "Balde";
+export function monthYearOrDay(isoDate, timeUnit) {
+  const date = parseISO(isoDate);
+  if (isValid(date)) {
+    switch (timeUnit) {
+      case "day":
+        return format(date, "d", { locale: es });
+      case "month":
+        return format(date, "MMM", { locale: es });
+      case "year":
+        return format(date, "yyyy", { locale: es });
+      default:
+        return isoDate;
+    }
+  }
+  return "";
+}
