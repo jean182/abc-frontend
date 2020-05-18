@@ -78,7 +78,7 @@ function EventList(props) {
     <>
       <div className="row table-row title-header text-white bg-primary">
         <div className="col text-center">
-          <h3>Administración de eventos</h3>
+          <h3 data-testid="event-list-title">Administración de eventos</h3>
         </div>
       </div>
       <HeaderRow

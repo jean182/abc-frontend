@@ -24,6 +24,7 @@ const mockProps = {
       updated_at: "2020-03-03T18:13:59.000Z",
     },
   ],
+  selectedEvent: {},
   error: null,
   loading: false,
   getEvents: jest.fn(),
@@ -57,16 +58,6 @@ describe("EventListContainer Component", () => {
 
     it("shows a p tag with the error message", () => {
       expect(component.find("p").text()).toBe("404");
-    });
-  });
-
-  describe("when eventList is empty", () => {
-    beforeEach(() => {
-      component = shallow(<EventListContainer {...mockProps} eventList={[]} />);
-    });
-
-    it("shows a p tag with the error message", () => {
-      expect(component.find("div").text()).toBe("No hay datos para mostrar");
     });
   });
 });

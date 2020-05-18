@@ -10,7 +10,7 @@ import {
 import { showEvent } from "../../redux/modules/events/event";
 import Loading from "../Shared/Loading";
 import EventList from "./EventList";
-import EventListFilters from "./EventListFilters";
+import ReduxEventListFilters from "./EventListFilters";
 import t from "../../helpers/i18n";
 import { SelectedEvent } from "./SelectedEvent";
 
@@ -35,7 +35,7 @@ export function EventListContainer(props) {
   return (
     <>
       <SelectedEvent selectedEvent={selectedEvent} />
-      <EventListFilters />
+      <ReduxEventListFilters />
       {isEmpty(eventList) ? (
         <div className="row align-rows-center table-row p-2 my-3 my-sm-0 table-row">
           <div className="col-sm my-1 my-sm-0">
