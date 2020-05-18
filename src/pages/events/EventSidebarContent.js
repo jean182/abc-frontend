@@ -8,8 +8,11 @@ import { showEvent } from "../../redux/modules/events/event";
 import FormsWrapper from "../../components/Surveys/FormsWrapper";
 import AuthButton from "../../router/AuthButton";
 import AdminOptions from "./AdminOptions";
+import Modal from "../../components/Modal/Modal";
+import EventAverages from "./EventsAverage";
+import { eventListFilterSelector } from "../../redux/modules/events/eventList";
 
-function SidebarContent({ selectedEvent, user }) {
+function SidebarContent({ filteredEvents, selectedEvent, user }) {
   const { role } = user;
   return (
     <>
@@ -28,6 +31,18 @@ function SidebarContent({ selectedEvent, user }) {
           </Link>
         </div>
       </div>
+      {filteredEvents.length > 0 && (
+        <Modal
+          ariaLabel="Average Modal"
+          buttonId="events-average-button"
+          modalId="events-average-button-modal"
+          title="Distribución de eventos según el promedio de impacto y de probabilidad"
+          triggerStyles="btn btn-primary btn-block mb-3"
+          triggerText="Promedios"
+        >
+          <EventAverages eventList={filteredEvents} />
+        </Modal>
+      )}
       {role === "Administrador" && <AdminOptions />}
       <AuthButton />
     </>
@@ -35,15 +50,18 @@ function SidebarContent({ selectedEvent, user }) {
 }
 
 SidebarContent.defaultProps = {
+  filteredEvents: [],
   selectedEvent: {},
 };
 
 SidebarContent.propTypes = {
+  filteredEvents: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
   user: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  filteredEvents: eventListFilterSelector(state, state.filterReducer),
   selectedEvent: showEvent(state),
   user: state.sessionReducer.user,
 });
