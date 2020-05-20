@@ -1,36 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { first, isEmpty } from "lodash";
 import Modal from "../Modal/Modal";
 import ProbabilityForm from "./ProbabilityForm";
 import ImpactForm from "./ImpactForm";
-import { scoreRequest } from "../../api/scoreEndpoints";
+import {
+  fetchScore,
+  showScore,
+  updateScore,
+  createScore,
+} from "../../redux/modules/score/score";
 
-export default function FormsWrapper({
+function FormsWrapper({
+  createScoreInfo,
   currentUser,
+  getScoreInfo,
   impactQuestions,
   probabilityQuestions,
+  score,
   selectedEvent,
+  updateScoreInfo,
 }) {
   const probabilityModal = useRef(null);
   const impactModal = useRef(null);
-  const [score, setScore] = useState(null);
 
   useEffect(() => {
     if (!isEmpty(selectedEvent) && !isEmpty(currentUser)) {
-      const fetchScore = async () => {
-        try {
-          const evaluation = first(selectedEvent.evaluations);
-          const result = await scoreRequest(evaluation.id, currentUser.id);
-          setScore(result.data);
-        } catch (err) {
-          setScore({});
-        }
-      };
-
-      fetchScore();
+      const evaluation = first(selectedEvent.evaluations);
+      getScoreInfo({ id: evaluation.id, userId: currentUser.id });
     }
-  }, [selectedEvent, currentUser]);
+  }, [getScoreInfo, selectedEvent, currentUser]);
 
   if (isEmpty(selectedEvent))
     return (
@@ -53,9 +54,11 @@ export default function FormsWrapper({
         >
           {probabilityQuestions.length > 0 ? (
             <ProbabilityForm
+              createScoreInfo={createScoreInfo}
               selectedItem={selectedEvent}
               currentUser={currentUser}
               riskFactors={probabilityQuestions}
+              updateScoreInfo={updateScoreInfo}
               score={score}
             />
           ) : (
@@ -88,17 +91,38 @@ export default function FormsWrapper({
   );
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      createScoreInfo: createScore,
+      getScoreInfo: fetchScore,
+      updateScoreInfo: updateScore,
+    },
+    dispatch
+  );
+};
+
+const mapStateToProps = (state) => ({
+  score: showScore(state),
+});
+
 FormsWrapper.defaultProps = {
   currentUser: {},
   selectedEvent: {},
 };
 
 FormsWrapper.propTypes = {
+  createScoreInfo: PropTypes.func.isRequired,
   currentUser: PropTypes.oneOfType([PropTypes.object]),
+  getScoreInfo: PropTypes.func.isRequired,
   impactQuestions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
   probabilityQuestions: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.object])
   ).isRequired,
+  score: PropTypes.oneOfType([PropTypes.object]).isRequired,
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
+  updateScoreInfo: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormsWrapper);

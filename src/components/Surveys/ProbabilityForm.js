@@ -2,6 +2,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
+import { first, get, isEmpty, omit } from "lodash";
+import Swal from "sweetalert2";
 import translate from "../../helpers/i18n";
 import EventInfo from "./EventInfo";
 import ProbabilityQuestion from "./ProbabilityQuestion";
@@ -9,6 +11,7 @@ import {
   getProcedureTypeValue,
   getVoteTypeValue,
 } from "../../helpers/scale-helpers";
+import { editScore, newScore } from "../../helpers/score-helpers";
 
 const responseKeys = [
   { label: "Totalmente en desacuerdo", value: 2 },
@@ -18,16 +21,37 @@ const responseKeys = [
   { label: "Totalmente de acuerdo", value: 10 },
 ];
 
+const riskFeelings = [
+  "Muy baja probabilidad",
+  "Baja probabilidad",
+  "Probabilidad intermedia",
+  "Alta probabilidad",
+  "Muy alta probabilidad",
+  "Extremadamente probable",
+];
+
 export default function ProbabilityForm(props) {
   const { register, handleSubmit } = useForm();
-  const { riskFactors, score, selectedItem } = props;
-  console.log(riskFactors);
+  const {
+    createScoreInfo,
+    currentUser,
+    riskFactors,
+    score,
+    selectedItem,
+    updateScoreInfo,
+  } = props;
   const questions = riskFactors.filter(
     ({ description }) =>
       description !== "Tipo de votación" &&
       description !== "Tipo de procedimiento"
   );
-  const { description, procedureType, voteType } = selectedItem;
+  const nonEditableQuestions = riskFactors.filter(
+    ({ description }) =>
+      description === "Tipo de votación" ||
+      description === "Tipo de procedimiento"
+  );
+  const { description, procedureType, voteType, evaluations } = selectedItem;
+  const evaluation = first(evaluations);
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -35,12 +59,48 @@ export default function ProbabilityForm(props) {
   } = splitDescription;
   const procedureTypeValue = getProcedureTypeValue(procedureType);
   const voteTypeValue = getVoteTypeValue(voteType);
-  console.log(procedureTypeValue);
-  console.log(voteTypeValue);
 
-  const onSubmit = (data, e) => {
-    console.log(data);
-    console.log(e);
+  const onSubmit = (data) => {
+    let scoreParams = {};
+    const values = Object.values(omit(data, ["questionGlobal"]));
+    const riskFeeling = get(data, "questionGlobal");
+    if (!isEmpty(score)) {
+      const editScoreResult = editScore(
+        values,
+        questions,
+        nonEditableQuestions,
+        score,
+        procedureTypeValue,
+        voteTypeValue
+      );
+      scoreParams = {
+        score: {
+          ...editScoreResult,
+          evaluationId: evaluation.id,
+          riskFeeling,
+        },
+      };
+      delete scoreParams.score.riskFactorScores;
+      updateScoreInfo({ id: score.id, score: scoreParams, swal: Swal });
+    } else {
+      const newScoreResult = newScore(
+        values,
+        questions,
+        nonEditableQuestions,
+        procedureTypeValue,
+        voteTypeValue
+      );
+      scoreParams = {
+        score: {
+          ...newScoreResult,
+          userId: currentUser.id,
+          evaluationId: evaluation.id,
+          riskFeeling,
+          impactScale: 0,
+        },
+      };
+      createScoreInfo({ score: scoreParams, swal: Swal });
+    }
   };
   return (
     <>
@@ -57,7 +117,7 @@ export default function ProbabilityForm(props) {
           onSubmit={handleSubmit(onSubmit)}
         >
           {questions.map((question, index) => {
-            const matchingRiskFactorScore = score
+            const matchingRiskFactorScore = !isEmpty(score)
               ? score.riskFactorScores.find(
                   (risk) => risk.riskFactorId === question.id
                 )
@@ -81,18 +141,19 @@ export default function ProbabilityForm(props) {
             </p>
             <p>{translate("probabilityForm.questionGlobal")}</p>
             <div className="toggle">
-              {responseKeys.map((response, index) => (
+              {riskFeelings.map((response, index) => (
                 <React.Fragment key={`questionGlobal-${index}`}>
                   <input
                     id={`questionGlobal-${index}`}
                     name="questionGlobal"
                     type="radio"
-                    value={response.value}
+                    value={response}
+                    defaultChecked={
+                      score ? score.riskFeeling === response : false
+                    }
                     ref={register({ required: true })}
                   />
-                  <label htmlFor={`questionGlobal-${index}`}>
-                    {response.label}
-                  </label>
+                  <label htmlFor={`questionGlobal-${index}`}>{response}</label>
                 </React.Fragment>
               ))}
             </div>
@@ -117,8 +178,11 @@ ProbabilityForm.defaultProps = {
 };
 
 ProbabilityForm.propTypes = {
+  createScoreInfo: PropTypes.func.isRequired,
+  currentUser: PropTypes.oneOfType([PropTypes.object]).isRequired,
   score: PropTypes.oneOfType([PropTypes.object]),
   selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
   riskFactors: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
+  updateScoreInfo: PropTypes.func.isRequired,
 };
