@@ -74,14 +74,10 @@
     "barChartLabel": "Distribución de usuarios por probabilidad de avance del evento"
   },
   "probabilityForm": {
-    "questionOneTitle": "Aspectos Circunstanciales",
-    "questionOne": "¿Existen factores, tanto procedimentales como externos, que puedan incidir en el avance del proyecto?",
-    "questionTwoTitle": "Órgano que lo tramita",
-    "questionTwo": "¿La composición, orden del día y naturaleza del órgano que tramita el proyecto de ley hace más probable su aprobación?",
-    "questionThreeTitle": "Manifestaciones de apoyo",
-    "questionThree": "¿Manifestaciones de parte de los diputados, grupos de opinión o formadores de opinión hacen más probable el avance del proyecto de ley?",
-    "questionFourTitle": "Popularidad de la medida",
-    "questionFour": "¿La aprobación de la medida genera un efecto político positivo para los intereses de los diputados o partidos politicos?",
+    "question0": "¿Existen factores, tanto procedimentales como externos, que puedan incidir en el avance del proyecto?",
+    "question1": "¿La composición, orden del día y naturaleza del órgano que tramita el proyecto de ley hace más probable su aprobación?",
+    "question2": "¿Manifestaciones de parte de los diputados, grupos de opinión o formadores de opinión hacen más probable el avance del proyecto de ley?",
+    "question3": "¿La aprobación de la medida genera un efecto político positivo para los intereses de los diputados o partidos politicos?",
     "questionGlobalTitle": "Probabilidad Global",
     "questionGlobal": "¿Qué tan probable cree que es el avance del proyecto de ley?",
     "submit": "Guardar Probabilidad"

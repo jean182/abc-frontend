@@ -11,8 +11,18 @@ import AdminOptions from "./AdminOptions";
 import Modal from "../../components/Modal/Modal";
 import EventAverages from "./EventsAverage";
 import { eventListFilterSelector } from "../../redux/modules/events/eventList";
+import {
+  impactQuestionList,
+  probabilityQuestionList,
+} from "../../redux/modules/questions/questionList";
 
-function SidebarContent({ filteredEvents, selectedEvent, user }) {
+function SidebarContent({
+  filteredEvents,
+  impactQuestions,
+  probabilityQuestions,
+  selectedEvent,
+  user,
+}) {
   const { role } = user;
   return (
     <>
@@ -22,7 +32,12 @@ function SidebarContent({ filteredEvents, selectedEvent, user }) {
         </div>
       </div>
       <PendingUsers selectedEvent={selectedEvent} />
-      <FormsWrapper selectedEvent={selectedEvent} />
+      <FormsWrapper
+        selectedEvent={selectedEvent}
+        currentUser={user}
+        probabilityQuestions={probabilityQuestions}
+        impactQuestions={impactQuestions}
+      />
       <div className="row py-3 sidebar-subtitle-borders border-primary">
         <div className="col">
           <Link to="/inicio" className="btn btn-primary btn-block">
@@ -51,17 +66,25 @@ function SidebarContent({ filteredEvents, selectedEvent, user }) {
 
 SidebarContent.defaultProps = {
   filteredEvents: [],
+  impactQuestions: [],
+  probabilityQuestions: [],
   selectedEvent: {},
 };
 
 SidebarContent.propTypes = {
   filteredEvents: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
+  impactQuestions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
+  probabilityQuestions: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object])
+  ),
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
   user: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredEvents: eventListFilterSelector(state, state.filterReducer),
+  impactQuestions: impactQuestionList(state),
+  probabilityQuestions: probabilityQuestionList(state),
   selectedEvent: showEvent(state),
   user: state.sessionReducer.user,
 });

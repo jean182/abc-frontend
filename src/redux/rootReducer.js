@@ -5,6 +5,7 @@ import eventsReducer from "./modules/events/eventsReducer";
 import filterReducer from "./modules/filters/filters";
 import sessionReducer from "./modules/auth/session";
 import usersReducer from "./modules/users/userList";
+import questionReducer from "./modules/questions/questionList";
 
 export default combineReducers({
   authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   filterReducer,
   sessionReducer,
   usersReducer,
+  questionReducer,
 });

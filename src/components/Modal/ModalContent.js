@@ -33,7 +33,10 @@ const ModalContent = ({
         }}
         {...(isOpen ? { "aria-modal": true } : { "aria-hidden": true })}
       >
-        <div className="modal-dialog modal-lg" ref={modalRef}>
+        <div
+          className="modal-dialog modal-dialog-scrollable modal-lg"
+          ref={modalRef}
+        >
           <div className="modal-content">
             <div className="modal-header bg-secondary text-white">
               <h1>{title}</h1>

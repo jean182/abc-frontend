@@ -1,13 +1,37 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
+import { first, isEmpty } from "lodash";
 import Modal from "../Modal/Modal";
 import ProbabilityForm from "./ProbabilityForm";
 import ImpactForm from "./ImpactForm";
+import { scoreRequest } from "../../api/scoreEndpoints";
 
-export default function FormsWrapper({ selectedEvent }) {
+export default function FormsWrapper({
+  currentUser,
+  impactQuestions,
+  probabilityQuestions,
+  selectedEvent,
+}) {
   const probabilityModal = useRef(null);
   const impactModal = useRef(null);
+  const [score, setScore] = useState(null);
+
+  useEffect(() => {
+    if (!isEmpty(selectedEvent) && !isEmpty(currentUser)) {
+      const fetchScore = async () => {
+        try {
+          const evaluation = first(selectedEvent.evaluations);
+          const result = await scoreRequest(evaluation.id, currentUser.id);
+          setScore(result.data);
+        } catch (err) {
+          setScore({});
+        }
+      };
+
+      fetchScore();
+    }
+  }, [selectedEvent, currentUser]);
+
   if (isEmpty(selectedEvent))
     return (
       <div className="row py-3 sidebar-subtitle-borders border-primary">
@@ -27,7 +51,18 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Probabilidad"
           ref={probabilityModal}
         >
-          <ProbabilityForm selectedItem={selectedEvent} />
+          {probabilityQuestions.length > 0 ? (
+            <ProbabilityForm
+              selectedItem={selectedEvent}
+              currentUser={currentUser}
+              riskFactors={probabilityQuestions}
+              score={score}
+            />
+          ) : (
+            <div className="modal-body">
+              <p>Lo sentimos, a ocurrido un error</p>
+            </div>
+          )}
         </Modal>
         <Modal
           ariaLabel="Impact Form"
@@ -39,7 +74,14 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Impacto"
           ref={impactModal}
         >
-          <ImpactForm selectedItem={selectedEvent} />
+          {impactQuestions.length > 0 && (
+            <ImpactForm
+              selectedItem={selectedEvent}
+              currentUser={currentUser}
+              riskFactors={impactQuestions}
+              score={score}
+            />
+          )}
         </Modal>
       </div>
     </div>
@@ -47,9 +89,16 @@ export default function FormsWrapper({ selectedEvent }) {
 }
 
 FormsWrapper.defaultProps = {
+  currentUser: {},
   selectedEvent: {},
 };
 
 FormsWrapper.propTypes = {
+  currentUser: PropTypes.oneOfType([PropTypes.object]),
+  impactQuestions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  probabilityQuestions: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object])
+  ).isRequired,
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
 };
