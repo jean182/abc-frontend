@@ -38,6 +38,7 @@ function EventList(props) {
         value !== "approvalDate?" &&
         value !== "impactAverage" &&
         value !== "probabilityAverage" &&
+        value !== "evaluations" &&
         value !== "state"
     );
 
