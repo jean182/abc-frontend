@@ -1,14 +1,20 @@
 .empty-container {
   min-height: 100%;
 
+  & svg {
+    font-size: 180px;
+    color: $light-gray;
+  }
+
   & p {
     color: darken($light-gray, 15%);
   }
 }
 
 .empty-container-2 {
+  // padding: 20px;
   min-height: 300px;
-  background-color: darken($text-muted, 5%) !important;
+  // background-color: darken($text-muted, 5%) !important;
   min-height: 37.1vh;
 
   & p {
@@ -17,12 +23,12 @@
 }
 
 .dist-cxu-box {
-  padding: 0 10px 0 0 !important;
+  padding: 0 !important;
   height: 76vh;
 
   &--filled {
-    // background-color: #f8f9fa;
-    border-radius: 3px;
+    border-radius: 2px;
+    border: 1px solid $primary;
   }
 }
 
@@ -30,7 +36,9 @@
   padding: 0 0 0 10px !important;
 
   &--filled {
-    // background-color: #e9ecef !important;
-    border-radius: 3px;
+    margin-top: 20px;
+    padding: 0;
+    border-radius: 2px;
+    border: 1px solid $primary;
   }
 }

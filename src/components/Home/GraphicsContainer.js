@@ -59,7 +59,7 @@ export default function GraphicsContainer({ selectedEvent }) {
   return (
     <div>
       <div className="row">
-        <div className="col-sm bg-light dist-cxu-box--filled">
+        <div className="col-sm-12 dist-cxu-box--filled">
           <div className="graphic empty-container mb-3 d-flex justify-content-center align-items-center">
             <div className="graphic--title">
               <p>{translate("home.noDataMessageOne")}</p>
@@ -71,8 +71,8 @@ export default function GraphicsContainer({ selectedEvent }) {
             </div>
           </div>
         </div>
-        <div className="col-sm dist-uxpae-box--filled">
-          <div className="graphic bg-light empty-container-2 mb-3 d-flex justify-content-center align-items-center">
+        <div className="col-sm-12 dist-uxpae-box--filled">
+          <div className="graphic empty-container-2 mb-3 d-flex justify-content-center align-items-center">
             <div className="graphic--title">
               <p>{translate("home.noDataMessageTwo")}</p>
             </div>
@@ -80,9 +80,9 @@ export default function GraphicsContainer({ selectedEvent }) {
               {!isEmpty(barData) && <Chart chartConfig={buildBarChart()} />}
             </div>
           </div>
-          <div className="bg-light empty-container-2 d-flex justify-content-center align-items-center">
-            <p>{translate("home.noDataMessageThree")}</p>
-          </div>
+        </div>
+        <div className="empty-container-2 d-flex justify-content-center align-items-center">
+          <p>{translate("home.noDataMessageThree")}</p>
         </div>
       </div>
     </div>
