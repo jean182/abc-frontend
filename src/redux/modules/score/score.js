@@ -40,7 +40,6 @@ const scoreReducer = handleActions(
     [FETCH_SCORE_SUCCESS]: (state, action) => {
       const { data } = action.payload;
       const score = isEmpty(data) ? {} : data;
-      console.log(score);
       return {
         ...state,
         score,
@@ -155,7 +154,6 @@ export function* createScoreSaga(action) {
 export function* updateScoreSaga(action) {
   const { id, score, swal } = action.payload;
   try {
-    console.log(score);
     const response = yield call(updateScoreRequest, id, score);
     yield put(updateScoreSuccess(response));
     yield call([swal, swal.fire], "Listo!", "Editado exitosamente", "success");
