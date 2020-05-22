@@ -53,8 +53,8 @@ export default function ProbabilityForm(props) {
       description === "Tipo de votación" ||
       description === "Tipo de procedimiento"
   );
-  const { description, procedureType, voteType, evaluations } = selectedItem;
-  const evaluation = first(evaluations);
+  const { description, procedureType, voteType, evaluationIds } = selectedItem;
+  const evaluationId = first(evaluationIds);
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -79,7 +79,7 @@ export default function ProbabilityForm(props) {
       scoreParams = {
         score: {
           ...editProbabilityScoreResult,
-          evaluationId: evaluation.id,
+          evaluationId,
           riskFeeling,
         },
       };
@@ -97,7 +97,7 @@ export default function ProbabilityForm(props) {
         score: {
           ...newProbabilityScoreResult,
           userId: currentUser.id,
-          evaluationId: evaluation.id,
+          evaluationId,
           riskFeeling,
           impactScale: 0,
         },
