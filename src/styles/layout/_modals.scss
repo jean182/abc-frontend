@@ -79,3 +79,51 @@
 .modal-lg {
     max-width: 1250px;
 }
+
+// Event Create Modal
+#event-create-form-modal .modal-header {
+    height: 77px;
+    padding: 20px 3rem 20px 3rem;
+}
+#event-create-form-modal .modal-header h1 {
+    margin-bottom: 0;
+}
+#event-create-form-modal .modal-header .close {
+    bottom: 25px;
+}
+#event-create-form-modal .modal-dialog {
+    transform: translateY(13%);
+}
+#event-create-form-modal .modal-lg { width: 800px !important; } 
+
+// Event Edit Modal
+#event-edit-form-modal .modal-header {
+    height: 77px;
+    padding: 20px 3rem 20px 3rem;
+}
+#event-edit-form-modal .modal-header h1 {
+    margin-bottom: 0;
+}
+#event-edit-form-modal .modal-header .close {
+    bottom: 25px;
+}
+#event-edit-form-modal .modal-dialog {
+    transform: translateY(13%);
+}
+#event-edit-form-modal .modal-lg { width: 800px !important; } 
+
+// Events Average Modal
+#events-average-button-modal .modal-header {
+    height: 77px;
+    padding: 20px 3rem 20px 3rem;
+}
+#events-average-button-modal .modal-header h1 {
+    margin-bottom: 0;
+}
+#events-average-button-modal .modal-header .close {
+    bottom: 25px;
+}
+
+#events-average-button-modal .modal-dialog {
+    transform: translateY(10%);
+}

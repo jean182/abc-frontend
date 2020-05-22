@@ -119,10 +119,13 @@
   }
   
   .sidebar-subtitle-borders {
-    border-top: 3px solid $primary;
+    border-top: 1px solid $primary;
     &:first-of-type {
       border-bottom: none;
    }
+  }
+  .sidebar-subtitle-borders:nth-child(-n+2) {
+    border-top: 4px solid $primary;
   }
 
   .select-event-msg p {
@@ -132,9 +135,9 @@
   
   .pending-users {
     border: 1px solid;
-    border-radius: 3px;
+    border-radius: 2px;
     color: #16113f;
-    background-color: #e9efff;
+    background-color: #f8faff;
   }
 
   .user-name {

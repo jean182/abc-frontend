@@ -99,3 +99,31 @@ button#impact-form-button::before {
     position: relative;
     right: 8px;
 }
+button#events-average-button::before {
+    content: url(../../assets/chart-scattered.svg);
+    padding-right: 9px;
+    position: relative;
+    right: 0px;
+    width: 10px;
+}
+button#event-create-form-button::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f0fe";
+    position: relative;
+    padding-right: 10px;
+}
+button#event-edit-form-button::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f044";
+    position: relative;
+    padding-right: 10px;
+}
+button#event-edit-form-button::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f044";
+    position: relative;
+    padding-right: 10px;
+}
