@@ -2,22 +2,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
+import { first, isEmpty } from "lodash";
+import Swal from "sweetalert2";
 import translate from "../../helpers/i18n";
 import EventInfo from "./EventInfo";
+import ImpactQuestion from "./ImpactQuestion";
+import {
+  editImpactScore,
+  newImpactScore,
+} from "../../helpers/impact-form-helpers";
 
 const responseKeys = [
-  "Muy bajo",
-  "Bajo impacto",
-  "Impacto intermedio",
-  "Alto impacto",
-  "Impacto extremo",
-];
-
-const selectOptions = [
-  "Grupos financieros",
-  "Conglomerados financieros",
-  "Banca corporativa",
-  "Banca de consumo",
+  { label: "Muy bajo", value: 1 },
+  { label: "Bajo impacto", value: 2 },
+  { label: "Impacto intermedio", value: 3 },
+  { label: "Alto impacto", value: 6 },
+  { label: "Muy alto impacto", value: 8 },
+  { label: "Impacto extremo", value: 10 },
 ];
 
 const checkBoxOptions = [
@@ -30,8 +31,22 @@ const checkBoxOptions = [
 ];
 
 export default function ImpactForm(props) {
-  const { selectedItem } = props;
-  const { description, procedureType, voteType } = selectedItem;
+  const {
+    createScoreInfo,
+    currentUser,
+    riskFactors,
+    score,
+    selectedItem,
+    updateScoreInfo,
+  } = props;
+  const questions = riskFactors.filter(({ description }) =>
+    description.includes("Real")
+  );
+  const nonEditableQuestions = riskFactors.filter(({ description }) =>
+    description.includes("Potencial")
+  );
+  const { description, procedureType, voteType, evaluations } = selectedItem;
+  const evaluation = first(evaluations);
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -39,9 +54,44 @@ export default function ImpactForm(props) {
   } = splitDescription;
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data, e) => {
-    console.log(data);
-    console.log(e);
+  const onSubmit = (data) => {
+    let scoreParams = {};
+    const values = Object.values(data);
+
+    if (!isEmpty(score)) {
+      const editImpactScoreResult = editImpactScore(
+        values,
+        questions,
+        nonEditableQuestions,
+        score
+      );
+      scoreParams = {
+        score: {
+          ...editImpactScoreResult,
+          userId: currentUser.id,
+          evaluationId: evaluation.id,
+          impactScale: score.impactScale,
+        },
+      };
+      delete scoreParams.score.riskFactorScores;
+      updateScoreInfo({ id: score.id, score: scoreParams, swal: Swal });
+    } else {
+      const newImpactScoreResult = newImpactScore(
+        values,
+        questions,
+        nonEditableQuestions,
+        score
+      );
+      scoreParams = {
+        score: {
+          ...newImpactScoreResult,
+          userId: currentUser.id,
+          evaluationId: evaluation.id,
+          impactScale: 0,
+        },
+      };
+      createScoreInfo({ score: scoreParams, swal: Swal });
+    }
   };
 
   return (
@@ -58,112 +108,44 @@ export default function ImpactForm(props) {
           className="impact-form-container"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <label className="my-1 mr-2" htmlFor="sectorSelect">
-            Sector:
-          </label>
-          <select
-            className="custom-select"
-            id="sectorSelect"
-            ref={register}
-            name="sector"
-          >
-            {selectOptions.map((option) => {
-              return (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              );
-            })}
-          </select>
-          <fieldset>
-            <p>
-              <strong>{translate("impactForm.questionOneTitle")}</strong>
-            </p>
-            <p>{translate("impactForm.questionOne")}</p>
-            <div className="toggle">
-              {responseKeys.map((response, index) => (
-                <React.Fragment key={`impactQuestionOne-${index}`}>
-                  <input
-                    id={`impact-question-one-${index}`}
-                    name="impactQuestionOne"
-                    type="radio"
-                    value={response}
-                    ref={register({ required: true })}
-                  />
-                  <label htmlFor={`impact-question-one-${index}`}>
-                    {response}
-                  </label>
-                </React.Fragment>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <p>
-              <strong>{translate("impactForm.questionTwoTitle")}</strong>
-            </p>
-            <p>{translate("impactForm.questionTwo")}</p>
-            <div className="toggle">
-              {responseKeys.map((response, index) => (
-                <React.Fragment key={`impactQuestionTwo-${index}`}>
-                  <input
-                    id={`impact-question-two-${index}`}
-                    name="impactQuestionTwo"
-                    type="radio"
-                    value={response}
-                    ref={register}
-                  />
-                  <label htmlFor={`impact-question-two-${index}`}>
-                    {response}
-                  </label>
-                </React.Fragment>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <p>
-              <strong>
-                {translate("impactForm.questionGeneralImpactTitle")}
-              </strong>
-            </p>
-            <p>{translate("impactForm.questionGeneralImpact")}</p>
-            {checkBoxOptions.map((option, index) => {
-              return (
-                <div
-                  className="form-check form-check-inline"
-                  key={`${option}-${index}`}
-                >
-                  <input
-                    ref={register}
-                    name="generalImpact"
-                    className="form-check-input"
-                    type="checkbox"
-                    id={`${option}-${index}`}
-                    value={option}
-                  />
-                  <label
-                    className="form-check-label"
-                    htmlFor={`${option}-${index}`}
-                  >
-                    {option}
-                  </label>
-                </div>
-              );
-            })}
-          </fieldset>
+          {questions.map((question) => {
+            const matchingRiskFactorScore = !isEmpty(score)
+              ? score.riskFactorScores.find(
+                  (risk) => risk.riskFactorId === question.id
+                )
+              : null;
+            return (
+              <ImpactQuestion
+                checkBoxOptions={checkBoxOptions}
+                key={question.id}
+                question={question}
+                register={register}
+                responseKeys={responseKeys}
+                riskFactorScore={matchingRiskFactorScore}
+              />
+            );
+          })}
         </form>
-        <div />
-        <div className="modal-footer">
-          <button type="submit" form="impact-form" className="btn btn-primary">
-            {translate("impactForm.submit")}
-          </button>
-        </div>
+      </div>
+      <div className="modal-footer">
+        <button type="submit" form="impact-form" className="btn btn-primary">
+          {translate("impactForm.submit")}
+        </button>
       </div>
     </>
   );
 }
 
+ImpactForm.defaultProps = {
+  score: null,
+};
+
 ImpactForm.propTypes = {
+  createScoreInfo: PropTypes.func.isRequired,
+  currentUser: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  score: PropTypes.oneOfType([PropTypes.object]),
   selectedItem: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  riskFactors: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  updateScoreInfo: PropTypes.func.isRequired,
 };

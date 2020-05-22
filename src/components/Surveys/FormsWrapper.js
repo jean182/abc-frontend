@@ -79,9 +79,11 @@ function FormsWrapper({
         >
           {impactQuestions.length > 0 && (
             <ImpactForm
+              createScoreInfo={createScoreInfo}
               selectedItem={selectedEvent}
               currentUser={currentUser}
               riskFactors={impactQuestions}
+              updateScoreInfo={updateScoreInfo}
               score={score}
             />
           )}

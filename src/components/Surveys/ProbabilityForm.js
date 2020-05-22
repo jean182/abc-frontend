@@ -11,7 +11,10 @@ import {
   getProcedureTypeValue,
   getVoteTypeValue,
 } from "../../helpers/scale-helpers";
-import { editScore, newScore } from "../../helpers/score-helpers";
+import {
+  editProbabilityScore,
+  newProbabilityScore,
+} from "../../helpers/probability-form-helpers";
 
 const responseKeys = [
   { label: "Totalmente en desacuerdo", value: 2 },
@@ -65,7 +68,7 @@ export default function ProbabilityForm(props) {
     const values = Object.values(omit(data, ["questionGlobal"]));
     const riskFeeling = get(data, "questionGlobal");
     if (!isEmpty(score)) {
-      const editScoreResult = editScore(
+      const editProbabilityScoreResult = editProbabilityScore(
         values,
         questions,
         nonEditableQuestions,
@@ -75,7 +78,7 @@ export default function ProbabilityForm(props) {
       );
       scoreParams = {
         score: {
-          ...editScoreResult,
+          ...editProbabilityScoreResult,
           evaluationId: evaluation.id,
           riskFeeling,
         },
@@ -83,7 +86,7 @@ export default function ProbabilityForm(props) {
       delete scoreParams.score.riskFactorScores;
       updateScoreInfo({ id: score.id, score: scoreParams, swal: Swal });
     } else {
-      const newScoreResult = newScore(
+      const newProbabilityScoreResult = newProbabilityScore(
         values,
         questions,
         nonEditableQuestions,
@@ -92,7 +95,7 @@ export default function ProbabilityForm(props) {
       );
       scoreParams = {
         score: {
-          ...newScoreResult,
+          ...newProbabilityScoreResult,
           userId: currentUser.id,
           evaluationId: evaluation.id,
           riskFeeling,

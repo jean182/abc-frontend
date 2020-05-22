@@ -1,19 +1,22 @@
+import { isEmpty } from "lodash";
+
 const formatNonEditableQuestions = (
   riskFactorScores,
   nonEditableQuestions,
   procedureTypeValue,
   voteTypeValue
 ) => {
-  return riskFactorScores
-    .filter((riskFactorScore) => {
+  const probabilityRiskFactorScoresNonSelectable = riskFactorScores.filter(
+    (riskFactorScore) => {
       return nonEditableQuestions.some(
         ({ id }) => id === riskFactorScore.riskFactorId
       );
-    })
-    .map((riskFactorScore) => {
-      const { id, description } = riskFactorScore.riskFactor;
+    }
+  );
+  if (isEmpty(probabilityRiskFactorScoresNonSelectable)) {
+    return nonEditableQuestions.map((question) => {
+      const { id, description } = question;
       return {
-        ...riskFactorScore,
         riskFactorId: id,
         scale:
           description === "Tipo de votación"
@@ -21,20 +24,41 @@ const formatNonEditableQuestions = (
             : procedureTypeValue,
       };
     });
+  }
+  return probabilityRiskFactorScoresNonSelectable.map((riskFactorScore) => {
+    const { id, description } = riskFactorScore.riskFactor;
+    return {
+      ...riskFactorScore,
+      riskFactorId: id,
+      scale:
+        description === "Tipo de votación" ? voteTypeValue : procedureTypeValue,
+    };
+  });
 };
 
 const formatQuestions = (riskFactorScores, questions, values) => {
-  return riskFactorScores
-    .filter((riskFactorScore) => {
+  const probabilityRiskFactorScores = riskFactorScores.filter(
+    (riskFactorScore) => {
       return questions.some(({ id }) => id === riskFactorScore.riskFactorId);
-    })
-    .map((riskFactorScore, index) => {
+    }
+  );
+
+  if (isEmpty(probabilityRiskFactorScores)) {
+    return questions.map((question, index) => {
       const scale = Number(values[index]);
       return {
-        ...riskFactorScore,
+        riskFactorId: question.id,
         scale,
       };
     });
+  }
+  return probabilityRiskFactorScores.map((riskFactorScore, index) => {
+    const scale = Number(values[index]);
+    return {
+      ...riskFactorScore,
+      scale,
+    };
+  });
 };
 
 const formatNewNonEditableQuestions = (
@@ -93,7 +117,7 @@ const probabilityScaleTotal = (values, procedureTypeValue, voteTypeValue) => {
   }
 };
 
-export const newScore = (
+export const newProbabilityScore = (
   values,
   questions,
   nonEditableQuestions,
@@ -117,7 +141,7 @@ export const newScore = (
   };
 };
 
-export const editScore = (
+export const editProbabilityScore = (
   values,
   questions,
   nonEditableQuestions,
