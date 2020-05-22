@@ -1,6 +1,6 @@
 .probability-form-container {
 	padding: 1rem 2rem;
-	height: 860px;
+	height: 840px;
 
 	fieldset p strong {
 		font-size: 20px;
@@ -22,7 +22,21 @@
 		border-radius: 3px;
 		padding: 0 10px 10px 10px;
 		border: 1px solid #7f8dad;
-		margin: 20px 0 20px 0;
+		margin: 60px 0 20px 0;
+		
+		& p {
+			padding-top: 10px;
+		}
+
+		& p:last-of-type {
+			padding-top: 0px;
+			font-size: 18px;
+		}
+		
+		& p strong {
+			color: white;
+			font-size: 24px;
+		}
 	}
 
 	& p:first-child {
@@ -73,6 +87,10 @@
 
 .impact-form-container fieldset:last-child {
 	margin-bottom: 30px;
+}
+
+#impact-form-modal .modal-lg{
+	max-width: 995px;
 }
 
 .toggle input + label {

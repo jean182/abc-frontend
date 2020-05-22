@@ -30,11 +30,12 @@
   }
   
   .bd-sidebar {
+    margin-left: 20px;
     order: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    // border-bottom: 1px solid rgba(0, 0, 0, .1);
   
     @include media-breakpoint-up(md) {
-      border-right: 1px solid rgba(0, 0, 0, .1);
+      // border-right: 1px solid rgba(0, 0, 0, .1);
     }
   
     @include media-breakpoint-up(xl) {
@@ -122,6 +123,11 @@
     &:first-of-type {
       border-bottom: none;
    }
+  }
+
+  .select-event-msg p {
+    padding-left: 15px;
+    margin-bottom: 0;
   }
   
   .pending-users {

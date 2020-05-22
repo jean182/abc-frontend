@@ -3,6 +3,8 @@
     padding: 8px 2rem;
     color: $white;
     transition: .2s all;
+    border-radius: 2px;
+    text-align: left;
 
     &--login {
         background-color: $secondary;
@@ -72,4 +74,28 @@ button.btn--unstyled.nav-link.text-white {
 
 button.btn--unstyled.btn-tooltip {
     font-weight: 400 !important;
+}
+
+.bd-sidebar svg {
+    position: relative;
+    bottom: 2px;
+}
+
+button#probability-form-button,
+button#impact-form-button {
+    padding-left: 42px;
+}
+button#probability-form-button::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f682";
+    position: relative;
+    right: 8px;
+}
+button#impact-form-button::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f681";
+    position: relative;
+    right: 8px;
 }

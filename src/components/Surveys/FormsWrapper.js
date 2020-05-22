@@ -35,8 +35,8 @@ function FormsWrapper({
 
   if (isEmpty(selectedEvent))
     return (
-      <div className="row py-3 sidebar-subtitle-borders border-primary">
-        <p>Seleccione un evento</p>
+      <div className="row py-3 sidebar-subtitle-borders border-primary select-event-msg">
+        <p>Seleccione un evento de la tabla</p>
       </div>
     );
   return (

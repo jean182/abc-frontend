@@ -1,13 +1,12 @@
+.chart {
+  vertical-align: middle;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: inline-block;
 
-.chart{
-    vertical-align: middle;
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    display: inline-block;
-  
-  }
-  
-  canvas{
-    height: 100%;
-  }
+}
+
+canvas {
+  height: 100%;
+}
