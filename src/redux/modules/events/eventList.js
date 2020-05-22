@@ -1,5 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { handleActions, createAction } from "redux-actions";
+import { createSelector } from "reselect";
 import {
   createEventRequest,
   deleteEventRequest,
@@ -171,6 +172,24 @@ export function showEvents(state) {
 
   return events;
 }
+
+const filterSelector = (state) => state.filterReducer;
+
+export const eventListFilterSelector = createSelector(
+  [showEvents, filterSelector],
+  (eventList, filters) => {
+    const filterKeys = Object.keys(filters);
+    return eventList.filter((event) => {
+      return filterKeys.every((key) => {
+        if (!filters[key].length) return true;
+        if (Array.isArray(event[key])) {
+          return event[key].some((keyEle) => filters[key].includes(keyEle));
+        }
+        return filters[key].includes(event[key]);
+      });
+    });
+  }
+);
 
 // Sagas
 export function* fetchEventsSaga() {

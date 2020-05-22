@@ -5,9 +5,6 @@ import UserAdministration from "../../components/Users/UserAdministration";
 function AdminOptions() {
   return (
     <>
-      <button type="button" className="btn btn-primary btn-block">
-        Promedios
-      </button>
       <Modal
         ariaLabel="User Form Modal"
         buttonId="user-form-button"

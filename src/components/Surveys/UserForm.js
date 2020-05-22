@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { isEmpty, pickBy, identity } from "lodash";
 import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import translate from "../../helpers/i18n";
 import {
@@ -20,7 +21,7 @@ function UserForm(props) {
     selectedUser,
     updateAction,
   } = props;
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const formRef = useRef(null);
   const onSubmit = (data, event) => {
     let userParams = {};
@@ -56,54 +57,77 @@ function UserForm(props) {
   }, [selectedUser]);
 
   return (
-    <form
+    <Form
       id="user-form"
       className="user-form-container"
       onSubmit={handleSubmit(onSubmit)}
       ref={formRef}
+      autoComplete="off"
     >
       <div className="form-group">
         <label htmlFor="name">{translate("userForm.name")}</label>
-        <input
+        <Form.Control
           name="name"
-          className="form-control"
-          ref={register({ required: isEmpty(selectedUser) })}
+          className={errors.name ? "is-invalid" : "valid"}
+          ref={register({ required: true })}
           defaultValue={selectedUser ? selectedUser.name : ""}
           placeholder={translate("userForm.name")}
         />
+        {errors.name && (
+          <div className="invalid-feedback">
+            {`${translate("userForm.name")} no puede estar vacio`}
+          </div>
+        )}
       </div>
       <div className="form-group">
         <label htmlFor="username">{translate("userForm.username")}</label>
-        <input
+        <Form.Control
           name="username"
-          className="form-control"
+          className={errors.username ? "is-invalid" : "valid"}
           defaultValue={selectedUser ? selectedUser.username : ""}
-          ref={register({ required: isEmpty(selectedUser) })}
+          ref={register({ required: true })}
           placeholder={translate("userForm.username")}
         />
+        {errors.username && (
+          <div className="invalid-feedback">
+            {`${translate("userForm.username")} no puede estar vacio`}
+          </div>
+        )}
       </div>
       <div className="form-group">
         <label htmlFor="email">{translate("userForm.email")}</label>
-        <input
+        <Form.Control
           name="email"
-          className="form-control"
+          className={errors.email ? "is-invalid" : "valid"}
           type="email"
           defaultValue={
             selectedUser && selectedUser.email ? selectedUser.email : ""
           }
-          ref={register({ required: isEmpty(selectedUser) })}
+          ref={register({ required: true })}
           placeholder={translate("userForm.email")}
         />
+        {errors.email && (
+          <div className="invalid-feedback">
+            {`${translate("userForm.email")} no puede estar vacio`}
+          </div>
+        )}
       </div>
       <div className="form-group">
         <label htmlFor="password">{translate("userForm.password")}</label>
-        <input
+        <Form.Control
           name="password"
-          className="form-control"
+          className={
+            errors.password && isEmpty(selectedUser) ? "is-invalid" : "valid"
+          }
           type="password"
           ref={register({ required: isEmpty(selectedUser) })}
           placeholder={translate("userForm.password")}
         />
+        {errors.password && isEmpty(selectedUser) && (
+          <div className="invalid-feedback">
+            {`${translate("userForm.password")} no puede estar vacio`}
+          </div>
+        )}
       </div>
       <input
         type="submit"
@@ -123,7 +147,7 @@ function UserForm(props) {
           {translate("userForm.delete")}
         </button>
       )}
-    </form>
+    </Form>
   );
 }
 

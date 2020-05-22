@@ -15,8 +15,16 @@ import EventPage from "../pages/events/EventPage";
 import translate from "../helpers/i18n";
 import HomePage from "../pages/home/HomePage";
 import { fetchUser } from "../redux/modules/auth/session";
+import { fetchQuestions } from "../redux/modules/questions/questionList";
 
-export const AppRouter = ({ authorized, getUserInfo, token, user }) => {
+export const AppRouter = ({
+  authorized,
+  getUserInfo,
+  getQuestionList,
+  token,
+  user,
+  questionList,
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(authorized);
 
   useEffect(() => {
@@ -29,6 +37,12 @@ export const AppRouter = ({ authorized, getUserInfo, token, user }) => {
       getUserInfo();
     }
   }, [user, getUserInfo, isAuthenticated]);
+
+  useEffect(() => {
+    if (isEmpty(questionList) && isAuthenticated) {
+      getQuestionList();
+    }
+  }, [questionList, getQuestionList, isAuthenticated]);
 
   return (
     <Router>
@@ -65,14 +79,18 @@ AppRouter.defaultProps = {
 AppRouter.propTypes = {
   authorized: PropTypes.bool,
   getUserInfo: PropTypes.func.isRequired,
+  getQuestionList: PropTypes.func.isRequired,
   token: PropTypes.string,
   user: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  questionList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getUserInfo: fetchUser,
+      getQuestionList: fetchQuestions,
     },
     dispatch
   );
@@ -81,6 +99,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
   token: state.clientReducer.token,
   user: state.sessionReducer.user,
+  questionList: state.questionReducer.questionList,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppRouter);

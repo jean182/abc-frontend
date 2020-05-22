@@ -1,13 +1,38 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { first, isEmpty } from "lodash";
 import Modal from "../Modal/Modal";
 import ProbabilityForm from "./ProbabilityForm";
 import ImpactForm from "./ImpactForm";
+import {
+  fetchScore,
+  showScore,
+  updateScore,
+  createScore,
+} from "../../redux/modules/score/score";
 
-export default function FormsWrapper({ selectedEvent }) {
+function FormsWrapper({
+  createScoreInfo,
+  currentUser,
+  getScoreInfo,
+  impactQuestions,
+  probabilityQuestions,
+  score,
+  selectedEvent,
+  updateScoreInfo,
+}) {
   const probabilityModal = useRef(null);
   const impactModal = useRef(null);
+
+  useEffect(() => {
+    if (!isEmpty(selectedEvent) && !isEmpty(currentUser)) {
+      const evaluation = first(selectedEvent.evaluations);
+      getScoreInfo({ id: evaluation.id, userId: currentUser.id });
+    }
+  }, [getScoreInfo, selectedEvent, currentUser]);
+
   if (isEmpty(selectedEvent))
     return (
       <div className="row py-3 sidebar-subtitle-borders border-primary select-event-msg">
@@ -27,7 +52,20 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Probabilidad"
           ref={probabilityModal}
         >
-          <ProbabilityForm selectedItem={selectedEvent} />
+          {probabilityQuestions.length > 0 ? (
+            <ProbabilityForm
+              createScoreInfo={createScoreInfo}
+              selectedItem={selectedEvent}
+              currentUser={currentUser}
+              riskFactors={probabilityQuestions}
+              updateScoreInfo={updateScoreInfo}
+              score={score}
+            />
+          ) : (
+            <div className="modal-body">
+              <p>Lo sentimos, a ocurrido un error</p>
+            </div>
+          )}
         </Modal>
         <Modal
           ariaLabel="Impact Form"
@@ -39,17 +77,52 @@ export default function FormsWrapper({ selectedEvent }) {
           triggerText="Impacto"
           ref={impactModal}
         >
-          <ImpactForm selectedItem={selectedEvent} />
+          {impactQuestions.length > 0 && (
+            <ImpactForm
+              selectedItem={selectedEvent}
+              currentUser={currentUser}
+              riskFactors={impactQuestions}
+              score={score}
+            />
+          )}
         </Modal>
       </div>
     </div>
   );
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      createScoreInfo: createScore,
+      getScoreInfo: fetchScore,
+      updateScoreInfo: updateScore,
+    },
+    dispatch
+  );
+};
+
+const mapStateToProps = (state) => ({
+  score: showScore(state),
+});
+
 FormsWrapper.defaultProps = {
+  currentUser: {},
   selectedEvent: {},
 };
 
 FormsWrapper.propTypes = {
+  createScoreInfo: PropTypes.func.isRequired,
+  currentUser: PropTypes.oneOfType([PropTypes.object]),
+  getScoreInfo: PropTypes.func.isRequired,
+  impactQuestions: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
+    .isRequired,
+  probabilityQuestions: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object])
+  ).isRequired,
+  score: PropTypes.oneOfType([PropTypes.object]).isRequired,
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
+  updateScoreInfo: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormsWrapper);

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { Form } from "react-bootstrap";
 import translate from "../../helpers/i18n";
 
 const procedureTypeOptions = [
@@ -12,6 +13,12 @@ const procedureTypeOptions = [
   { id: 4, label: "Dispensa de trámite", value: "waiver_procedure" },
 ];
 
+const stageOptions = [
+  { id: 1, label: "Pendiente de asignar", value: "pending" },
+  { id: 2, label: "En comisión", value: "commission" },
+  { id: 3, label: "En plenario", value: "plenary" },
+];
+
 const voteTypeOptions = [
   { id: 1, label: "Mayoría Calificada", value: "qualified_majority" },
   { id: 2, label: "Mayoría Simple", value: "simple_majority" },
@@ -19,14 +26,14 @@ const voteTypeOptions = [
 
 function EventForm(props) {
   const { action, close, selectedEvent } = props;
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data, event) => {
     let eventParams = {};
     if (isEmpty(selectedEvent)) {
       eventParams = {
         event: {
           ...data,
-          state: "pending",
+          state: "current",
         },
       };
       action({ event: eventParams, swal: Swal });
@@ -35,7 +42,7 @@ function EventForm(props) {
         id: selectedEvent.id,
         event: {
           ...data,
-          state: "pending",
+          state: "current",
         },
       };
       action({ event: eventParams, swal: Swal });
@@ -45,7 +52,7 @@ function EventForm(props) {
   };
 
   return (
-    <form
+    <Form
       id={`event-${isEmpty(selectedEvent) ? "create" : "edit"}-form`}
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -54,27 +61,38 @@ function EventForm(props) {
           <label htmlFor="fileNumber">
             {translate("eventForm.fileNumber")}
           </label>
-          <input
+          <Form.Control
             name="fileNumber"
-            className="form-control"
+            className={errors.fileNumber ? "is-invalid" : "valid"}
             type="number"
             ref={register({ required: true })}
             defaultValue={selectedEvent ? selectedEvent.fileNumber : ""}
             placeholder={translate("eventForm.fileNumber")}
           />
+          {errors.fileNumber && (
+            <div className="invalid-feedback">
+              {`${translate("eventForm.fileNumber")} no puede estar vacio`}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="description">
             {translate("eventForm.description")}
           </label>
-          <textarea
+          <Form.Control
+            as="textarea"
             name="description"
-            className="form-control"
+            className={errors.description ? "is-invalid" : "valid"}
             type="textarea"
             defaultValue={selectedEvent ? selectedEvent.description : ""}
             ref={register({ required: true })}
             placeholder={translate("eventForm.description")}
           />
+          {errors.description && (
+            <div className="invalid-feedback">
+              {`${translate("eventForm.description")} no puede estar vacio`}
+            </div>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="proposedBy">
@@ -137,6 +155,23 @@ function EventForm(props) {
             })}
           </select>
         </div>
+        <div className="form-group">
+          <label htmlFor="stage">{translate("eventForm.stage")}</label>
+          <select
+            className="custom-select"
+            name="stage"
+            ref={register({ required: true })}
+            defaultValue={selectedEvent ? selectedEvent.stage : ""}
+          >
+            {stageOptions.map((option) => {
+              return (
+                <option key={option.id} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
       </div>
       <div className="modal-footer">
         <input
@@ -149,7 +184,7 @@ function EventForm(props) {
           }
         />
       </div>
-    </form>
+    </Form>
   );
 }
 

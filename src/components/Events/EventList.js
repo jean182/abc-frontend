@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { first, isEmpty, orderBy } from "lodash";
 import HeaderRow from "../Shared/Table/HeaderRow";
 import TableRow from "../Shared/Table/TableRow";
 import Pagination from "../Shared/Pagination";
-import {
-  setEvent,
-  unsetEvent,
-  showEvent,
-} from "../../redux/modules/events/event";
-import { SelectedEvent } from "./SelectedEvent";
+import { setEvent, unsetEvent } from "../../redux/modules/events/event";
 import translate from "../../helpers/i18n";
 
 function EventList(props) {
@@ -37,7 +32,14 @@ function EventList(props) {
     })
     .filter(
       ({ value }) =>
-        value !== "id" && value !== "createdAt" && value !== "updatedAt"
+        value !== "id" &&
+        value !== "createdAt" &&
+        value !== "updatedAt" &&
+        value !== "approvalDate?" &&
+        value !== "impactAverage" &&
+        value !== "probabilityAverage" &&
+        value !== "evaluations" &&
+        value !== "state"
     );
 
   const onChangePage = (_event, page) => {
@@ -75,10 +77,9 @@ function EventList(props) {
 
   return (
     <>
-      <SelectedEvent selectedEvent={selectedEvent} />
       <div className="row table-row title-header text-white bg-primary">
         <div className="col text-center">
-          <h3>Administración de eventos</h3>
+          <h3 data-testid="event-list-title">Administración de eventos</h3>
         </div>
       </div>
       <HeaderRow
@@ -132,8 +133,4 @@ EventList.propTypes = {
   selectedEvent: PropTypes.oneOfType([PropTypes.object]),
 };
 
-const mapStateToProps = (state) => ({
-  selectedEvent: showEvent(state),
-});
-
-export default connect(mapStateToProps)(EventList);
+export default EventList;
