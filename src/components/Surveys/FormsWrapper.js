@@ -28,8 +28,8 @@ function FormsWrapper({
 
   useEffect(() => {
     if (!isEmpty(selectedEvent) && !isEmpty(currentUser)) {
-      const evaluation = first(selectedEvent.evaluations);
-      getScoreInfo({ id: evaluation.id, userId: currentUser.id });
+      const evaluationId = first(selectedEvent.evaluationIds);
+      getScoreInfo({ id: evaluationId, userId: currentUser.id });
     }
   }, [getScoreInfo, selectedEvent, currentUser]);
 

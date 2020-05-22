@@ -5,13 +5,23 @@ import EmptyHomeScreen from "./EmptyHomeScreen";
 import Chart from "../Charts/Chart";
 import bubbleConfig from "../../data/bubble-config";
 import barConfig from "../../data/bar-config";
-import { getBarChart, getBubbleChart } from "../../api/eventsEndpoints";
-import { buildBarData, buildBubbleData } from "../../helpers/buildChartData";
+import radarConfig from "../../data/radar-config";
+import {
+  getBarChart,
+  getBubbleChart,
+  getRadarChart,
+} from "../../api/eventsEndpoints";
+import {
+  buildBarData,
+  buildBubbleData,
+  buildRadarData,
+} from "../../helpers/buildChartData";
 import translate from "../../helpers/i18n";
 
 export default function GraphicsContainer({ selectedEvent }) {
   const [bubbleData, setBubbleData] = useState([]);
   const [barData, setBarData] = useState([]);
+  const [radarData, setRadarData] = useState({});
 
   useEffect(() => {
     if (!isEmpty(selectedEvent)) {
@@ -31,14 +41,25 @@ export default function GraphicsContainer({ selectedEvent }) {
           setBarData([]);
         }
       };
+      const fetchRadarData = async () => {
+        try {
+          const result = await getRadarChart(selectedEvent.id);
+          setRadarData(result.data);
+        } catch (err) {
+          setRadarData({});
+        }
+      };
 
       fetchBarData();
 
       fetchBubbleData();
+
+      fetchRadarData();
     }
   }, [selectedEvent]);
 
-  if (isEmpty(barData) || isEmpty(bubbleData)) return <EmptyHomeScreen />;
+  if (isEmpty(barData) || isEmpty(bubbleData) || isEmpty(radarData))
+    return <EmptyHomeScreen />;
 
   const buildBubbleChart = () => {
     return {
@@ -54,6 +75,13 @@ export default function GraphicsContainer({ selectedEvent }) {
     return {
       ...barConfig,
       data: buildBarData(barData),
+    };
+  };
+
+  const buildRadarChart = () => {
+    return {
+      ...radarConfig,
+      data: buildRadarData(radarData),
     };
   };
 
@@ -84,8 +112,15 @@ export default function GraphicsContainer({ selectedEvent }) {
             </div>
           </div>
         </div>
-        <div className="empty-container-2 d-flex justify-content-center align-items-center">
-          <p>{translate("home.noDataMessageThree")}</p>
+        <div className="col-sm-12 dist-uxpae-box--filled">
+          <div className="graphic empty-container-2 mb-3 d-flex justify-content-center align-items-center">
+            <div className="graphic--title">
+              <p>{translate("home.noDataMessageThree")}</p>
+            </div>
+            <div className="graphic--wrapper">
+              {!isEmpty(radarData) && <Chart chartConfig={buildRadarChart()} />}
+            </div>
+          </div>
         </div>
       </div>
     </div>

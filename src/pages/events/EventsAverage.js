@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { flatten, isEmpty } from "lodash";
 import Chart from "../../components/Charts/Chart";
+import EmptyHomeScreen from "../../components/Home/EmptyHomeScreen";
+import { getEvaluations } from "../../api/eventsEndpoints";
 import {
   buildEventsAverageBubbleData,
   formatTooltipForAverageChart,
@@ -8,9 +11,24 @@ import {
 
 function EventAverages(props) {
   const { eventList } = props;
-  const filteredEvents = eventList.filter(
-    (event) => event.impactAverage !== null && event.probabilityAverage !== null
-  );
+  const ids = flatten(eventList.map(({ evaluationIds }) => evaluationIds));
+  const [evaluationList, setEvaluationList] = useState([]);
+
+  useEffect(() => {
+    if (!isEmpty(ids)) {
+      const fetchEvalutions = async () => {
+        try {
+          const result = await getEvaluations(ids);
+          setEvaluationList(result.data);
+        } catch (err) {
+          setEvaluationList([]);
+        }
+      };
+
+      fetchEvalutions();
+    }
+  }, []);
+
   const buildBubbleChart = () => {
     return {
       type: "bubble",
@@ -52,7 +70,7 @@ function EventAverages(props) {
           callbacks: {
             title: () => "Promedio",
             label: (tooltipItem) => {
-              return formatTooltipForAverageChart(tooltipItem, filteredEvents);
+              return formatTooltipForAverageChart(tooltipItem, eventList);
             },
           },
           titleFontSize: 20,
@@ -60,19 +78,23 @@ function EventAverages(props) {
         },
       },
       data: {
-        labels: filteredEvents.map((event) => event.description),
-        datasets: buildEventsAverageBubbleData(filteredEvents),
+        labels: eventList.map((event) => event.description),
+        datasets: buildEventsAverageBubbleData(evaluationList, eventList),
       },
     };
   };
 
   const chartConfig = buildBubbleChart();
 
-  return (
-    <div className="modal-body">
+  const renderGraphic = () => {
+    return isEmpty(evaluationList) ? (
+      <EmptyHomeScreen />
+    ) : (
       <Chart chartConfig={chartConfig} />
-    </div>
-  );
+    );
+  };
+
+  return <div className="modal-body">{renderGraphic()}</div>;
 }
 
 EventAverages.propTypes = {

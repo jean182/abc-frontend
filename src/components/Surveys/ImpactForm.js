@@ -45,8 +45,8 @@ export default function ImpactForm(props) {
   const nonEditableQuestions = riskFactors.filter(({ description }) =>
     description.includes("Potencial")
   );
-  const { description, procedureType, voteType, evaluations } = selectedItem;
-  const evaluation = first(evaluations);
+  const { description, procedureType, voteType, evaluationIds } = selectedItem;
+  const id = first(evaluationIds);
   const splitDescription = description.split(":");
   const {
     0: expNumber,
@@ -69,8 +69,9 @@ export default function ImpactForm(props) {
         score: {
           ...editImpactScoreResult,
           userId: currentUser.id,
-          evaluationId: evaluation.id,
-          impactScale: score.impactScale,
+          evaluationId: id,
+          // Until scale is provided
+          impactScale: 5,
         },
       };
       delete scoreParams.score.riskFactorScores;
@@ -86,8 +87,9 @@ export default function ImpactForm(props) {
         score: {
           ...newImpactScoreResult,
           userId: currentUser.id,
-          evaluationId: evaluation.id,
-          impactScale: 0,
+          evaluationId: id,
+          // Until scale is provided
+          impactScale: 5,
         },
       };
       createScoreInfo({ score: scoreParams, swal: Swal });
