@@ -186,7 +186,12 @@ function* createUserSaga(action) {
   try {
     const response = yield call(createUserRequest, user);
     yield put(createUserSuccess(response));
-    yield call([swal, swal.fire], "Listo!", "Creado exitosamente", "success");
+    yield call(
+      [swal, swal.fire],
+      "Listo!",
+      "Evento Creado exitosamente",
+      "success"
+    );
   } catch (error) {
     yield put(createUserFail(error.message));
     yield call([swal, swal.fire], "Oops...", error.message, "error");
@@ -199,7 +204,12 @@ function* updateUserSaga(action) {
     const { id } = user;
     const response = yield call(updateUserRequest, id, user);
     yield put(updateUserSuccess(response));
-    yield call([swal, swal.fire], "Listo!", "Editado exitosamente", "success");
+    yield call(
+      [swal, swal.fire],
+      "Listo!",
+      "Evento Editado exitosamente",
+      "success"
+    );
   } catch (error) {
     yield put(updateUserFail(error.message));
     yield call([swal, swal.fire], "Oops...", error.message, "error");
@@ -214,7 +224,7 @@ function* deleteUserSaga(action) {
     yield call(
       [swal, swal.fire],
       "Listo!",
-      "El usuario a sido deshabilitado exitosamente",
+      "El usuario ha sido deshabilitado exitosamente",
       "success"
     );
   } catch (error) {

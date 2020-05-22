@@ -131,7 +131,7 @@ function UserForm(props) {
       </div>
       <input
         type="submit"
-        className="btn btn-priamry"
+        className="btn btn-primary"
         value={
           isEmpty(selectedUser)
             ? translate("userForm.create")

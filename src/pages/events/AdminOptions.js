@@ -26,6 +26,23 @@ function AdminOptions({
     deleteAction({ id: selectedEvent.id, swal: Swal });
   };
 
+  const confirmDestroyUser = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        destroyUser();
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  };
+
   return (
     <>
       <Modal
@@ -63,7 +80,7 @@ function AdminOptions({
           <button
             type="button"
             className="btn btn-primary btn-block mb-3"
-            onClick={destroyUser}
+            onClick={confirmDestroyUser}
           >
             Deshabilitar Evento
           </button>

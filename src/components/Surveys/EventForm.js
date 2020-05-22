@@ -67,7 +67,6 @@ function EventForm(props) {
             type="number"
             ref={register({ required: true })}
             defaultValue={selectedEvent ? selectedEvent.fileNumber : ""}
-            placeholder={translate("eventForm.fileNumber")}
           />
           {errors.fileNumber && (
             <div className="invalid-feedback">
@@ -86,7 +85,6 @@ function EventForm(props) {
             type="textarea"
             defaultValue={selectedEvent ? selectedEvent.description : ""}
             ref={register({ required: true })}
-            placeholder={translate("eventForm.description")}
           />
           {errors.description && (
             <div className="invalid-feedback">
@@ -103,7 +101,6 @@ function EventForm(props) {
             className="form-control"
             defaultValue={selectedEvent ? selectedEvent.proposedBy : ""}
             ref={register}
-            placeholder={translate("eventForm.proposedBy")}
           />
         </div>
         <div className="form-group">
@@ -176,7 +173,7 @@ function EventForm(props) {
       <div className="modal-footer">
         <input
           type="submit"
-          className="btn btn-priamry"
+          className="btn btn-primary"
           value={
             isEmpty(selectedEvent)
               ? translate("eventForm.create")
