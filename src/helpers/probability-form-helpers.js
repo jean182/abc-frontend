@@ -70,6 +70,7 @@ const formatNewNonEditableQuestions = (
     const { id, description } = question;
     return {
       riskFactorId: id,
+      riskType: "probability",
       scale:
         description === "Tipo de votación" ? voteTypeValue : procedureTypeValue,
     };
@@ -81,6 +82,7 @@ const formatNewQuestions = (questions, values) => {
     const scale = Number(values[index]);
     return {
       scale,
+      riskType: "probability",
       riskFactorId: question.id,
     };
   });

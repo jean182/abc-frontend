@@ -1,32 +1,62 @@
 /* eslint-disable eqeqeq */
 import { isEmpty } from "lodash";
 
+const generateNewObservations = (submittedObservations) => {
+  return submittedObservations.map((observation) => {
+    return {
+      name: observation,
+    };
+  });
+};
+
 const generateObservations = (impactRiskFactorScore, submittedObservations) => {
   const { observations } = impactRiskFactorScore;
-  if (isEmpty(observations)) {
-    if (isEmpty(submittedObservations)) return [];
-    return submittedObservations.map((observation) => {
+  if (isEmpty(submittedObservations)) {
+    observations.map((observation) => {
       return {
-        name: observation,
+        id: observation.id,
+        name: observation.name,
+        _destroy: true,
       };
     });
   }
-  return observations.map((observation) => {
-    const matchingObservation = isEmpty(submittedObservations)
-      ? null
-      : submittedObservations.find((name) => name === observation.name);
-    if (isEmpty(matchingObservation)) {
-      return {
-        id: observation.id,
-        _destroy: true,
-      };
-    }
+
+  if (isEmpty(observations)) {
+    submittedObservations.map((name) => {
+      return { name };
+    });
+  }
+
+  // All the results that are already in the database and were selected again
+  const matchingItems = observations.filter((observation) => {
+    return submittedObservations.some((name) => name === observation.name);
+  });
+
+  // All the results that are already in the database and were not selected again
+  const discardedItems = observations.filter((observation) => {
+    return submittedObservations.every((name) => name !== observation.name);
+  });
+
+  // Results that are not in the database but were selected
+  const newItems = submittedObservations
+    .filter((name) => {
+      return observations.every((observation) => name !== observation.name);
+    })
+    .map((name) => {
+      return { name };
+    });
+
+  if (isEmpty(discardedItems)) return [...matchingItems, ...newItems];
+
+  const deleteDiscardedItems = discardedItems.map((discardedItem) => {
     return {
-      id: observation.id,
-      riskFactorScoreId: observation.riskFactorScoreId,
-      name: observation.name,
+      id: discardedItem.id,
+      name: discardedItem.name,
+      _destroy: true,
     };
   });
+
+  return [...matchingItems, ...newItems, ...deleteDiscardedItems];
 };
 
 const formatNonEditableQuestions = (score, nonEditableQuestions) => {
@@ -74,32 +104,36 @@ const formatQuestions = (score, questions, values) => {
     (item) => !(parseInt(item, 10) == item)
   );
   if (isEmpty(impactRiskFactorScores)) {
-    return questions.map((question, index) => {
+    return questions
+      .sort((a, b) => a.id - b.id)
+      .map((question, index) => {
+        const scale = Number(scales[index]);
+        const observationsAttributes = generateObservations(
+          {},
+          observationsList[index]
+        );
+        return {
+          riskFactorId: question.id,
+          scale,
+          observationsAttributes,
+        };
+      });
+  }
+  return impactRiskFactorScores
+    .sort((a, b) => a.riskFactorId - b.riskFactorId)
+    .map((riskFactorScore, index) => {
       const scale = Number(scales[index]);
       const observationsAttributes = generateObservations(
-        {},
+        riskFactorScore,
         observationsList[index]
       );
       return {
-        riskFactorId: question.id,
+        id: riskFactorScore.id,
+        riskFactorId: riskFactorScore.riskFactorId,
         scale,
         observationsAttributes,
       };
     });
-  }
-  return impactRiskFactorScores.map((riskFactorScore, index) => {
-    const scale = Number(scales[index]);
-    const observationsAttributes = generateObservations(
-      riskFactorScore,
-      observationsList[index]
-    );
-    return {
-      id: riskFactorScore.id,
-      riskFactorId: riskFactorScore.riskFactorId,
-      scale,
-      observationsAttributes,
-    };
-  });
 };
 
 const formatNewNonEditableQuestions = (nonEditableQuestions) => {
@@ -107,6 +141,7 @@ const formatNewNonEditableQuestions = (nonEditableQuestions) => {
     const { id } = question;
     return {
       riskFactorId: id,
+      riskType: "probability",
       scale: 0,
     };
   });
@@ -119,16 +154,40 @@ const formatNewQuestions = (questions, values) => {
   );
   return questions.map((question, index) => {
     const scale = Number(scales[index]);
-    const observationsAttributes = generateObservations(
-      {},
+    const observationsAttributes = generateNewObservations(
       observationsList[index]
     );
     return {
       riskFactorId: question.id,
+      riskType: "probability",
       scale,
       observationsAttributes,
     };
   });
+};
+
+const impactScaleTotal = (values) => {
+  const scales = values.filter((item) => parseInt(item, 10) == item);
+  const valueList = scales.map((n) => Number(n));
+  const total = valueList.reduce((a, b) => a + b, 0);
+  switch (true) {
+    case total < 11:
+      return 1;
+    case total < 15:
+      return 3;
+    case total < 20:
+      return 5;
+    case total < 24:
+      return 7;
+    case total < 28:
+      return 8;
+    case total < 33:
+      return 9;
+    case total < 41:
+      return 10;
+    default:
+      return 1;
+  }
 };
 
 export const newImpactScore = (values, questions, nonEditableQuestions) => {
@@ -136,9 +195,9 @@ export const newImpactScore = (values, questions, nonEditableQuestions) => {
   const newNonEditableQuestions = formatNewNonEditableQuestions(
     nonEditableQuestions
   );
-  const probabilityScale = 5;
+  const impactScale = impactScaleTotal(values);
   return {
-    probabilityScale,
+    impactScale,
     riskFactorScoresAttributes: [...newQuestions, ...newNonEditableQuestions],
   };
 };
@@ -154,8 +213,10 @@ export const editImpactScore = (
     score,
     nonEditableQuestions
   );
+  const impactScale = impactScaleTotal(values);
   return {
     ...score,
+    impactScale,
     riskFactorScoresAttributes: [...newQuestions, ...newNonEditableQuestions],
   };
 };
