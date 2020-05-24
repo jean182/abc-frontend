@@ -86,6 +86,8 @@
     "question1": "¿Cuál considera usted que es el impacto de la medida, tal como esta redactada?",
     "questionGeneralImpactTitle": "Impacto en general",
     "questionGeneralImpact": "¿Cuál cree que es la naturaleza del impacto?",
+    "additionalNotes": "Notas",
+    "additionalNotesPlaceholder": "Opcional, cualquier comentario relevante a esta pregunta",
     "submit": "Guardar Impacto"
   },
   "userForm": {

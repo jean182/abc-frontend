@@ -89,6 +89,25 @@ export default function ImpactQuestion(props) {
           })}
         </div>
       </fieldset>
+      <fieldset>
+        <div className="form-group">
+          <label htmlFor={`notes-${id}`}>
+            {translate("impactForm.additionalNotes")}
+          </label>
+          <textarea
+            ref={register}
+            id={`notes-${id}`}
+            className="form-control"
+            name={`notes-${id}`}
+            placeholder={translate("impactForm.additionalNotesPlaceholder")}
+            defaultValue={
+              riskFactorScore && riskFactorScore.notes
+                ? riskFactorScore.notes
+                : ""
+            }
+          />
+        </div>
+      </fieldset>
     </div>
   );
 }

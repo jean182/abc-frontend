@@ -1,4 +1,4 @@
-/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/no-array-index-key, eqeqeq */
 import React from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
@@ -56,11 +56,18 @@ export default function ImpactForm(props) {
 
   const onSubmit = (data) => {
     let scoreParams = {};
-    const values = Object.values(data);
+    const stringValues = Object.values(data).filter(
+      (a) => typeof a === "string" || a instanceof String
+    );
+    const observationsList = Object.values(data).filter(
+      (a) => typeof a !== "string"
+    );
+    const scales = stringValues.filter((item) => parseInt(item, 10) == item);
+    const notes = stringValues.filter((item) => parseInt(item, 10) != item);
 
     if (!isEmpty(score)) {
       const editImpactScoreResult = editImpactScore(
-        values,
+        { observationsList, scales, notes },
         questions,
         nonEditableQuestions,
         score
@@ -76,7 +83,7 @@ export default function ImpactForm(props) {
       updateScoreInfo({ id: score.id, score: scoreParams, swal: Swal });
     } else {
       const newImpactScoreResult = newImpactScore(
-        values,
+        { observationsList, scales, notes },
         questions,
         nonEditableQuestions,
         score
