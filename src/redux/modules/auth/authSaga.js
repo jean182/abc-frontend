@@ -24,11 +24,10 @@ function* loginFlow(email, password, history, from) {
     const request = { auth: { email, password } };
     const { data } = yield call(loginUserRequest, request);
     token = data.jwt;
+    setAuthToken(token);
     yield put(setClient(token));
 
     yield put({ type: LOGIN_SUCCESS });
-
-    setAuthToken(token);
 
     axiosConfig.interceptors.request.use((config) => {
       // eslint-disable-next-line no-param-reassign
@@ -59,6 +58,16 @@ function* loginWatcher() {
 
       task = yield fork(loginFlow, email, password, history, from);
     }
+
+    axiosConfig.interceptors.request.use((config) => {
+      const currentToken = getAuthToken();
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = currentToken
+        ? `Bearer ${currentToken}`
+        : "";
+
+      return config;
+    });
 
     const action = yield take([UNSET_CLIENT, LOGIN_FAIL, LOGOUT]);
 

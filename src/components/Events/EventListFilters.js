@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { isValid, parseISO } from "date-fns";
@@ -11,6 +11,15 @@ import translate from "../../helpers/i18n";
 import { getIsoDatesFromInterval } from "../../helpers/date-helpers";
 
 export const EventListFilters = (props) => {
+  useEffect(() => {
+    // Reset filters when component is unmounted.
+    return () => {
+      props.dispatch(filterByIfHasDate([true, false]));
+      props.dispatch(filterByDate([]));
+      props.dispatch(filterByStage("pending,commission,plenary"));
+    };
+  }, [props]);
+
   const handleDateChange = (event) => {
     const { value } = event.target;
     const date = parseISO(value);
