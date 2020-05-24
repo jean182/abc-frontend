@@ -99,22 +99,20 @@ const formatQuestions = (score, questions, values) => {
   const impactRiskFactorScores = riskFactorScores.filter((riskFactorScore) => {
     return questions.some(({ id }) => id === riskFactorScore.riskFactorId);
   });
-  const scales = values.filter((item) => parseInt(item, 10) == item);
-  const observationsList = values.filter(
-    (item) => !(parseInt(item, 10) == item)
-  );
+  const { observationsList, scales, notes } = values;
   if (isEmpty(impactRiskFactorScores)) {
     return questions
       .sort((a, b) => a.id - b.id)
       .map((question, index) => {
         const scale = Number(scales[index]);
-        const observationsAttributes = generateObservations(
-          {},
+        const observationsAttributes = generateNewObservations(
           observationsList[index]
         );
+        const note = notes[index];
         return {
           riskFactorId: question.id,
           scale,
+          notes: isEmpty(note) ? null : note,
           observationsAttributes,
         };
       });
@@ -127,10 +125,12 @@ const formatQuestions = (score, questions, values) => {
         riskFactorScore,
         observationsList[index]
       );
+      const note = notes[index];
       return {
         id: riskFactorScore.id,
         riskFactorId: riskFactorScore.riskFactorId,
         scale,
+        notes: isEmpty(note) ? null : note,
         observationsAttributes,
       };
     });
@@ -148,26 +148,27 @@ const formatNewNonEditableQuestions = (nonEditableQuestions) => {
 };
 
 const formatNewQuestions = (questions, values) => {
-  const scales = values.filter((item) => parseInt(item, 10) == item);
-  const observationsList = values.filter(
-    (item) => !(parseInt(item, 10) == item)
-  );
-  return questions.map((question, index) => {
-    const scale = Number(scales[index]);
-    const observationsAttributes = generateNewObservations(
-      observationsList[index]
-    );
-    return {
-      riskFactorId: question.id,
-      riskType: "probability",
-      scale,
-      observationsAttributes,
-    };
-  });
+  const { scales, notes, observationsList } = values;
+  return questions
+    .sort((a, b) => a.id - b.id)
+    .map((question, index) => {
+      const scale = Number(scales[index]);
+      const observationsAttributes = generateNewObservations(
+        observationsList[index]
+      );
+      const note = notes[index];
+      return {
+        riskFactorId: question.id,
+        riskType: "probability",
+        scale,
+        notes: isEmpty(note) ? null : note,
+        observationsAttributes,
+      };
+    });
 };
 
 const impactScaleTotal = (values) => {
-  const scales = values.filter((item) => parseInt(item, 10) == item);
+  const { scales } = values;
   const valueList = scales.map((n) => Number(n));
   const total = valueList.reduce((a, b) => a + b, 0);
   switch (true) {
