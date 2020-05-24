@@ -70,8 +70,6 @@ export default function ImpactForm(props) {
           ...editImpactScoreResult,
           userId: currentUser.id,
           evaluationId: id,
-          // Until scale is provided
-          impactScale: 5,
         },
       };
       delete scoreParams.score.riskFactorScores;
@@ -88,8 +86,7 @@ export default function ImpactForm(props) {
           ...newImpactScoreResult,
           userId: currentUser.id,
           evaluationId: id,
-          // Until scale is provided
-          impactScale: 5,
+          probabilityScale: 0,
         },
       };
       createScoreInfo({ score: scoreParams, swal: Swal });
@@ -110,23 +107,26 @@ export default function ImpactForm(props) {
           className="impact-form-container"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {questions.map((question) => {
-            const matchingRiskFactorScore = !isEmpty(score)
-              ? score.riskFactorScores.find(
-                  (risk) => risk.riskFactorId === question.id
-                )
-              : null;
-            return (
-              <ImpactQuestion
-                checkBoxOptions={checkBoxOptions}
-                key={question.id}
-                question={question}
-                register={register}
-                responseKeys={responseKeys}
-                riskFactorScore={matchingRiskFactorScore}
-              />
-            );
-          })}
+          {questions
+            // Needs to be sorted to avoid confusion.
+            .sort((a, b) => a.id - b.id)
+            .map((question) => {
+              const matchingRiskFactorScore = !isEmpty(score)
+                ? score.riskFactorScores.find(
+                    (risk) => risk.riskFactorId === question.id
+                  )
+                : null;
+              return (
+                <ImpactQuestion
+                  checkBoxOptions={checkBoxOptions}
+                  key={question.id}
+                  question={question}
+                  register={register}
+                  responseKeys={responseKeys}
+                  riskFactorScore={matchingRiskFactorScore}
+                />
+              );
+            })}
         </form>
       </div>
       <div className="modal-footer">

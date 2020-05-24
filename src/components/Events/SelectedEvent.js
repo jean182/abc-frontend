@@ -10,6 +10,11 @@ export function SelectedEvent({ selectedEvent }) {
   const setInputValue = (obj, key) =>
     obj && !isEmpty(obj[key]) ? obj[key] : "";
 
+  const description = setInputValue(selectedEvent, "description");
+  const proposedBy = setInputValue(selectedEvent, "proposedBy");
+  const day = monthYearOrDay(selectedEvent.approvalDate, "day");
+  const month = monthYearOrDay(selectedEvent.approvalDate, "month");
+  const year = monthYearOrDay(selectedEvent.approvalDate, "year");
   return (
     <div className="row mb-3 selected-event">
       <div className="col-sm-11 p-3 align-self-center selected-event">
@@ -18,7 +23,7 @@ export function SelectedEvent({ selectedEvent }) {
           className="form-control bg-white mb-3 abc-input abc-no-input"
           placeholder={t("table.events.description")}
           type="text"
-          defaultValue={setInputValue(selectedEvent, "description")}
+          value={description}
           readOnly
         />
         <input
@@ -26,7 +31,7 @@ export function SelectedEvent({ selectedEvent }) {
           className="form-control bg-white mt-3 abc-input abc-no-input"
           placeholder={t("table.events.proposedBy")}
           type="text"
-          defaultValue={setInputValue(selectedEvent, "proposedBy")}
+          value={proposedBy}
           readOnly
         />
       </div>
@@ -36,7 +41,7 @@ export function SelectedEvent({ selectedEvent }) {
           className="form-control bg-white abc-input--date"
           placeholder={t("table.events.day")}
           type="text"
-          defaultValue={monthYearOrDay(selectedEvent.approvalDate, "day")}
+          value={day}
           readOnly
         />
         <input
@@ -44,7 +49,7 @@ export function SelectedEvent({ selectedEvent }) {
           className="form-control bg-white abc-input--date"
           placeholder={t("table.events.month")}
           type="text"
-          defaultValue={monthYearOrDay(selectedEvent.approvalDate, "month")}
+          value={month}
           readOnly
         />
         <input
@@ -52,7 +57,7 @@ export function SelectedEvent({ selectedEvent }) {
           className="form-control bg-white abc-input--date"
           placeholder={t("table.events.year")}
           type="text"
-          defaultValue={monthYearOrDay(selectedEvent.approvalDate, "year")}
+          value={year}
           readOnly
         />
       </div>

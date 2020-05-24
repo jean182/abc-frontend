@@ -43,7 +43,7 @@ export function EventListContainer(props) {
           </div>
         </div>
       ) : (
-        <EventList eventList={eventList} />
+        <EventList eventList={eventList} selectedEvent={selectedEvent} />
       )}
     </>
   );
