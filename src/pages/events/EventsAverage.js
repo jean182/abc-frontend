@@ -11,10 +11,10 @@ import {
 
 function EventAverages(props) {
   const { eventList } = props;
-  const ids = flatten(eventList.map(({ evaluationIds }) => evaluationIds));
   const [evaluationList, setEvaluationList] = useState([]);
 
   useEffect(() => {
+    const ids = flatten(eventList.map(({ evaluationIds }) => evaluationIds));
     if (!isEmpty(ids)) {
       const fetchEvalutions = async () => {
         try {
@@ -27,7 +27,7 @@ function EventAverages(props) {
 
       fetchEvalutions();
     }
-  }, []);
+  }, [eventList]);
 
   const buildBubbleChart = () => {
     return {

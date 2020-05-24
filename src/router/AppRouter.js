@@ -22,7 +22,6 @@ export const AppRouter = ({
   getUserInfo,
   getQuestionList,
   token,
-  user,
   questionList,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(authorized);
@@ -33,10 +32,10 @@ export const AppRouter = ({
   }, [token]);
 
   useEffect(() => {
-    if (isEmpty(user) && isAuthenticated) {
+    if (isAuthenticated) {
       getUserInfo();
     }
-  }, [user, getUserInfo, isAuthenticated]);
+  }, [isAuthenticated, getUserInfo]);
 
   useEffect(() => {
     if (isEmpty(questionList) && isAuthenticated) {
@@ -81,7 +80,6 @@ AppRouter.propTypes = {
   getUserInfo: PropTypes.func.isRequired,
   getQuestionList: PropTypes.func.isRequired,
   token: PropTypes.string,
-  user: PropTypes.oneOfType([PropTypes.object]).isRequired,
   questionList: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object]))
     .isRequired,
 };
@@ -98,7 +96,6 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
   token: state.clientReducer.token,
-  user: state.sessionReducer.user,
   questionList: state.questionReducer.questionList,
 });
 
