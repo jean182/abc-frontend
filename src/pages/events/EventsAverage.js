@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { flatten, isEmpty } from "lodash";
 import Chart from "../../components/Charts/Chart";
 import EmptyHomeScreen from "../../components/Home/EmptyHomeScreen";
+import Download from "./DownloadAverages";
 import { getEvaluations } from "../../api/eventsEndpoints";
 import {
   buildEventsAverageBubbleData,
@@ -94,7 +95,16 @@ function EventAverages(props) {
     );
   };
 
-  return <div className="modal-body">{renderGraphic()}</div>;
+  return (
+    <>
+      <div className="modal-body">{renderGraphic()}</div>
+      {!isEmpty(evaluationList) && (
+        <div className="modal-footer">
+          <Download evaluationList={evaluationList} eventList={eventList} />
+        </div>
+      )}
+    </>
+  );
 }
 
 EventAverages.propTypes = {
