@@ -14,10 +14,12 @@ const ModalContent = ({
   onClickAway,
   onClose,
   onKeyDown,
+  scrollable,
   subtitle,
   title,
 }) => {
   const openClass = isOpen ? "show" : "";
+  const scrollClass = scrollable ? "modal-dialog-scrollable" : "";
   return (
     <FocusLock>
       <div
@@ -33,10 +35,7 @@ const ModalContent = ({
         }}
         {...(isOpen ? { "aria-modal": true } : { "aria-hidden": true })}
       >
-        <div
-          className="modal-dialog modal-dialog-scrollable modal-lg"
-          ref={modalRef}
-        >
+        <div className={`modal-dialog ${scrollClass} modal-lg`} ref={modalRef}>
           <div className="modal-content">
             <div className="modal-header bg-secondary text-white">
               <h1>{title}</h1>
@@ -79,6 +78,7 @@ ModalContent.propTypes = {
   onClickAway: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired,
+  scrollable: PropTypes.bool.isRequired,
   subtitle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

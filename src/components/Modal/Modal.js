@@ -48,6 +48,7 @@ class Modal extends Component {
       children,
       buttonId,
       modalId,
+      scrollable,
       subtitle,
       title,
       triggerStyles,
@@ -73,6 +74,7 @@ class Modal extends Component {
               onClickAway={this.onClickAway}
               onClose={this.onClose}
               onKeyDown={this.onKeyDown}
+              scrollable={scrollable}
               subtitle={subtitle}
               title={title}
             />
@@ -95,6 +97,7 @@ class Modal extends Component {
 
 Modal.defaultProps = {
   title: "",
+  scrollable: false,
   subtitle: "",
   triggerStyles: "btn btn-primary",
 };
@@ -104,6 +107,7 @@ Modal.propTypes = {
   buttonId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   modalId: PropTypes.string.isRequired,
+  scrollable: PropTypes.bool,
   subtitle: PropTypes.string,
   title: PropTypes.string,
   triggerText: PropTypes.string.isRequired,

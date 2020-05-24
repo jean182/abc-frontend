@@ -46,6 +46,7 @@ function FormsWrapper({
           ariaLabel="Probability Form"
           buttonId="probability-form-button"
           modalId="probability-form-modal"
+          scrollable
           subtitle="Califique los diferentes factores que componen la probabilidad del evento según las opciones dadas"
           title="Probabilidad"
           triggerStyles="btn btn-primary btn-block mb-3"
@@ -71,6 +72,7 @@ function FormsWrapper({
           ariaLabel="Impact Form"
           buttonId="impact-form-button"
           modalId="impact-form-modal"
+          scrollable
           subtitle="Califique los diferentes factores que componen el impacto del evento según las opciones dadas"
           title="Impacto"
           triggerStyles="btn btn-primary btn-block mt-3"
