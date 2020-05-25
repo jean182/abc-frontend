@@ -4,12 +4,23 @@ import translate from "./i18n";
 
 const { color } = Chartjs.helpers;
 
+const colorList = [
+  "rgb(255, 99, 132)",
+  "rgb(54, 162, 235)",
+  "rgb(255, 159, 64)",
+  "rgb(75, 192, 192)",
+  "rgb(255, 0, 0)",
+  "rgb(153, 102, 255)",
+  "rgb(28, 214, 20)",
+  "rgb(195, 5, 148)",
+];
+
 const prettyFileNumber = (description) =>
   description.substring(0, description.lastIndexOf(":"));
 
 export const buildBubbleData = (response) => {
-  return response.map((item) => {
-    const backgroundColor = ["#2A4988", "#416fcc"];
+  return response.map((item, index) => {
+    const backgroundColor = colorList[index];
     return {
       label: item.username,
       data: [
@@ -19,8 +30,9 @@ export const buildBubbleData = (response) => {
           r: 5,
         },
       ],
-      backgroundColor,
+      backgroundColor: color(backgroundColor).alpha(0.2).rgbString(),
       borderColor: backgroundColor,
+      pointBackgroundColor: backgroundColor,
       borderWidth: 1,
     };
   });
@@ -80,15 +92,6 @@ export const buildBarData = (response) => {
 };
 
 export const buildRadarData = (response) => {
-  const radarColors = [
-    "rgb(255, 99, 132)",
-    "rgb(54, 162, 235)",
-    "rgb(255, 159, 64)",
-    "rgb(75, 192, 192)",
-    "rgb(255, 205, 86)",
-    "rgb(153, 102, 255)",
-    "rgb(201, 203, 207)",
-  ];
   const sortedResponse = response.map((item) => {
     const { values } = item;
     const sortedValues = values.sort((a, b) => a[0].localeCompare(b[0]));
@@ -105,9 +108,9 @@ export const buildRadarData = (response) => {
       const scores = values.map((value) => last(value));
       return {
         label: description,
-        backgroundColor: color(radarColors[index]).alpha(0.2).rgbString(),
-        borderColor: radarColors[index],
-        pointBackgroundColor: radarColors[index],
+        backgroundColor: color(colorList[index]).alpha(0.2).rgbString(),
+        borderColor: colorList[index],
+        pointBackgroundColor: colorList[index],
         data: scores,
       };
     }),
