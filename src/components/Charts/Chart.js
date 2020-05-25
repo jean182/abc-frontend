@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Chartjs from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+
+Chartjs.plugins.unregister(ChartDataLabels);
 
 const Chart = ({ chartConfig }) => {
   const chartContainer = useRef(null);

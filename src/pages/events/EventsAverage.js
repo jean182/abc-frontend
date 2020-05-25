@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { flatten, isEmpty } from "lodash";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import Chart from "../../components/Charts/Chart";
 import EmptyHomeScreen from "../../components/Home/EmptyHomeScreen";
 import Download from "./DownloadAverages";
@@ -33,6 +34,7 @@ function EventAverages(props) {
   const buildBubbleChart = () => {
     return {
       type: "bubble",
+      plugins: [ChartDataLabels],
       scaleSteps: 10,
       options: {
         title: {
@@ -76,6 +78,28 @@ function EventAverages(props) {
           },
           titleFontSize: 20,
           bodyFontSize: 16,
+        },
+        plugins: {
+          datalabels: {
+            anchor() {
+              return "center";
+            },
+            align() {
+              return "right";
+            },
+            color() {
+              return "black";
+            },
+            font: {
+              weight: "bold",
+            },
+            formatter(_value, context) {
+              const { label } = context.dataset;
+              return label;
+            },
+            offset: 8,
+            padding: 0,
+          },
         },
       },
       data: {
