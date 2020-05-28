@@ -9883,10 +9883,10 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-saga-test-plan@^4.0.0-beta.2:
-  version "4.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-4.0.0-beta.2.tgz#51717b4819df798c252fbe38171edddb4ef6e76e"
-  integrity sha512-krCpdou4GMH2nL8RFB20Xp0ucvRcwU/4d8jUObYPzaN9tY0nnohOJio583V2vaT7LlNpXBavInPrUbwOK3NLfg==
+redux-saga-test-plan@^4.0.0-rc.3:
+  version "4.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/redux-saga-test-plan/-/redux-saga-test-plan-4.0.0-rc.3.tgz#bde05527202be652859e68d15cdabe79ffa7509a"
+  integrity sha512-18Ha1AWmP4Xt64cSyJv2j7sH8lwQzdk/LByiyhoNyuqyhzkQzlKlflHr3LqiSCzn3e2AgFxagynto8XGRqsHcg==
   dependencies:
     core-js "^2.4.1"
     fsm-iterator "^1.1.0"
