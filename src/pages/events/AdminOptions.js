@@ -28,13 +28,20 @@ function AdminOptions({
 
   const confirmDestroyUser = () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "¿Está seguro que desea deshabilitar el evento?",
+      text: "¡Esta acción no se puede revertir!",
       icon: "warning",
       showCancelButton: true,
+      customClass: {
+        container: "destroy-user-container",
+        title: "destroy-user-title-class",
+        content: "destroy-user-content-class",
+        confirmButton: "destroy-user-confirm-button-class",
+      },
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Deshabilitar",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.value) {
         destroyUser();

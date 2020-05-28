@@ -1,9 +1,21 @@
 html {
-    font-family: $font-family-base;
     transition: 0.5s;
     height: 100vh;
 }
 
 div#root {
-    padding-top: 20px;
+    padding-top: 25px;
 }
+
+@include media-breakpoint-down(hsm) { 
+    .px-md-5 { 
+        padding-left: 2rem !important;
+        padding-right: 2rem !important; 
+    } 
+}
+@include media-breakpoint-down(hmd) {
+    .px-md-5 { 
+        padding-left: 2rem !important;
+        padding-right: 2rem !important; 
+    } 
+} 

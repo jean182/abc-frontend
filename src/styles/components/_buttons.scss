@@ -1,10 +1,15 @@
 .btn {
+    @include srl-border-radius(2px, all);
     background-color: $primary;
-    padding: 8px 2rem;
+    padding: 8px 1rem;
     color: $white;
     transition: .2s all;
-    border-radius: 2px;
     text-align: left;
+
+    @include media-breakpoint-down(sm)  { font-size: 13px; }
+    @include media-breakpoint-down(md)    { font-size: 14px; }
+    @include media-breakpoint-down(hlg)    { font-size: 15px; }
+    @include media-breakpoint-down(hxl)    { font-size: 16px; }
 
     &--login {
         background-color: $secondary;
@@ -22,9 +27,11 @@
         border: none;
         width: 100%;
         padding: 0;
-        font-size: 18px;
-        font-weight: 600 !important;
-        font: inherit;
+        @include media-breakpoint-down(sm)  { font-size: 10px; }
+        @include media-breakpoint-down(md)    { font-size: 12px; }
+        @include media-breakpoint-down(hlg)    { font-size: 14px; }
+        @include media-breakpoint-down(hxl)    { font-size: 16px; }
+        font-weight: 400 !important;
         cursor: pointer;
         outline: 0;
     }
@@ -33,7 +40,6 @@
         color: inherit;
         border: none;
         padding: 0;
-        font: inherit;
         cursor: pointer;
         outline: 0;
     }
@@ -73,7 +79,7 @@ button.btn--unstyled.nav-link.text-white {
 }
 
 button.btn--unstyled.btn-tooltip {
-    font-weight: 400 !important;
+    font-weight: 300 !important;
 }
 
 .bd-sidebar svg {
@@ -83,21 +89,7 @@ button.btn--unstyled.btn-tooltip {
 
 button#probability-form-button,
 button#impact-form-button {
-    padding-left: 42px;
-}
-button#probability-form-button::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f682";
-    position: relative;
-    right: 8px;
-}
-button#impact-form-button::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f681";
-    position: relative;
-    right: 8px;
+    padding-left: 25px;
 }
 button#events-average-button::before {
     content: url(../../assets/chart-scattered.svg);
@@ -106,24 +98,32 @@ button#events-average-button::before {
     right: 0px;
     width: 10px;
 }
+button#probability-form-button::before {
+    @include btn-font-icon-config("\f682");
+    right: 8px;
+}
+button#impact-form-button::before {
+    @include btn-font-icon-config("\f681");
+    right: 8px;
+}
 button#event-create-form-button::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f0fe";
-    position: relative;
+    @include btn-font-icon-config("\f0fe");
     padding-right: 10px;
 }
 button#event-edit-form-button::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f044";
-    position: relative;
+    @include btn-font-icon-config("\f044");
     padding-right: 10px;
 }
 button#event-edit-form-button::before {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    content: "\f044";
-    position: relative;
+    @include btn-font-icon-config("\f044");
+    padding-right: 10px;
+}
+button#user-form-button::before {
+    @include btn-font-icon-config("\f509");
+    padding-right: 10px;
+}
+
+nav.bd-links button:nth-of-type(4)::before {
+    @include btn-font-icon-config("\f273");
     padding-right: 10px;
 }

@@ -70,7 +70,7 @@ function EventForm(props) {
           />
           {errors.fileNumber && (
             <div className="invalid-feedback">
-              {`${translate("eventForm.fileNumber")} no puede estar vacio`}
+              {`${translate("eventForm.fileNumber")} no puede estar vacío`}
             </div>
           )}
         </div>
@@ -88,7 +88,7 @@ function EventForm(props) {
           />
           {errors.description && (
             <div className="invalid-feedback">
-              {`${translate("eventForm.description")} no puede estar vacio`}
+              {`${translate("eventForm.description")} no puede estar vacío`}
             </div>
           )}
         </div>
@@ -96,7 +96,7 @@ function EventForm(props) {
           <label htmlFor="proposedBy">
             {translate("eventForm.proposedBy")}
           </label>
-          <input
+          <textarea
             name="proposedBy"
             className="form-control"
             defaultValue={selectedEvent ? selectedEvent.proposedBy : ""}

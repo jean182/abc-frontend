@@ -11,9 +11,9 @@
     "logout": "Cerrar Sesión"
   },
   "home": {
-    "noDataMessageOne": "Distribución de calificaciones por usuario",
-    "noDataMessageTwo": "Distribución de usuarios por probabilidad de avance del evento",
-    "noDataMessageThree": "Distribución por sector de las naturalezas de impacto seleccionadas"
+    "chart1Title": "Distribución de calificaciones por usuario",
+    "chart2Title": "Distribución de usuarios por probabilidad de avance del evento",
+    "chart3Title": "Distribución por sector de las naturalezas de impacto seleccionadas"
   },
   "errors": {
     "required": "Requerido",
@@ -23,15 +23,15 @@
   "noData": "No hay datos para mostrar",
   "table": {
     "events": {
-      "fileNumber": "# Expediente:",
-      "description": "Descripción:",
-      "procedureType": "Tipo de Procedimiento:",
-      "voteType": "Tipo Valoración:",
-      "proposedBy": "Propuesto por:",
-      "approvalDate": "Fecha de dictaminación:",
-      "stage": "Etapa:",
-      "state": "Evento:",
-      "selection": "Selección:",
+      "fileNumber": "№ Expediente",
+      "description": "Descripción",
+      "procedureType": "Tipo de Procedimiento",
+      "voteType": "Tipo Valoración",
+      "proposedBy": "Propuesto por",
+      "approvalDate": "Fecha de dictaminación",
+      "stage": "Etapa",
+      "state": "Evento",
+      "selection": "Selección",
       "day": "Día",
       "month": "Mes",
       "year": "Año"

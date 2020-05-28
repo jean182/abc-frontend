@@ -38,7 +38,7 @@ function EventAverages(props) {
       scaleSteps: 10,
       options: {
         title: {
-          display: true,
+          display: false,
           text:
             "Distribución de eventos según el promedio de impacto y probabilidad",
         },
@@ -91,7 +91,8 @@ function EventAverages(props) {
               return "black";
             },
             font: {
-              weight: "bold",
+              weight: "300",
+              family: "Roboto",
             },
             formatter(_value, context) {
               const { label } = context.dataset;

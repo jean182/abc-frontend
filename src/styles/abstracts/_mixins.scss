@@ -1,0 +1,66 @@
+// Fonts source mixin
+@mixin font-source-sans($size: false, $colour: false, $weight: false,  $lh: false) {
+    font-family: $font-family-base, Helvetica, Arial, sans-serif !important;
+    @if $size { font-size: $size !important; }
+    @if $colour { color: $colour !important; }
+    @if $weight { font-weight: $weight !important; }
+    @if $lh { line-height: $lh !important; }
+}
+
+// Font Size & Weight
+@mixin font-size-and-weight ($size, $weight) {
+    font-size: $size;
+    font-weight: $weight;
+}
+
+// Border radius top corners
+@mixin srl-border-radius ($radius, $position) {
+    @if $position == all {
+        border-radius: $radius;
+    }
+    @if $position == top {
+        border-radius: $radius $radius 0 0;
+    }
+    @if $position == bottom {
+        border-radius: 0 0 $radius $radius;
+    }
+    @if $position == left {
+        border-radius: $radius 0 0 $radius;
+    }
+    @if $position == right {
+        border-radius: 0 $radius $radius 0;
+    }
+
+}
+
+// Border radius bottom corners
+
+@mixin border-radius-bottom ($radius) {
+    border-bottom-left-radius: $radius;
+    border-bottom-right-radius: $radius;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+// Button Font icons configuration
+@mixin btn-font-icon-config ($content) {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: relative;
+    content: $content;
+}
+
+// Form inputs configuration
+@mixin form-inputs-config($width, $weight){
+	width: $width;
+	font-weight: $weight;
+}
+
+// Login H tag configuration
+@mixin login-h-config ($color, $font-size, $weight) {
+    margin: 0;
+    color: $color;
+    font-size: $font-size;
+    text-align: center;
+    font-weight: $weight;
+}

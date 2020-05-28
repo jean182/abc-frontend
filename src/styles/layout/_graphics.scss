@@ -4,20 +4,17 @@
     &--title {
         display: block !important;
         text-align: center;
-        font-size: 24px;
-        font-weight: 600;
+        @include font-size-and-weight(24px, 600);
         width: 100%;
         & p {
             color: #8c8c8c !important;
-            padding: 30px 0 10px 0;
-            margin-bottom: 0;
+            padding: 20px 0 0px 0;
+            margin-bottom: 20px;
         }
     }
 
     &--wrapper {
         display: block !important;
-        // background-color: white;
-        // padding: 20px;
         height: 100%;
     }
 }

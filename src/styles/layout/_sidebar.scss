@@ -32,11 +32,6 @@
   .bd-sidebar {
     margin-left: 20px;
     order: 0;
-    // border-bottom: 1px solid rgba(0, 0, 0, .1);
-  
-    @include media-breakpoint-up(md) {
-      // border-right: 1px solid rgba(0, 0, 0, .1);
-    }
   
     @include media-breakpoint-up(xl) {
       flex: 0 1 320px;
@@ -114,18 +109,19 @@
   
   .sidebar-subtitle {
     color: #16113f;
-    font-size: 0.8rem;
+    @include font-size-and-weight(0.8rem, 800);
     text-transform: uppercase;
   }
   
   .sidebar-subtitle-borders {
-    border-top: 1px solid $primary;
+    // border-top: 1px solid $primary;
     &:first-of-type {
       border-bottom: none;
    }
   }
   .sidebar-subtitle-borders:nth-child(-n+2) {
     border-top: 4px solid $primary;
+    border-bottom: 1px solid $primary;
   }
 
   .select-event-msg p {
@@ -138,6 +134,16 @@
     border-radius: 2px;
     color: #16113f;
     background-color: #f8faff;
+
+    & p {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    & ul li {
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
   }
 
   .user-name {

@@ -1,7 +1,7 @@
 // Color Palette
 $primary: #3359A5;
 $secondary: #16113F;
-$light-gray: #E5E5E5;
+$light-gray: #F5F5F5;
 $text-muted: #F8F9FA;
 $gray-text: #333333;
 
@@ -11,6 +11,28 @@ $inputBg: $primary;
 $questionBg: #9dafd5;
 
 // Typography
-$font-family-sans-serif:      'Roboto';
-$font-family-base:            $font-family-sans-serif !default;
-$font-color-base:             $gray-text;
+$font-family-sans-serif:    'Roboto';
+$font-family-base:          $font-family-sans-serif !default;
+$font-weight-slim:          300;
+$font-weight-regular:       500;
+$font-weight-bold:          800;
+$font-color-light:          $gray-text;
+$font-color-dark:           darken($gray-text, 50%);
+$font-size:                 16px;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  hsm: 1280px,
+  hmd: 1440px,
+  hlg: 1680px,
+  hxl: 1920px
+) !default;

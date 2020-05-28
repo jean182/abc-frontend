@@ -18,7 +18,7 @@ export default function ImpactQuestion(props) {
       ? riskFactorScore.observations
       : [];
   return (
-    <div className="border-bottom">
+    <div className="survey-box">
       <fieldset id={`group-${id}`}>
         <p>
           <strong>{description}</strong>

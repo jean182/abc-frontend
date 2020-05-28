@@ -13,7 +13,7 @@ function HomeSidebarContent({ user }) {
   return (
     <>
       <div className="row py-3 border-primary sidebar-subtitle-borders">
-        <div className="col font-weight-bold sidebar-subtitle">
+        <div className="col sidebar-subtitle">
           Calificación de eventos de riesgo legislativo con impacto en la banca
         </div>
       </div>

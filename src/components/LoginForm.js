@@ -94,15 +94,7 @@ function LoginForm() {
           </div>
         </div>
         <div className="form-group row align-items-center">
-          <div className="col-sm-6 col-form-label login--pass-recover">
-            <a
-              className="text-white"
-              href="https://www.facebook.com/AsociacionBancariaCostarricense/"
-            >
-              Recuperar contraseña
-            </a>
-          </div>
-          <div className="col-sm-6 text-sm-right">
+          <div className="col-sm-12 text-sm-right">
             <button type="submit" className="btn btn--login">
               Ingresar
             </button>

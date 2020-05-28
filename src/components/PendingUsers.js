@@ -30,7 +30,7 @@ export default function PendingUsers({ selectedEvent }) {
     <div className="row py-3 sidebar-subtitle-borders border-primary">
       <div className="col">
         <div className="pending-users p-2 border-primary">
-          <p className="font-weight-bold">{t("sidebar.pending")}</p>
+          <p>{t("sidebar.pending")}</p>
           <ul>
             {users.map((user) => {
               return <li key={user.id}>{user.name}</li>;
