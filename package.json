@@ -11,7 +11,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "chartjs-plugin-datalabels": "^0.7.0",
-    "date-fns": "^2.13.0",
+    "date-fns": "^2.14.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "humps": "^2.0.1",
