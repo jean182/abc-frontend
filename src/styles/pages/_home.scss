@@ -1,9 +1,10 @@
 .empty-container {
   min-height: 100%;
+  width: 100%;
 
   & svg {
     font-size: 180px;
-    color: $light-gray;
+    color: darken($light-gray, 5%);
   }
 
   & p {
@@ -20,11 +21,13 @@
 }
 
 .dist-cxu-box {
+  width: 100%;
+  margin: 0;
   padding: 0 !important;
   height: 76vh;
 
   &--filled {
-    border-radius: 2px;
+    @include border-radius(2px);
     border: 1px solid $primary;
   }
 }
@@ -33,9 +36,9 @@
   padding: 0 0 0 10px !important;
 
   &--filled {
+    @include border-radius(2px);
     margin-top: 20px;
     padding: 0;
-    border-radius: 2px;
     border: 1px solid $primary;
   }
 }

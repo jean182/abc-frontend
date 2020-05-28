@@ -35,7 +35,7 @@ export const EventListFilters = (props) => {
   };
 
   return (
-    <div className="row mb-3">
+    <div className="row mb-3 search-bar">
       <div className="col">
         <label htmlFor="approvalDateFilter">
           {translate("eventFilters.approvalDate")}

@@ -4,17 +4,10 @@ import { useDispatch } from "react-redux";
 import { first, isEmpty, orderBy } from "lodash";
 import HeaderRow from "../Shared/Table/HeaderRow";
 import TableRow from "../Shared/Table/TableRow";
-import Pagination from "../Shared/Pagination";
 import { setEvent, unsetEvent } from "../../redux/modules/events/event";
-import translate from "../../helpers/i18n";
 
 function EventList(props) {
   const { eventList, selectedEvent } = props;
-  const [resetPagination, setResetPagination] = useState(false);
-  const [range, setRange] = useState({
-    start: 0,
-    end: 10,
-  });
   const [selectedRow, setSelectedRow] = useState(
     isEmpty(selectedEvent) ? 0 : selectedEvent.id
   );
@@ -42,16 +35,7 @@ function EventList(props) {
         value !== "state"
     );
 
-  const onChangePage = (_event, page) => {
-    setResetPagination(false);
-    setRange({
-      start: 10 * (page - 1),
-      end: 10 * page,
-    });
-  };
-
   const handleSort = (value) => {
-    setResetPagination(true);
     if (value.orderType !== "") {
       setSortValue(value);
     } else {
@@ -88,36 +72,21 @@ function EventList(props) {
         handleSort={handleSort}
         sortValue={sortValue.value}
       />
-      {orderBy(eventList, [sortValue.value], [sortValue.orderType])
-        .slice(range.start, range.end)
-        .map((event) => {
-          return (
-            <TableRow
-              columns={columns}
-              dataItem="events"
-              key={event.id}
-              row={event}
-              select={findMatchingEvent}
-              selected={selectedRow === event.id}
-            />
-          );
-        })}
-      <div className="d-flex justify-content-between mt-3">
-        <span className="page-items-count">
-          {`${translate("pagination.showing")} ${
-            range.start === 0 ? 1 : range.start + 1
-          } - ${
-            range.end <= eventList.length ? range.end : eventList.length
-          } ${translate("pagination.of")} ${eventList.length} ${translate(
-            "pagination.events"
-          )}.`}
-        </span>
-        <Pagination
-          resetPagination={resetPagination}
-          data={eventList}
-          itemCount={10}
-          onChange={onChangePage}
-        />
+      <div className="table-wrapper">
+        {orderBy(eventList, [sortValue.value], [sortValue.orderType]).map(
+          (event) => {
+            return (
+              <TableRow
+                columns={columns}
+                dataItem="events"
+                key={event.id}
+                row={event}
+                select={findMatchingEvent}
+                selected={selectedRow === event.id}
+              />
+            );
+          }
+        )}
       </div>
     </>
   );

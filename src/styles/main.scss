@@ -1,16 +1,17 @@
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
 
+@import 'vendors/bootstrap';
+@import 'vendors/fa';
+
 @import 'base/typography';
 @import 'base/base';
 @import 'base/reset';
 
-@import 'vendors/bootstrap';
-@import 'vendors/fa';
-
 @import 'components/buttons';
 @import 'components/inputs';
 @import 'components/options';
+@import 'components/swal';
 
 @import 'layout/chart';
 @import 'layout/footer';
@@ -19,6 +20,7 @@
 @import 'layout/login';
 @import 'layout/modals';
 @import 'layout/navigation';
+@import 'layout/search';
 @import 'layout/sidebar';
 @import 'layout/table';
 @import 'layout/graphics';

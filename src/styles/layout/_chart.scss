@@ -10,3 +10,11 @@
 canvas {
   height: 100%;
 }
+
+.panel-wrapper {
+  width: 100%;
+  margin: 0;
+  height: 75vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

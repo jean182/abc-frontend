@@ -19,7 +19,7 @@ const Chart = ({ chartConfig }) => {
 
   return (
     <div className="panel-content text-center">
-      <canvas ref={chartContainer} />
+      <canvas height="145vh" ref={chartContainer} />
     </div>
   );
 };

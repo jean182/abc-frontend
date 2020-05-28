@@ -1,6 +1,9 @@
 .selected-event {
     background-color: #F5F5F5;
-    border-radius: 3px 3px;
+    @include font-size-and-weight($font-size, 300);
+    @include srl-border-radius(2px, all);
+    width: 100%;
+    margin: 0;
 }
 
 .selected-event-date {

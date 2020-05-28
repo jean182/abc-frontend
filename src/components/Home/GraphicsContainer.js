@@ -89,11 +89,11 @@ export default function GraphicsContainer({ selectedEvent }) {
 
   return (
     <div>
-      <div className="row">
+      <div className="row panel-wrapper">
         <div className="col-sm-12 dist-cxu-box--filled">
           <div className="graphic empty-container mb-3 d-flex justify-content-center align-items-center">
             <div className="graphic--title">
-              <p>{translate("home.noDataMessageOne")}</p>
+              <p>{translate("home.chart1Title")}</p>
             </div>
             <div className="graphic--wrapper">
               {!isEmpty(chartConfig.data.datasets) && (
@@ -105,7 +105,7 @@ export default function GraphicsContainer({ selectedEvent }) {
         <div className="col-sm-12 dist-uxpae-box--filled">
           <div className="graphic empty-container-2 mb-3 d-flex justify-content-center align-items-center">
             <div className="graphic--title">
-              <p>{translate("home.noDataMessageTwo")}</p>
+              <p>{translate("home.chart2Title")}</p>
             </div>
             <div className="graphic--wrapper">
               {!isEmpty(barData) && <Chart chartConfig={buildBarChart()} />}
@@ -115,7 +115,7 @@ export default function GraphicsContainer({ selectedEvent }) {
         <div className="col-sm-12 dist-uxpae-box--filled">
           <div className="graphic empty-container-2 mb-3 d-flex justify-content-center align-items-center">
             <div className="graphic--title">
-              <p>{translate("home.noDataMessageThree")}</p>
+              <p>{translate("home.chart3Title")}</p>
             </div>
             <div className="graphic--wrapper">
               {!isEmpty(radarData) && <Chart chartConfig={buildRadarChart()} />}

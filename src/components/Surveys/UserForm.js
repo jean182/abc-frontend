@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { isEmpty, pickBy, identity } from "lodash";
+import { isEmpty, pickBy, identity, lowerCase } from "lodash";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import Swal from "sweetalert2";
@@ -75,7 +75,7 @@ function UserForm(props) {
         />
         {errors.name && (
           <div className="invalid-feedback">
-            {`${translate("userForm.name")} no puede estar vacio`}
+            {`${translate("userForm.name")} no puede estar vacío`}
           </div>
         )}
       </div>
@@ -90,7 +90,7 @@ function UserForm(props) {
         />
         {errors.username && (
           <div className="invalid-feedback">
-            {`${translate("userForm.username")} no puede estar vacio`}
+            {`${translate("userForm.username")} no puede estar vacío`}
           </div>
         )}
       </div>
@@ -108,7 +108,9 @@ function UserForm(props) {
         />
         {errors.email && (
           <div className="invalid-feedback">
-            {`${translate("userForm.email")} no puede estar vacio`}
+            {`El ${lowerCase(
+              translate("userForm.email")
+            )} no puede estar vacío`}
           </div>
         )}
       </div>
@@ -125,7 +127,7 @@ function UserForm(props) {
         />
         {errors.password && isEmpty(selectedUser) && (
           <div className="invalid-feedback">
-            {`${translate("userForm.password")} no puede estar vacio`}
+            {`${translate("userForm.password")} no puede estar vacío`}
           </div>
         )}
       </div>
