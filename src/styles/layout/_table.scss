@@ -58,7 +58,7 @@
     width: 100%;
     margin: 0;
     background-color: #90a3c9;
-    padding: 5px 0;
+    padding: 0 17px 0 0;
     font-family: "Open Sans", sans-serif;
     border: none;
   }
@@ -126,4 +126,5 @@
   margin-top: 2rem;
   @include srl-border-radius(2px, top);
   max-width: 942px;
+  padding: 0 20px 0 0;
 }
