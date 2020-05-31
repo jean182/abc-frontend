@@ -50,6 +50,30 @@ function UserForm(props) {
     clearSelectedUser();
   };
 
+  const confirmDestroyUser = () => {
+    Swal.fire({
+      title: "¿Está seguro que desea deshabilitar el usuario?",
+      text: "¡Esta acción no se puede revertir!",
+      icon: "warning",
+      showCancelButton: true,
+      customClass: {
+        container: "destroy-user-container",
+        title: "destroy-user-title-class",
+        content: "destroy-user-content-class",
+        confirmButton: "destroy-user-confirm-button-class",
+      },
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Deshabilitar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        destroyUser();
+        Swal.fire("Listo!", "El usuario ha sido deshabilitado.", "success");
+      }
+    });
+  };
+
   useEffect(() => {
     if (!isEmpty(selectedUser)) {
       formRef.current.reset();
@@ -144,7 +168,7 @@ function UserForm(props) {
         <button
           type="button"
           className="ml-2 btn btn-danger"
-          onClick={destroyUser}
+          onClick={confirmDestroyUser}
         >
           {translate("userForm.delete")}
         </button>
