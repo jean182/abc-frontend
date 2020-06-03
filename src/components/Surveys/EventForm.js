@@ -75,6 +75,25 @@ function EventForm(props) {
           )}
         </div>
         <div className="form-group">
+          <label htmlFor="evaluationNumber">
+            {translate("eventForm.evaluationNumber")}
+          </label>
+          <Form.Control
+            name="evaluationNumber"
+            className={errors.evaluationNumber ? "is-invalid" : "valid"}
+            type="number"
+            ref={register({ required: true })}
+            defaultValue={selectedEvent ? selectedEvent.evaluationNumber : ""}
+          />
+          {errors.evaluationNumber && (
+            <div className="invalid-feedback">
+              {`${translate(
+                "eventForm.evaluationNumber"
+              )} no puede estar vacío`}
+            </div>
+          )}
+        </div>
+        <div className="form-group">
           <label htmlFor="description">
             {translate("eventForm.description")}
           </label>

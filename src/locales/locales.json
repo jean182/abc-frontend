@@ -24,6 +24,7 @@
   "table": {
     "events": {
       "fileNumber": "№ Expediente",
+      "evaluationNumber": "№ Evaluación",
       "description": "Descripción",
       "procedureType": "Tipo de Procedimiento",
       "voteType": "Tipo Valoración",
@@ -101,6 +102,7 @@
   },
   "eventForm": {
     "fileNumber": "No. Expediente:",
+    "evaluationNumber": "No. de Evaluación:",
     "description": "Descripción:",
     "proposedBy": "Propuesto por:",
     "approvalDate": "Fecha de dictaminación:",

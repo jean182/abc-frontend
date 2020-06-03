@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { flatten, isEmpty } from "lodash";
-import ChartDataLabels from "chartjs-plugin-datalabels";
 import Chart from "../../components/Charts/Chart";
 import EmptyHomeScreen from "../../components/Home/EmptyHomeScreen";
 import Download from "./DownloadAverages";
@@ -34,7 +33,6 @@ function EventAverages(props) {
   const buildBubbleChart = () => {
     return {
       type: "bubble",
-      plugins: [ChartDataLabels],
       scaleSteps: 10,
       options: {
         title: {
@@ -116,7 +114,7 @@ function EventAverages(props) {
     return isEmpty(evaluationList) ? (
       <EmptyHomeScreen />
     ) : (
-      <Chart chartConfig={chartConfig} />
+      <Chart chartConfig={chartConfig} displayLegend />
     );
   };
 

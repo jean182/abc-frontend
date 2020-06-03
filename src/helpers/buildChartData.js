@@ -15,8 +15,9 @@ const colorList = [
   "rgb(195, 5, 148)",
 ];
 
-const prettyFileNumber = (description) =>
-  description.substring(0, description.lastIndexOf(":"));
+function formatFileNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+}
 
 export const buildBubbleData = (response) => {
   return response.map((item, index) => {
@@ -40,7 +41,10 @@ export const buildBubbleData = (response) => {
 
 export const formatTooltipForAverageChart = (tooltipItem, events) => {
   const event = events[tooltipItem.datasetIndex];
-  let label = prettyFileNumber(event.description) || "";
+  const { evaluationNumber } = event;
+  const stringEvNumber = evaluationNumber > 1 ? `- ${evaluationNumber}` : "";
+  let label =
+    `Exp: ${formatFileNumber(event.fileNumber)} ${stringEvNumber}` || "";
 
   if (label) {
     label += ": ";
@@ -56,8 +60,10 @@ export const buildEventsAverageBubbleData = (response, eventList) => {
   return response.map((item, index) => {
     const backgroundColor = ["#2A4988", "#416fcc"];
     const event = eventList[index];
+    const { evaluationNumber } = event;
+    const stringEvNumber = evaluationNumber > 1 ? `- ${evaluationNumber}` : "";
     return {
-      label: prettyFileNumber(event.description),
+      label: `Exp: ${formatFileNumber(event.fileNumber)} ${stringEvNumber}`,
       data: [
         {
           x: item.probabilityAverage,
