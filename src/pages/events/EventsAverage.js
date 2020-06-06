@@ -77,29 +77,6 @@ function EventAverages(props) {
           titleFontSize: 20,
           bodyFontSize: 16,
         },
-        plugins: {
-          datalabels: {
-            anchor() {
-              return "center";
-            },
-            align() {
-              return "right";
-            },
-            color() {
-              return "black";
-            },
-            font: {
-              weight: "300",
-              family: "Roboto",
-            },
-            formatter(_value, context) {
-              const { label } = context.dataset;
-              return label;
-            },
-            offset: 8,
-            padding: 0,
-          },
-        },
       },
       data: {
         labels: eventList.map((event) => event.description),

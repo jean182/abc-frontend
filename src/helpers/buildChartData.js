@@ -22,8 +22,15 @@ function formatFileNumber(num) {
 export const buildBubbleData = (response) => {
   return response.map((item, index) => {
     const backgroundColor = colorList[index];
+    const highRiskBg = "rgb(255, 45, 0)";
+    const financialSectors = item.financialSectors.map((sector) =>
+      sector.replace(" - Real", "")
+    );
+    const sectorStrings =
+      financialSectors.length > 0 ? `(${financialSectors.join(", ")})` : "";
+    const label = `${item.username} ${sectorStrings}`;
     return {
-      label: item.username,
+      label,
       data: [
         {
           x: item.probabilityScale,
@@ -32,9 +39,9 @@ export const buildBubbleData = (response) => {
         },
       ],
       backgroundColor: color(backgroundColor).alpha(0.2).rgbString(),
-      borderColor: backgroundColor,
-      pointBackgroundColor: backgroundColor,
-      borderWidth: 1,
+      borderColor: item.highRisk ? highRiskBg : backgroundColor,
+      pointBackgroundColor: item.highRisk ? highRiskBg : backgroundColor,
+      borderWidth: item.highRisk ? 3 : 1,
     };
   });
 };
@@ -113,7 +120,7 @@ export const buildRadarData = (response) => {
       const { description, values } = item;
       const scores = values.map((value) => last(value));
       return {
-        label: description,
+        label: description.replace(" - Real", ""),
         backgroundColor: color(colorList[index]).alpha(0.2).rgbString(),
         borderColor: colorList[index],
         pointBackgroundColor: colorList[index],

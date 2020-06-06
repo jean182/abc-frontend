@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css"; //
+import "tippy.js/dist/tippy.css";
 import { truncate } from "lodash";
 
 const Tooltip = (props) => {
@@ -9,7 +9,7 @@ const Tooltip = (props) => {
 
   return (
     <Tippy content={description} placement="right">
-      <button className="btn--unstyled btn-tooltip " type="button">
+      <button className="btn--unstyled btn-tooltip" type="button">
         {truncate(description, { length: 10, separator: "" })}
       </button>
     </Tippy>

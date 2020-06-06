@@ -21,7 +21,7 @@ export default function ImpactQuestion(props) {
     <div className="survey-box">
       <fieldset id={`group-${id}`}>
         <p>
-          <strong>{description}</strong>
+          <strong>{description.replace(" - Real", "")}</strong>
         </p>
         <p>{translate(`impactForm.question1`)}</p>
         <div className="toggle">
