@@ -72,6 +72,7 @@ const formatNonEditableQuestions = (score, nonEditableQuestions) => {
     return nonEditableQuestions.map((nonEditableQuestion) => {
       return {
         riskFactorId: nonEditableQuestion.id,
+        riskType: "impact",
         scale: 0,
       };
     });
@@ -89,6 +90,7 @@ const formatNonEditableQuestions = (score, nonEditableQuestions) => {
         id: riskFactorScore.id,
         scoreId: score.id,
         riskFactorId: id,
+        riskType: "impact",
         scale: 0,
       };
     });
@@ -113,6 +115,7 @@ const formatQuestions = (score, questions, values) => {
           riskFactorId: question.id,
           scale,
           notes: isEmpty(note) ? null : note,
+          riskType: "impact",
           observationsAttributes,
         };
       });
@@ -131,6 +134,7 @@ const formatQuestions = (score, questions, values) => {
         riskFactorId: riskFactorScore.riskFactorId,
         scale,
         notes: isEmpty(note) ? null : note,
+        riskType: "impact",
         observationsAttributes,
       };
     });
@@ -141,7 +145,7 @@ const formatNewNonEditableQuestions = (nonEditableQuestions) => {
     const { id } = question;
     return {
       riskFactorId: id,
-      riskType: "probability",
+      riskType: "impact",
       scale: 0,
     };
   });
@@ -159,7 +163,7 @@ const formatNewQuestions = (questions, values) => {
       const note = notes[index];
       return {
         riskFactorId: question.id,
-        riskType: "probability",
+        riskType: "impact",
         scale,
         notes: isEmpty(note) ? null : note,
         observationsAttributes,
@@ -172,19 +176,25 @@ const impactScaleTotal = (values) => {
   const valueList = scales.map((n) => Number(n));
   const total = valueList.reduce((a, b) => a + b, 0);
   switch (true) {
-    case total < 11:
+    case total <= 5:
       return 1;
-    case total < 15:
+    case total <= 7:
+      return 2;
+    case total <= 9:
       return 3;
-    case total < 20:
+    case total <= 11:
+      return 4;
+    case total <= 14:
       return 5;
-    case total < 24:
+    case total <= 16:
+      return 6;
+    case total <= 20:
       return 7;
-    case total < 28:
+    case total <= 26:
       return 8;
-    case total < 33:
+    case total <= 32:
       return 9;
-    case total < 41:
+    case total <= 40:
       return 10;
     default:
       return 1;
