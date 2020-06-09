@@ -115,5 +115,11 @@
   "eventFilters": {
     "approvalDate": "Filtrar por fecha de dictaminación",
     "stage": "Filtrar por Etapa"
+  },
+  "loginForm": {
+    "emptyEmail": "Debe ingresar un correo electrónico.",
+    "emptyPassword": "Debe ingresar una contraseña.",
+    "invalidEmail": "Formato de correo incorrecto.",
+    "invalidPassword": "La contraseña debe de tener mínimo seis caracteres."
   }
 }

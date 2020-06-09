@@ -10,7 +10,7 @@ function CurrentUser({ user }) {
   return (
     <div className="row py-3 sidebar-subtitle-borders border-primary">
       <div className="col">
-        <p className="font-weight-bold mb-0">
+        <p className="font-weight-bold mb-0 pb-2">
           {translate("sidebar.evaluator")}
         </p>
         <span className="user-name">{user.name}</span>
