@@ -5,8 +5,33 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../redux/modules/auth/auth";
-import Errors from "./Errors";
 import translate from "../helpers/i18n";
+
+function handleEmailErrors(errors) {
+  const { message } = errors.email;
+  return message === "invalidEmail" ? (
+    <div className="invalid-login-txt">
+      {`${translate("loginForm.invalidEmail")}`}
+    </div>
+  ) : (
+    <div className="invalid-login-txt">
+      {`${translate("loginForm.emptyEmail")}`}
+    </div>
+  );
+}
+
+function handlePasswordErrors(errors) {
+  const { message } = errors.password;
+  return message === "Required" ? (
+    <div className="invalid-login-txt">
+      {`${translate("loginForm.emptyPassword")}`}
+    </div>
+  ) : (
+    <div className="invalid-login-txt">
+      {`${translate("loginForm.invalidPassword")}`}
+    </div>
+  );
+}
 
 function LoginForm() {
   const history = useHistory();
@@ -23,85 +48,83 @@ function LoginForm() {
   };
 
   return (
-    <form
-      className={`needs-validation ${
-        !isEmpty(errors) ? "was-validated" : ""
-      }col-sm-7 bg-primary shadow-lg login`}
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-    >
-      {serverErrors.length > 0 &&
-        serverErrors.map((error, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <span key={`${error.time}-${index}`} className="text-danger">
-            {error.body}
-          </span>
-        ))}
-      <div className="login--header">
-        <h3>Bienvenido a la plataforma de Riesgo Legislativo</h3>
-        <h4>Calificación de eventos con impacto en la banca</h4>
-      </div>
-      <div className="login--inputs-container">
-        <div className="form-group row">
-          <label
-            htmlFor="email"
-            className="col-sm-3 col-form-label text-capitalize text-white"
-          >
-            Usuario:
-          </label>
-          <div className="col-sm-9">
-            <input
-              className="form-control"
-              id="email"
-              type="text"
-              name="email"
-              placeholder="Correo Electrónico"
-              required
-              pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$"
-              ref={register({
-                required: "required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: "invalidEmail",
-                },
-              })}
-            />
-            {errors.email && <Errors errors={errors} objectKey="email" />}
+    <>
+      {serverErrors.length > 0 && (
+        <span className="server-error">Contraseña Incorrecta</span>
+      )}
+      <form
+        className={`needs-validation ${
+          !isEmpty(errors) ? "was-validated" : ""
+        }col-sm-7 bg-primary shadow-lg login`}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
+        <div className="login--header">
+          <h3>Bienvenido a la plataforma de Riesgo Legislativo</h3>
+          <h4>Calificación de eventos con impacto en la banca</h4>
+        </div>
+        <div className="login--inputs-container">
+          <div className="form-group row">
+            <label
+              htmlFor="email"
+              className="col-sm-3 col-form-label text-capitalize text-white"
+            >
+              Usuario:
+            </label>
+            <div className="col-sm-9">
+              <input
+                className="form-control"
+                id="email"
+                type="text"
+                name="email"
+                placeholder="Correo Electrónico"
+                required
+                pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$"
+                ref={register({
+                  required: "required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "invalidEmail",
+                  },
+                })}
+              />
+              {errors.email && handleEmailErrors(errors)}
+            </div>
+          </div>
+          <div className="form-group row">
+            <label
+              htmlFor="password"
+              className="col-sm-3 col-form-label text-capitalize text-white"
+            >
+              contraseña:
+            </label>
+            <div className="col-sm-9">
+              <input
+                className="form-control"
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                required
+                minLength="6"
+                ref={register({
+                  required: "Required",
+                  minLength: { value: 6, message: "minLength" },
+                })}
+              />
+              {errors.password && handlePasswordErrors(errors)}
+            </div>
+          </div>
+          <div className="form-group row align-items-center">
+            <div className="col-sm-12 text-sm-right">
+              <button type="submit" className="btn btn--login">
+                Ingresar
+              </button>
+            </div>
           </div>
         </div>
-        <div className="form-group row">
-          <label
-            htmlFor="password"
-            className="col-sm-3 col-form-label text-capitalize text-white"
-          >
-            contraseña:
-          </label>
-          <div className="col-sm-9">
-            <input
-              className="form-control"
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Contraseña"
-              required
-              minLength="6"
-              ref={register({
-                required: "Required",
-                minLength: { value: 6, message: "minLength" },
-              })}
-            />
-            {errors.password && <Errors errors={errors} objectKey="password" />}
-          </div>
-        </div>
-        <div className="form-group row align-items-center">
-          <div className="col-sm-12 text-sm-right">
-            <button type="submit" className="btn btn--login">
-              Ingresar
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

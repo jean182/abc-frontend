@@ -38,3 +38,17 @@
     }
 
 }
+
+.invalid-login-txt {
+    position: absolute;
+    padding-top: 5px;
+    color: #ff7474;
+}
+
+.server-error {
+    background-color: $warning;
+    padding: 20px;
+    font-weight: bolder;
+    color: #fff;
+    border-radius: 2px;
+}
