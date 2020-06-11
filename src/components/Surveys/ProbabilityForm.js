@@ -119,23 +119,25 @@ export default function ProbabilityForm(props) {
           className="probability-form-container"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {questions.map((question, index) => {
-            const matchingRiskFactorScore = !isEmpty(score)
-              ? score.riskFactorScores.find(
-                  (risk) => risk.riskFactorId === question.id
-                )
-              : null;
-            return (
-              <ProbabilityQuestion
-                key={question.id}
-                question={question}
-                register={register}
-                responseKeys={responseKeys}
-                riskFactorScore={matchingRiskFactorScore}
-                questionNumber={index}
-              />
-            );
-          })}
+          {questions
+            .sort((a, b) => a.id - b.id)
+            .map((question, index) => {
+              const matchingRiskFactorScore = !isEmpty(score)
+                ? score.riskFactorScores.find(
+                    (risk) => risk.riskFactorId === question.id
+                  )
+                : null;
+              return (
+                <ProbabilityQuestion
+                  key={question.id}
+                  question={question}
+                  register={register}
+                  responseKeys={responseKeys}
+                  riskFactorScore={matchingRiskFactorScore}
+                  questionNumber={index}
+                />
+              );
+            })}
           <fieldset>
             <p>
               <strong>
