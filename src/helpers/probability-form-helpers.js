@@ -44,21 +44,25 @@ const formatQuestions = (riskFactorScores, questions, values) => {
   );
 
   if (isEmpty(probabilityRiskFactorScores)) {
-    return questions.map((question, index) => {
+    return questions
+      .sort((a, b) => a.id - b.id)
+      .map((question, index) => {
+        const scale = Number(values[index]);
+        return {
+          riskFactorId: question.id,
+          scale,
+        };
+      });
+  }
+  return probabilityRiskFactorScores
+    .sort((a, b) => a.riskFactorId - b.riskFactorId)
+    .map((riskFactorScore, index) => {
       const scale = Number(values[index]);
       return {
-        riskFactorId: question.id,
+        ...riskFactorScore,
         scale,
       };
     });
-  }
-  return probabilityRiskFactorScores.map((riskFactorScore, index) => {
-    const scale = Number(values[index]);
-    return {
-      ...riskFactorScore,
-      scale,
-    };
-  });
 };
 
 const formatNewNonEditableQuestions = (
@@ -78,14 +82,16 @@ const formatNewNonEditableQuestions = (
 };
 
 const formatNewQuestions = (questions, values) => {
-  return questions.map((question, index) => {
-    const scale = Number(values[index]);
-    return {
-      scale,
-      riskType: "probability",
-      riskFactorId: question.id,
-    };
-  });
+  return questions
+    .sort((a, b) => a.id - b.id)
+    .map((question, index) => {
+      const scale = Number(values[index]);
+      return {
+        scale,
+        riskType: "probability",
+        riskFactorId: question.id,
+      };
+    });
 };
 
 const probabilityScaleTotal = (values, procedureTypeValue, voteTypeValue) => {
