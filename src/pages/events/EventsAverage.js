@@ -13,6 +13,7 @@ import {
 function EventAverages(props) {
   const { eventList } = props;
   const [evaluationList, setEvaluationList] = useState([]);
+  const sortedEvents = eventList.sort((a, b) => a.id - b.id);
 
   useEffect(() => {
     const ids = flatten(eventList.map(({ evaluationIds }) => evaluationIds));
@@ -20,7 +21,7 @@ function EventAverages(props) {
       const fetchEvalutions = async () => {
         try {
           const result = await getEvaluations(ids);
-          setEvaluationList(result.data);
+          setEvaluationList(result.data.sort((a, b) => a.id - b.id));
         } catch (err) {
           setEvaluationList([]);
         }
@@ -71,7 +72,11 @@ function EventAverages(props) {
           callbacks: {
             title: () => "Promedio",
             label: (tooltipItem) => {
-              return formatTooltipForAverageChart(tooltipItem, eventList);
+              return formatTooltipForAverageChart(
+                tooltipItem,
+                sortedEvents,
+                evaluationList
+              );
             },
           },
           titleFontSize: 20,
@@ -79,8 +84,8 @@ function EventAverages(props) {
         },
       },
       data: {
-        labels: eventList.map((event) => event.description),
-        datasets: buildEventsAverageBubbleData(evaluationList, eventList),
+        labels: sortedEvents.map((event) => event.description),
+        datasets: buildEventsAverageBubbleData(evaluationList, sortedEvents),
       },
     };
   };

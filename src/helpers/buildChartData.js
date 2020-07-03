@@ -46,8 +46,15 @@ export const buildBubbleData = (response) => {
   });
 };
 
-export const formatTooltipForAverageChart = (tooltipItem, events) => {
-  const event = events[tooltipItem.datasetIndex];
+export const formatTooltipForAverageChart = (
+  tooltipItem,
+  events,
+  evaluations
+) => {
+  const evaluation = evaluations[tooltipItem.datasetIndex];
+  const event = events.find(
+    ({ evaluationIds }) => first(evaluationIds) === evaluation.id
+  );
   const { evaluationNumber } = event;
   const stringEvNumber = evaluationNumber > 1 ? `- ${evaluationNumber}` : "";
   let label =
