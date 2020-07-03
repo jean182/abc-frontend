@@ -12,7 +12,7 @@ const { ExcelColumn } = ReactExport.ExcelFile;
 export default function Download({ evaluationList, eventList }) {
   const data = evaluationList.map((evaluation) => {
     const event = eventList.find(
-      (item) => first(item.evaluationIds) === evaluation.id
+      ({ evaluationIds }) => first(evaluationIds) === evaluation.id
     );
     return {
       id: event.id,
