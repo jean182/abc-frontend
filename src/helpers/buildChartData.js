@@ -64,9 +64,11 @@ export const formatTooltipForAverageChart = (tooltipItem, events) => {
 };
 
 export const buildEventsAverageBubbleData = (response, eventList) => {
-  return response.map((item, index) => {
+  return response.map((item) => {
     const backgroundColor = ["#2A4988", "#416fcc"];
-    const event = eventList[index];
+    const event = eventList.find(
+      ({ evaluationIds }) => first(evaluationIds) === item.id
+    );
     const { evaluationNumber } = event;
     const stringEvNumber = evaluationNumber > 1 ? `- ${evaluationNumber}` : "";
     return {
