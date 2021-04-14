@@ -11151,10 +11151,10 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-sweetalert2@^9.13.1:
-  version "9.13.1"
-  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-9.13.1.tgz#debe573ab1a1d66308c76ded86ec364b9521119e"
-  integrity sha512-yyhf9f3FIYNpOLVCbGOdFr13KuXqKWOiHvoFBio7mMtZxTpOsa3XRdVDd0EYCoI+MDuUyYh6TeeG345j8zxT/Q==
+sweetalert2@^10.16.1:
+  version "10.16.1"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-10.16.1.tgz#16effae188618eb7f30f98a83830f8b36bfab535"
+  integrity sha512-kPOk5xs9CuDLhcuMD0MHPofXnYzl+wD2ix5bsovrbUG8xAbi6LWJyaAhhzT8gmv4C19DwjMMToCN4Nvtmyv1zQ==
 
 symbol-observable@^1.2.0:
   version "1.2.0"
