@@ -23,7 +23,7 @@
     "react-bootstrap": "^1.0.1",
     "react-data-export": "^0.6.0",
     "react-dom": "^16.13.1",
-    "react-focus-lock": "^2.2.1",
+    "react-focus-lock": "^2.5.1",
     "react-hook-form": "^5.7.2",
     "react-icons": "^3.9.0",
     "react-redux": "^7.2.0",
